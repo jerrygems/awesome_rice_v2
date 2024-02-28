@@ -1,0 +1,104 @@
+*{
+  background: rgba(0, 0, 0, 0);
+}
+/*stack1*/
+#icon{
+  font-size:140px;
+  color:rgba(255, 255, 255, 0.72);
+  text-shadow:0px 0px 4px rgb(172, 144, 144);
+  background: transparent;
+
+}
+/* #icon:hover{
+  border-radius: 100px;
+  text-shadow:0px 0px 0px white;
+  transition:text-shadow 1s;
+} */
+#headin{
+  font-size:25px;
+  font-weight: bold;
+  margin-bottom:20px;
+}
+#inpt{
+  background: white;
+  color:black;
+  padding:0px 15px 0px 15px;
+  font-size:15px;
+  margin:10px 100px 40px 100px ;
+}
+
+#s1r1{
+  background:transparent;
+}
+#s1r2{
+  background:transparent;
+}
+
+#box1{
+  background:transparent;
+}
+
+
+/*stack2*/
+#h1{
+  font-size:25px;
+  font-weight: bold;
+  margin-bottom:10px;
+}
+#h4{
+  font-size:15px;
+  color:white;
+}
+#icon2{
+  font-size:110px;
+  color:rgba(255, 255, 255, 0.72);
+  text-shadow:0px 0px 4px rgb(172, 144, 144);
+  background: transparent;
+
+}
+#inpt2{
+  background: white;
+  color:black;
+  padding:5px 15px 5px 15px;
+  font-size:15px;
+  margin:10px 100px 40px 100px ;
+}
+#box2{
+  background:#000000;
+}
+
+
+/*stack3*/
+#h1{
+  font-size:25px;
+  font-weight: bold;
+  margin-bottom:10px;
+}
+#h4{
+  font-size:15px;
+  color:white;
+}
+#icon3{
+  font-size:110px;
+  margin-top:20px;
+  color:rgba(255, 255, 255, 0.72);
+  text-shadow:0px 0px 4px rgb(172, 144, 144);
+  background: transparent;
+
+}
+#inpt3{
+  background: white;
+  color:black;
+  padding:5px 15px 5px 15px;
+  font-size:15px;
+  margin:10px 100px 40px 100px ;
+}
+#box3{
+  background:#000000;
+  
+}
+
+/*stack4*/
+#box4{
+  background:violet;
+}
