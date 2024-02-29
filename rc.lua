@@ -20,8 +20,21 @@ local task = require("bars.HBar.tasklist")
 local activity = require("bars.HBar.activity")
 local gizmo = require("bars.HBar.gizmo")
 local systray = require("systray.systray")
-
 local integrate = require("bars.integrations.integrations")
+
+-- popups here
+local musicBox = require("popups.musicBox")
+
+
+
+
+
+
+
+
+
+
+
 
 
 if awesome.startup_errors then
@@ -297,3 +310,5 @@ awful.screen.connect_for_each_screen(function(s)
 
     }
 end)
+
+musicBox.musicBox()
