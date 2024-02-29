@@ -1,9 +1,12 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
-local playerctl = require("scripts.playerctl")
 local getImage = require("scripts.getImage")
-local vicious = require("vicious")
+local naughty = require("naughty")
+
+
+
+
 
 local function musicBox()
     local reverse10 = gears.color.recolor_image("/home/spidey/.config/awesome/icons/10SecRev.svg", "#ffffff")
@@ -13,6 +16,30 @@ local function musicBox()
     local repeatbtn = gears.color.recolor_image("/home/spidey/.config/awesome/icons/repeat.svg", "#ffffff")
     local next = gears.color.recolor_image("/home/spidey/.config/awesome/icons/next-btn.svg", "#ffffff")
     local prev = gears.color.recolor_image("/home/spidey/.config/awesome/icons/prev-btn.svg", "#ffffff")
+
+
+    -- titleBox
+    local title = ""
+    local artist = ""
+
+    local titleBox = wibox.widget {
+        widget = wibox.widget.textbox,
+        markup = "<span color='#ffffff'><b>" .. artist .. "</b></span>",
+        font = "JetBrainsMono 15",
+    }
+    gears.timer {
+        timeout = 1,
+        autostart = true,
+        call_now = true,
+        callback = function()
+            title = io.popen("playerctl metadata | awk '/:title/{for (i=3; i<=NF; i++) printf \"%s \", $i}'", 'r'):read(
+                "*a")
+            artist = io.popen("playerctl metadata | awk '/:artist/{for (i=3; i<=NF; i++) printf \"%s \", $i}'", 'r')
+                :read(
+                    "*a")
+            titleBox.markup = "<span color='#ffffff'><b>" .. title .. "</b></span>"
+        end
+    }
 
     local buttonBox = wibox.widget {
         {
@@ -94,11 +121,7 @@ local function musicBox()
                     {
                         {
                             {
-                                {
-                                    widget = wibox.widget.textbox,
-                                    markup = "<span color='#ffffff'><b>" .. playerctl.title .. "</b></span>",
-                                    font = "JetBrainsMono 15",
-                                },
+                                titleBox,
                                 widget = wibox.container.margin,
                                 margins = { top = 10, bottom = 0, left = 25, right = 25 }
                             },
@@ -108,11 +131,7 @@ local function musicBox()
                         },
                         {
                             {
-                                {
-                                    widget = wibox.widget.textbox,
-                                    markup = "<span color='#ffffff'><small>" .. playerctl.artist .. "</small></span>",
-                                    font = "JetBrainsMono 12",
-                                },
+                                titleBox,
                                 widget = wibox.container.margin,
                                 margins = { top = 0, bottom = 0, left = 25, right = 25 }
                             },
@@ -183,6 +202,16 @@ local function musicBox()
         -- border_color = "#000000",
 
     }
+
+    local updateMan = gears.timer {
+        timeout = 1,
+        autostart = true,
+        call_now = true,
+        callback = function()
+
+        end
+    }
+
     return popup
 end
 return { musicBox = musicBox }

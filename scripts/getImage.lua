@@ -39,7 +39,7 @@ end
 
 -- without with specific_names
 local function get_image(url, path, filename)
-    os.execute("wget " .. url .. "-O" .. path .. filename .. "")
+    os.execute("wget " .. url .. "-O" .. path .. "/" .. filename .. "")
 end
 
 return {
