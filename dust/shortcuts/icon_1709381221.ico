@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>Resource not found 404 - Crowdcontrol</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'>
+<link rel="icon" type="image/x-icon" href="https://assets.bugcrowdusercontent.com/images/favicon.ico" />
+<meta content='A5D3J8QE4' name='slack-app-id'>
+<link rel="stylesheet" href="https://assets.bugcrowdusercontent.com/assets/error-4524a94838bc53b8e21f83607a39c9639313f33e4c1254b83ac30b54fe0114b2.css" media="screen" />
+</head>
+<body class='bc-body bc-grid cc-error-page bc-body--dark'>
+<div id='content'>
+<div class='container'>
+<div class='row'>
+<div class='col-sm-4'>
+<div class='cc-error-page__bc-logo'>
+<a href="/"><img alt="Bugcrowd logo" src="https://assets.bugcrowdusercontent.com/assets/tracker/logo/bugcrowd_logo-905e273734f810b9b2bf0e2b680dcbdb00f7a8d3257d40b99a82b69d08f2541b.png" /></a>
+</div>
+</div>
+<div class='col-sm-6'>
+<div class='cc-error-page__msg'>
+<h1 class='bc-h3'>The requested page was not found</h1>
+<p>
+You’re seeing this page because our server returned
+<strong>HTTP status 404.</strong>
+</p>
+<p>
+Check that you entered the correct URL. If you believe that this is in
+error, please visit
+<a href='https://bugcrowd-support.freshdesk.com/support/tickets/new' rel='external' target='_blank'>
+Bugcrowd Support
+</a>
+and create a support ticket.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

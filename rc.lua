@@ -24,6 +24,7 @@ local integrate = require("bars.integrations.integrations")
 
 -- popups here
 local musicBox = require("popups.musicBox")
+local bookmarks = require("popups.bookmarks")
 
 
 
@@ -305,10 +306,11 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.top_bar:setup {
         layout = wibox.layout.align.vertical,
-        wibox.container.place(integrate.integrations(s),"center","center")
+        wibox.container.place(integrate.integrations(s), "center", "center")
 
 
     }
 end)
 
-musicBox.musicBox()
+-- musicBox.musicBox()
+bookmarks.bookmarks()

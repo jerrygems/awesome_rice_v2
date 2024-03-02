@@ -52,8 +52,6 @@ https://huggingface.co/
 https://www.openml.org/
 https://course.fast.ai/
 https://www.kaggle.com/
-https://pytorch.org/
-https://www.tensorflow.org/
 https://www.youtube.com/playlist?list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A
 https://www.youtube.com/playlist?list=PLqYmG7hTraZCDxZ44o4p3N5Anz3lLRVZF
 https://www.youtube.com/watch?v=UU1WVnMk4E8&t=1055s
