@@ -1,113 +1,196 @@
 local wibox = require("wibox")
 local gears = require("gears")
+local awful = require("awful")
+local naughty = require("naughty")
 
 
 local reverse10 = gears.color.recolor_image("/home/spidey/.config/awesome/icons/10SecRev.svg", "#ffffff")
 local play = gears.color.recolor_image("/home/spidey/.config/awesome/icons/play.svg", "#ffffff")
 local pause = gears.color.recolor_image("/home/spidey/.config/awesome/icons/pause.svg", "#ffffff")
 local forward10 = gears.color.recolor_image("/home/spidey/.config/awesome/icons/10SecForward.svg", "#ffffff")
-local repeatbtn = gears.color.recolor_image("/home/spidey/.config/awesome/icons/repeat.svg", "#ffffff")
+local repeatit = gears.color.recolor_image("/home/spidey/.config/awesome/icons/repeat.svg", "#ffffff")
 local next = gears.color.recolor_image("/home/spidey/.config/awesome/icons/next-btn.svg", "#ffffff")
 local prev = gears.color.recolor_image("/home/spidey/.config/awesome/icons/prev-btn.svg", "#ffffff")
 
 
-local function buttonBox()
+local function buttonBox(s)
+    local WW = s.geometry.width
+    local WH = s.geometry.height
+
+
+
+    local status = io.popen("playerctl status", 'r'):read("*a")
+    local updater = function()
+        status = io.popen("playerctl status", 'r'):read("*a")
+    end
+    local toggler = wibox.widget {
+        image = play,
+        widget = wibox.widget.imagebox
+    }
+    local playbtn = wibox.widget {
+        toggler,
+        widget = wibox.container.background,
+        forced_width=20
+        -- bg = "#ffff00",
+    }
+    updater()
+
+
+
+    gears.timer {
+        timeout = 0.5, -- Check every second (adjust as needed)
+        autostart = true,
+        call_now = false,
+        callback = function()
+            updater()
+            playbtn:buttons(awful.button({}, 1, function()
+                if status == "Playing\n" then
+                    toggler.image = play
+                    awful.spawn("playerctl pause")
+                else
+                    toggler.image = pause
+                    awful.spawn("playerctl play")
+                end
+            end))
+        end
+    }
+
+
+    local revbtn = wibox.widget {
+        {
+
+            image = reverse10,
+            widget = wibox.widget.imagebox
+
+        },
+        widget = wibox.container.background,
+        -- bg = "#ffff00",
+    }
+    revbtn:buttons(
+        gears.table.join(
+            awful.button({}, 1, function()
+                awful.spawn("playerctl position 10-")
+            end)
+        )
+    )
+
+    local prevbtn = wibox.widget {
+        {
+
+            image = prev,
+            widget = wibox.widget.imagebox
+
+        },
+        widget = wibox.container.background,
+        -- bg = "#ffff00",
+    }
+    prevbtn:buttons(
+        gears.table.join(
+            awful.button({}, 1, function()
+                awful.spawn("playerctl previous")
+            end)
+        )
+    )
+
+
+    local nextbtn = wibox.widget {
+        {
+
+            image = next,
+            widget = wibox.widget.imagebox
+
+        },
+        widget = wibox.container.background,
+        -- bg = "#ffff00",
+    }
+    nextbtn:buttons(
+        gears.table.join(
+            awful.button({}, 1, function()
+                awful.spawn("playerctl next")
+            end)
+        )
+    )
+
+    local forwardbtn = wibox.widget {
+        {
+
+            image = forward10,
+            widget = wibox.widget.imagebox
+
+        },
+        widget = wibox.container.background,
+        -- bg = "#ffff00",
+    }
+    forwardbtn:buttons(
+        gears.table.join(
+            awful.button({}, 1, function()
+                awful.spawn("playerctl position 10+")
+            end)
+        )
+    )
+
+
+    local repeatbtn = wibox.widget {
+        {
+
+            image = repeatit,
+            widget = wibox.widget.imagebox
+
+        },
+        widget = wibox.container.background,
+        -- bg = "#ffff00",
+    }
+    repeatbtn:buttons(
+        gears.table.join(
+            awful.button({}, 1, function()
+                awful.spawn("playerctl previous && playerctl next")
+            end)
+        )
+    )
+
+
+
+
+
+
     local btnBox = wibox.widget {
         {
             { -- 10 sec back
-                {
-
-                    {
-
-                        image = reverse10,
-                        widget = wibox.widget.imagebox
-
-                    },
-                    widget = wibox.container.background,
-                    bg = "#ffff00",
-                },
+                revbtn,
                 widget = wibox.container.margin,
-                margins = { top = 13, bottom = 13, left = 13, right = 13 }
+                margins = { top = 10, bottom = 10, left = 5, right = 5 }
             },
             { -- prev
-                {
-
-                    {
-
-                        image = prev,
-                        widget = wibox.widget.imagebox
-
-                    },
-                    widget = wibox.container.background,
-                    bg = "#ffff00",
-                },
+                prevbtn,
                 widget = wibox.container.margin,
-                margins = { top = 13, bottom = 13, left = 13, right = 13 }
+                margins = { top = 10, bottom = 10, left = 5, right = 5 }
             },
             { -- play
-                {
-
-                    {
-
-                        image = play,
-                        widget = wibox.widget.imagebox
-
-                    },
-                    widget = wibox.container.background,
-                    bg = "#ffff00",
-                },
+                playbtn,
                 widget = wibox.container.margin,
-                margins = { top = 13, bottom = 13, left = 13, right = 13 }
+                margins = { top = 10, bottom = 10, left = 5, right = 5 }
             },
             {
-                {
-
-                    {
-
-                        image = next,
-                        widget = wibox.widget.imagebox
-
-                    },
-                    widget = wibox.container.background,
-                    bg = "#ffff00",
-                },
+                nextbtn,
                 widget = wibox.container.margin,
-                margins = { top = 13, bottom = 13, left = 13, right = 13 }
+                margins = { top = 10, bottom = 10, left = 5, right = 5 }
             },
             { -- 10 sec forward
-                {
-
-                    {
-
-                        image = forward10,
-                        widget = wibox.widget.imagebox 
-
-                    },
-                    widget = wibox.container.background,
-                    bg = "#ffff00",
-                },
+                forwardbtn,
                 widget = wibox.container.margin,
-                margins = { top = 13, bottom = 13, left = 13, right = 13 }
+                margins = { top = 10, bottom = 10, left = 5, right = 5 }
             },
             { -- repeat
-                {
-
-                    {
-
-                        image = repeatbtn,
-                        widget = wibox.widget.imagebox
-
-                    },
-                    widget = wibox.container.background,
-                    bg = "#ffff00",
-                },
+                repeatbtn,
                 widget = wibox.container.margin,
-                margins = { top = 13, bottom = 13, left = 13, right = 13 }
+                margins = { top = 10, bottom = 10, left = 5, right = 5 }
             },
             layout = wibox.layout.fixed.horizontal,
+            align = "center"
         },
         widget = wibox.container.background,
-        bg = "#00000000"
+        bg = "#00000000",
+        forced_height=WH*(4/100)
     }
     return btnBox
 end

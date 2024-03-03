@@ -7,19 +7,15 @@ local bottomBox = require("popups.musicParts.bottomBox")
 local topBox = require("popups.musicParts.topBox")
 
 
+local function musicBox(s)
 
-local function musicBox()
-    -- titleBox
-
+    local WW = s.geometry.width
+    local WH = s.geometry.height
 
     local music = wibox.widget {
-        {
-            wibox.container.place(topBox.topBox(), "center", "top"),
-            wibox.container.place(bottomBox.bottomBox(), "center", "bottom"),
-            layout = wibox.layout.align.vertical
-        },
+        wibox.container.place(topBox.topBox(s), "center", "top"),
         widget = wibox.container.margin,
-        margins = { top = 20, bottom = 20, left = 20, right = 20 }
+        margins = { top = WH * (0.7 / 100), bottom = WH * (0.7 / 100), left = WW * (0.5 / 100), right = WW * (0.5 / 100) }
 
     }
     local popup = awful.popup {
@@ -30,20 +26,15 @@ local function musicBox()
                 gears.shape.rounded_rect(cr, width, height, 10)
             end,
             bg = "#000000dd",
-            forced_width = 600,
-            forced_height = 450,
+            forced_width = WW * (20 / 100),
+            forced_height = WH * (18 / 100),
         },
         placement = awful.placement.centered,
         visible = true,
         ontop = false,
         bg = "#00000000",
-        -- shape = gears.shape.rounded_rect,
-        -- border_width = 2,
-        -- border_color = "#000000",
 
     }
-
-
 
     return popup
 end

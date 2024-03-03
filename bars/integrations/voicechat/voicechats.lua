@@ -1,5 +1,7 @@
 local wibox = require("wibox")
 local gears = require("gears")
+local awful = require("awful")
+local naughty = require("naughty")
 
 local function voicechats()
     local img = gears.color.recolor_image("/home/spidey/.config/awesome/icons/wave.svg", "#ffffff")
@@ -19,6 +21,14 @@ local function voicechats()
             gears.shape.rounded_rect(cr, width, height, 10)
         end
     }
+
+    box:buttons(
+        awful.button({}, 1, function()
+            naughty.notification({ text = "Button clicked!" })
+            -- Add your command here
+            -- awful.spawn.easy_async("python ~/.config/awesome/AI_integration/LLMs/app.py")
+        end)
+    )
 
     local voice = wibox.widget {
         box,

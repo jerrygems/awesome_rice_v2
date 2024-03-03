@@ -83,7 +83,7 @@ gears.timer {
     autostart = true,
     call_now = true,
     callback = function()
-        return 
+        return metadata
     end
 
 }

@@ -1,5 +1,6 @@
 local gears = require("gears")
 local wibox = require("wibox")
+local awful = require("awful")
 local chats = require("bars.integrations.chatbot.chats")
 local voicechat = require("bars.integrations.voicechat.voicechats")
 local IRC = require("bars.integrations.IRC.IRC")
