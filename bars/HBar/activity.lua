@@ -1,18 +1,29 @@
 local gears = require("gears")
 local wibox = require("wibox")
+local naughty = require("naughty")
+local awful = require("awful")
 
 local function activityBar(s)
+    local status = "Unknown"
+    local box = wibox.widget {
+        markup = '<small><b>in progress</b></small>',
+        font = "Lora 10",
+        widget = wibox.widget.textbox
+    }
+
+    -- awful.connect_signal(client.focus,function ()
+    --     naughty.notification({text="whatever"})
+    -- end)
+
+
+
     local activity = {
         {
-            {
-                markup = '<small><b>in progress</b></small>',
-                font = "Lora 10",
-                widget = wibox.widget.textbox
-            },
+            box,
             margins = 5,
             widget = wibox.container.margin
         },
-        bg = "#000000",
+        bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 5)
         end,

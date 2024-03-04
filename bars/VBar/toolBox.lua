@@ -2,7 +2,11 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local naughty = require("naughty")
+local getImage = require("scripts.getImage")
+local flist = require("confs.favourites_list")
 
+local a = getImage.get_icon()
+naughty.notification({text=" "..a})
 local function toolBoxBar(s)
     local HT = s.geometry.height
     local WT = s.geometry.width
@@ -15,8 +19,8 @@ local function toolBoxBar(s)
         layout = wibox.layout.fixed.vertical,
         {
             widget = wibox.widget.background,
-            bg = "#00000055",
-            forced_height = HT*(20/100),
+            bg = "#00000099",
+            forced_height = HT * (20 / 100),
             forced_width = 2,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)
@@ -26,7 +30,7 @@ local function toolBoxBar(s)
             }
         },
     }
-    return wibox.container.margin(toolBox,5,5,HT*(5/100),0)
+    return wibox.container.margin(toolBox, 5, 5, HT * (5 / 100), 0)
 end
 
 return { toolBoxBar = toolBoxBar }

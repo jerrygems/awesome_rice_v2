@@ -24,6 +24,7 @@ local integrate = require("bars.integrations.integrations")
 
 -- popups here
 local musicBox = require("popups.musicBox")
+local infoBox = require("popups.infoBox")
 local bookmarks = require("popups.bookmarks")
 
 
@@ -229,15 +230,16 @@ awful.screen.connect_for_each_screen(function(s)
         position = "left",
         type = "normal",
         width = s.geometry.width * (2 / 100),
-        height = s.geometry.height * (98 / 100),
+        height = s.geometry.height * (92 / 100),
         visible = true,
-        bg = "#00000077",
+        margins = { left = 3 },
+        bg = "#00000000",
         fg = "#ffffffff",
         ontop = false,
         -- border_width = 4,
         -- border_color = "#000000",
         shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 0)
+            gears.shape.rounded_rect(cr, width, height, 8)
         end
     })
 
@@ -260,14 +262,15 @@ awful.screen.connect_for_each_screen(function(s)
         width = s.geometry.width * (98 / 100),
         height = s.geometry.height * (3.5 / 100),
         visible = true,
+        margins = { top = 3 },
         -- bg = "#00000077",
-        bg = "#00000077",
+        bg = "#00000000",
         fg = "#ffffffff",
         ontop = false,
         -- border_width = 4,
         -- border_color = "#000000",
         shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 0)
+            gears.shape.rounded_rect(cr, width, height, 8)
         end
     })
 
@@ -287,26 +290,31 @@ awful.screen.connect_for_each_screen(function(s)
     }
 end)
 awful.screen.connect_for_each_screen(function(s)
-    s.top_bar = awful.wibar({
+    s.integration_bar = awful.wibar({
         position = "right",
         type = "normal",
         width = s.geometry.width * (2 / 100),
-        height = s.geometry.height * (98 / 100),
+        height = s.geometry.height * (92 / 100),
         visible = true,
+        x = 5,
+        margins = { right = 3 },
         -- bg = "#00000077",
-        bg = "#00000055",
+        bg = "#00000000",
         fg = "#ffffffff",
         ontop = false,
         -- border_width = 4,
         -- border_color = "#000000",
         shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 0)
+            gears.shape.rounded_rect(cr, width, height, 8)
         end
     })
 
-    s.top_bar:setup {
-        layout = wibox.layout.align.vertical,
-        wibox.container.place(integrate.integrations(s), "center", "center")
+    s.integration_bar:setup {
+
+        wibox.container.place(integrate.integrations(s), "center", "center"),
+
+        layout = wibox.layout.flex.vertical,
+
 
 
     }
@@ -314,5 +322,6 @@ end)
 
 awful.screen.connect_for_each_screen(function(s)
     musicBox.musicBox(s)
+    -- infoBox.infoBox(s)
 end)
 -- bookmarks.bookmarks()

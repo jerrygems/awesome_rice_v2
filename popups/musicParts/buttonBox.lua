@@ -4,13 +4,14 @@ local awful = require("awful")
 local naughty = require("naughty")
 
 
-local reverse10 = gears.color.recolor_image("/home/spidey/.config/awesome/icons/10SecRev.svg", "#ffffff")
-local play = gears.color.recolor_image("/home/spidey/.config/awesome/icons/play.svg", "#ffffff")
-local pause = gears.color.recolor_image("/home/spidey/.config/awesome/icons/pause.svg", "#ffffff")
-local forward10 = gears.color.recolor_image("/home/spidey/.config/awesome/icons/10SecForward.svg", "#ffffff")
-local repeatit = gears.color.recolor_image("/home/spidey/.config/awesome/icons/repeat.svg", "#ffffff")
-local next = gears.color.recolor_image("/home/spidey/.config/awesome/icons/next-btn.svg", "#ffffff")
-local prev = gears.color.recolor_image("/home/spidey/.config/awesome/icons/prev-btn.svg", "#ffffff")
+local home_dir = os.getenv("HOME")
+local reverse10 = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/10SecRev.svg", "#ffffff")
+local play = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/play.svg", "#ffffff")
+local pause = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/pause.svg", "#ffffff")
+local forward10 = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/10SecForward.svg", "#ffffff")
+local repeatit = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/repeat.svg", "#ffffff")
+local next = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/next-btn.svg", "#ffffff")
+local prev = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/prev-btn.svg", "#ffffff")
 
 
 local function buttonBox(s)
@@ -30,7 +31,7 @@ local function buttonBox(s)
     local playbtn = wibox.widget {
         toggler,
         widget = wibox.container.background,
-        forced_width=20
+        forced_width = 20
         -- bg = "#ffff00",
     }
     updater()
@@ -46,10 +47,14 @@ local function buttonBox(s)
             playbtn:buttons(awful.button({}, 1, function()
                 if status == "Playing\n" then
                     toggler.image = play
-                    awful.spawn("playerctl pause")
+                    awful.spawn.easy_async("playerctl pause", function()
+                        return nil
+                    end)
                 else
                     toggler.image = pause
-                    awful.spawn("playerctl play")
+                    awful.spawn.easy_async("playerctl play", function()
+                        return nil
+                    end)
                 end
             end))
         end
@@ -69,7 +74,9 @@ local function buttonBox(s)
     revbtn:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn("playerctl position 10-")
+                awful.spawn.easy_async("playerctl position 10-", function()
+                    return nil
+                end)
             end)
         )
     )
@@ -87,7 +94,9 @@ local function buttonBox(s)
     prevbtn:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn("playerctl previous")
+                awful.spawn.easy_async("playerctl previous", function()
+                    return nil
+                end)
             end)
         )
     )
@@ -106,7 +115,9 @@ local function buttonBox(s)
     nextbtn:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn("playerctl next")
+                awful.spawn.easy_async("playerctl next", function()
+                    return nil
+                end)
             end)
         )
     )
@@ -124,7 +135,9 @@ local function buttonBox(s)
     forwardbtn:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn("playerctl position 10+")
+                awful.spawn.easy_async("playerctl position 10+", function()
+                    return nil
+                end)
             end)
         )
     )
@@ -143,14 +156,12 @@ local function buttonBox(s)
     repeatbtn:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn("playerctl previous && playerctl next")
+                awful.spawn.easy_async("playerctl previous && playerctl next", function()
+                    return nil
+                end)
             end)
         )
     )
-
-
-
-
 
 
     local btnBox = wibox.widget {
@@ -190,7 +201,7 @@ local function buttonBox(s)
         },
         widget = wibox.container.background,
         bg = "#00000000",
-        forced_height=WH*(4/100)
+        forced_height = WH * (4 / 100)
     }
     return btnBox
 end

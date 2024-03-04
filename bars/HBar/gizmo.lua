@@ -57,13 +57,13 @@ local function gizmoZ(s)
                     layout = wibox.layout.fixed.horizontal,
                 },
                 widget = wibox.widget.background,
-                bg = "#00000055",
+                bg = "#00000099",
                 shape = function(cr, width, height)
                     gears.shape.rounded_rect(cr, width, height, 15)
                 end,
             },
             widget = wibox.container.margin,
-            margins = { top = 3, bottom = 3, left = 5, right = 5 },
+            margins = { top = 0, bottom = 0, left = 5, right = 5 },
         },
         layout = wibox.layout.fixed.horizontal,
         widget = wibox.container.background,

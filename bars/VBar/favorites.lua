@@ -15,7 +15,7 @@ local function favouriteList(s)
         layout = wibox.layout.fixed.vertical,
         {
             widget = wibox.widget.background,
-            bg = "#00000055",
+            bg = "#00000099",
             forced_height = HT*(30/100),
             forced_width = 2,
             shape = function(cr, width, height)
@@ -30,6 +30,37 @@ local function favouriteList(s)
 end
 
 return { favouriteList = favouriteList }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -- update_callback = function(self, tag, index)

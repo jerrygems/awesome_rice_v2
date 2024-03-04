@@ -25,7 +25,7 @@ local function systray(s)
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 15)
             end,
-            bg = "#00000055",
+            bg = "#00000099",
         },
         widget = wibox.container.margin,
         margins = { top = 3, bottom = 3, left = 5, right = 5 }

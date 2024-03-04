@@ -70,7 +70,7 @@ local function taglist_fun(s)
     local wrapper = wibox.container.background(
         wibox.container.margin(taglist, 8, 8, 14, 14),
         -- "#000000dd",
-        "#00000055",
+        "#00000099",
         function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 5)
         end

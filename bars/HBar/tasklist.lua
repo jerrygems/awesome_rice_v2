@@ -8,9 +8,7 @@ local function tasklistBar(s)
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
         style = {
-            width = 50,
-            height = 50,
-            bg = "#000000",
+            bg = "#00000099",
             fg = '#000000',
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)
@@ -31,6 +29,8 @@ local function tasklistBar(s)
                 widget = wibox.container.margin,
             },
             widget = wibox.container.background,
+            forced_height = 30,
+            forced_width = 30,
             bg = "#000000",
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)
@@ -57,13 +57,13 @@ local function tasklistBar(s)
                     end,
                 },
                 widget = wibox.container.margin,
-                margins = { top = 4, bottom = 4, left = 10, right = 10 }
+                margins = { top = 0, bottom = 0, left = 5, right = 5 }
             },
             widget = wibox.container.place,
             halign = "left"
         },
         widget = wibox.container.background,
-        forced_width=230
+        forced_width = 230
     }
 
     return c2
