@@ -5,8 +5,17 @@ local naughty = require("naughty")
 local getImage = require("scripts.getImage")
 local flist = require("confs.favourites_list")
 
-local a = getImage.get_icon()
-naughty.notification({text=" "..a})
+
+local img
+local function getimg(imgPath)
+naughty.notification({text=""..imgPath})
+end
+
+for i, felement in ipairs(flist) do
+    img = getImage.get_icon(felement,i, getimg)
+    -- naughty.notification({text="img : "..img})
+end
+
 local function toolBoxBar(s)
     local HT = s.geometry.height
     local WT = s.geometry.width

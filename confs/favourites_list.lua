@@ -1,10 +1,10 @@
 
 local favourites_list = {
-    "https://www.google.com/",
-    "https://www.google.com/",
-    "https://www.google.com/",
-    "https://www.google.com/",
-    "https://www.google.com/",
+    "https://www.facebook.com/",
+    "https://github.com/",
+    "https://kaggle.com/",
+    "https://chat.openai.com/",
+    "https://tryhackme.com/",
 
 }
 

@@ -4,7 +4,6 @@ local awful = require("awful")
 
 
 -- Storing the icon as local first
-local url = 'https://facebook.com'
 local path = "/.config/awesome/dust/waste/"
 local home_dir = os.getenv("HOME")
 local unique_id = 111
@@ -21,9 +20,8 @@ local function pathGen(file_path) -- if path is not created then create it
     end
 end
 
-local function get_icon()
+local function get_icon(url,imgid,callback)
     local file_path = home_dir .. path
-
     pathGen(file_path)                       -- if file path doesn't exist
 
     local parsed_url = socket_url.parse(url) -- filtering for getting the domain name
@@ -34,12 +32,12 @@ local function get_icon()
         local unique_name = unique_id .. os.time() .. ".ico"
         local img_path = os.getenv("HOME") .. path .. unique_name
 
-        awful.spawn.easy_async( "bash -c 'curl -o "..img_path.." -L "..scheme.."://"..host.."/favicon.ico'" ,
-            function(stdout, stderr)
-                if stderr and #stderr > 0 then
-                    return os.getenv("HOME") .. "/.config/awesome/icons/question.svg"
+        awful.spawn.easy_async("bash -c 'curl -o " .. img_path .. " -L " .. scheme .. "://" .. host .. "/favicon.ico'",
+            function()
+                if img_path then
+                    callback(img_path)
                 else
-                    return img_path
+                    callback(os.getenv("HOME") .. "/.config/awesome/icons/question.svg")
                 end
             end)
     end
