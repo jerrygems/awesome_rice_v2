@@ -25,7 +25,7 @@ local function musicBox(s)
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
             end,
-            bg = "#000000dd",
+            bg = "#00000099",
             forced_width = WW * (20 / 100),
             forced_height = WH * (18 / 100),
         },

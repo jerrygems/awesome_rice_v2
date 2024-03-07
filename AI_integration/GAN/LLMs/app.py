@@ -24,8 +24,8 @@ class MyWindow(Gtk.Window):
         second_screen = SecondStack()
         third_screen = ThirdStack()
 
-        stack.add_named(third_screen, "third_screen")
         stack.add_named(first_screen, "first_screen")
+        stack.add_named(third_screen, "third_screen")
         stack.add_named(second_screen, "second_screen")
 
         stack_switcher = Gtk.StackSwitcher()

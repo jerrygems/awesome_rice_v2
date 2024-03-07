@@ -6,7 +6,6 @@ local awful = require("awful")
 -- Storing the icon as local first
 local path = "/.config/awesome/dust/waste/"
 local home_dir = os.getenv("HOME")
-local unique_id = 111
 
 
 local function pathGen(file_path) -- if path is not created then create it
@@ -29,10 +28,9 @@ local function get_icon(url,imgid,callback)
         local host = parsed_url.host         -- name of the host
         local scheme = parsed_url.scheme     -- protocol that the host uses
 
-        local unique_name = unique_id .. os.time() .. ".ico"
+        local unique_name = imgid .. os.time() .. ".ico"
         local img_path = os.getenv("HOME") .. path .. unique_name
-
-        awful.spawn.easy_async("bash -c 'curl -o " .. img_path .. " -L " .. scheme .. "://" .. host .. "/favicon.ico'",
+        awful.spawn.easy_async("bash -c 'curl -o " .. img_path .. " -L " .. scheme .. "://" .. host .. "/favicon.ico'; sleep 1",
             function()
                 if img_path then
                     callback(img_path)

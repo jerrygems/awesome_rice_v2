@@ -93,7 +93,7 @@ local function topBox(s)
                                     margins = { top = 5, bottom = 5, left = 20, right = 20 }
                                 },
                                 widget = wibox.container.background,
-                                bg = "#000000",
+                                bg = "#00000055",
                                 shape = function(cr, width, height)
                                     gears.shape.rounded_rect(cr, width, height, 10)
                                 end,
