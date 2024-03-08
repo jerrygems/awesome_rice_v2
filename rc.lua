@@ -150,28 +150,28 @@ client.connect_signal("manage", function(c)
     end
 end)
 
-client.connect_signal("request::titlebars", function(c)
-    titlebar(c)
-end)
+-- client.connect_signal("request::titlebars", function(c)
+--     titlebar(c)
+-- end)
 
--- so here we can define the events of mouse
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {
-        raise = false
-    })
-end)
+-- -- so here we can define the events of mouse
+-- client.connect_signal("mouse::enter", function(c)
+--     c:emit_signal("request::activate", "mouse_enter", {
+--         raise = false
+--     })
+-- end)
 
-client.connect_signal("focus", function(c)
-    c.border_color = "#00ffff"
-end)
-client.connect_signal("unfocus", function(c)
-    c.border_color = beautiful.border_normal
-end)
+-- client.connect_signal("focus", function(c)
+--     c.border_color = "#00ffff"
+-- end)
+-- client.connect_signal("unfocus", function(c)
+--     c.border_color = beautiful.border_normal
+-- end)
 
 -- bars stuff will be from here
 
 awful.screen.connect_for_each_screen(function(s)
-    set_wallpaper(s)
+    -- set_wallpaper(s)
 
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
@@ -189,39 +189,43 @@ awful.screen.connect_for_each_screen(function(s)
         awful.layout.inc(-1)
     end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
-        screen = s,
-        filter = awful.widget.taglist.filter.all,
-        buttons = tag_and_task_btn.taglist_buttons
-    }
+    -- s.mytaglist = awful.widget.taglist {
+    --     screen = s,
+    --     filter = awful.widget.taglist.filter.all,
+    --     buttons = tag_and_task_btn.taglist_buttons
+    -- }
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist {
-        screen = s,
-        filter = awful.widget.tasklist.filter.currenttags,
-        buttons = tag_and_task_btn.tasklist_buttons
-    }
+    -- s.mytasklist = awful.widget.tasklist {
+    --     screen = s,
+    --     filter = awful.widget.tasklist.filter.currenttags,
+    --     buttons = tag_and_task_btn.tasklist_buttons
+    -- }
     -- Create the wibox
-    s.mywibox = awful.wibar({
-        position = "top",
-        screen = s
-    })
+    -- s.mywibox = awful.wibar({
+    --     position = "top",
+    --     screen = s
+    -- })
 
     -- Add widgets to the wibox
-    s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        {
-            layout = wibox.layout.fixed.horizontal,
-            s.mytaglist,
-            s.mypromptbox
-        },
-        s.mytasklist,
-        {
-            layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
-            s.mylayoutbox
-        }
-    }
+    -- s.mywibox:setup {
+    --     layout = wibox.layout.align.horizontal,
+    --     {
+    --         layout = wibox.layout.fixed.horizontal,
+    --         s.mytaglist,
+    --         s.mypromptbox
+    --     },
+    --     s.mytasklist,
+    --     {
+    --         layout = wibox.layout.fixed.horizontal,
+    --         wibox.widget.systray(),
+    --         s.mylayoutbox
+    --     }
+    -- }
 end)
+
+
+
+
 
 
 
@@ -323,10 +327,7 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 awful.screen.connect_for_each_screen(function(s)
-    musicBox.musicBox(s)
-    -- infoBox.infoBox(s)
+    -- musicBox.musicBox(s)
+    infoBox.infoBox(s)
 end)
 -- bookmarks.bookmarks()
-
-
-

@@ -8,11 +8,11 @@ local flist = require("confs.favourites_list")
 
 local img
 local function getimg(imgPath)
-naughty.notification({text=""..imgPath})
+    naughty.notification({ text = "" .. imgPath })
 end
 
 for i, felement in ipairs(flist) do
-    img = getImage.get_icon(felement,i, getimg)
+    img = getImage.get_icon(felement, i, getimg)
     -- naughty.notification({text="img : "..img})
 end
 
@@ -28,7 +28,7 @@ local function toolBoxBar(s)
         layout = wibox.layout.fixed.vertical,
         {
             widget = wibox.widget.background,
-            bg = "#00000099",
+            bg = "#00ff0099",
             forced_height = HT * (20 / 100),
             forced_width = 2,
             shape = function(cr, width, height)

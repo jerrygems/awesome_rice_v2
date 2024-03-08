@@ -3,36 +3,89 @@ local gears = require("gears")
 local awful = require("awful")
 
 local function volume(s)
-    
-    local bar1 = wibox.widget {
-        text = "hell",
-        widget = wibox.widget.textbox,
-
+    local vol = wibox.widget {
+        {
+            {
+                max_value        = 100,
+                value            = 30,
+                color            = "#6e96f9",
+                background_color = "#6e96f999",
+                widget           = wibox.widget.progressbar,
+                shape            = function(cr, width, height)
+                    gears.shape.rounded_rect(cr, width, height, 18)
+                end,
+            },
+            forced_height = 60,
+            forced_width  = 10,
+            direction     = "east",
+            layout        = wibox.container.rotate,
+        },
+        widget = wibox.container.margin,
+        margins = { top = 20, bottom = 20, left = 20, right = 0 },
     }
-    local bar2 = wibox.widget {
-        text = "hell",
-        widget = wibox.container.background,
-
+    local brightness = wibox.widget {
+        {
+            {
+                max_value        = 100,
+                value            = 30,
+                color            = "#6e96f9",
+                background_color = "#6e96f999",
+                widget           = wibox.widget.progressbar,
+                shape            = function(cr, width, height)
+                    gears.shape.rounded_rect(cr, width, height, 18)
+                end,
+            },
+            forced_height = 60,
+            forced_width  = 10,
+            direction     = "east",
+            layout        = wibox.container.rotate,
+        },
+        widget = wibox.container.margin,
+        margins = { top = 20, bottom = 20, left = 10, right = 10 },
     }
-    local bar3 = wibox.widget {
-        text = "hell",
-        widget = wibox.container.background,
-
+    local mic = wibox.widget {
+        {
+            {
+                max_value        = 100,
+                -- value        = 30,
+                -- color            = "#ff0000",
+                handle_color     = "#ffff00",
+                value            = 70,
+                minimum          = 0,
+                maximum          = 100,
+                handle_width     = 10,
+                handle_shape     = function(cr, width, height)
+                    gears.shape.rounded_rect(cr, width, height, 18)
+                end,
+                bar_border_width = 1,
+                bar_color        = "#6e96f999",
+                bar_shape        = function(cr, width, height)
+                    gears.shape.rounded_rect(cr, width, height, 18)
+                end,
+                widget           = wibox.widget.slider,
+            },
+            direction = "east",
+            layout    = wibox.container.rotate,
+        },
+        widget = wibox.container.margin,
+        margins = { top = 20, bottom = 20, left = 0, right = 20 },
     }
-
 
 
     local box = wibox.widget {
         {
-            bar1,
-            bar2,
-            bar3,
-            layout = wibox.layout.align.horizontal
+            vol,
+            brightness,
+            mic,
+
+
+            layout = wibox.layout.flex.horizontal
         },
 
         widget = wibox.container.background,
-        forced_height = 200,
-        forced_width = 200,
+        forced_height = 150,
+        forced_width = 150,
+        bg = "#000000ff",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
         end

@@ -1,4 +1,3 @@
-
 local favourites_list = {
     -- "https://www.facebook.com/",
     -- "https://github.com/",

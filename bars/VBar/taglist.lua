@@ -17,25 +17,38 @@ local function taglist_fun(s)
                 id = 'text_role',
                 align = 'center',
                 valign = 'center',
-                visible = false,--text visibility
+                visible = false, --text visibility
                 widget = wibox.widget.textbox
             },
-            margins = {5,5,5,5},
+            margins = { 5, 5, 5, 5 },
             widget = wibox.container.margin
         },
         id = 'background_role',
         widget = wibox.container.background,
-        update_callback = function()
-            -- naughty.notification({ text = " : " .. index .. " : " .. tostring(tag)   })
-        end,
+
 
         create_callback = function(self, tag, index)
-            if index == s.selected_tag.index then
-                self.forced_height = HT * (1.2 / 100) + (HT * (1.3 / 100))
-            else
-                self.forced_height = HT * (2.5 / 100) - (HT * (1.3 / 100))
+            self.animate = rubato.timed {
+                duration = 0.15,
+                subscribed = function(pos)
+                    self:get_children_by_id('background_role')[1].forced_height = pos
+                end
+            }
+
+            self.update = function()
+                if tag.selected then
+                    self.animate.target = 30
+                else
+                    self.animate.target = 20
+                end
             end
+            self.update()
         end,
+
+        update_callback=function (self)
+            self.update()
+            
+        end
 
     }
 
@@ -55,18 +68,15 @@ local function taglist_fun(s)
             shape_empty = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 30)
             end,
-            bg_empty = "#ffffff",
-            bg_occupied = "#57ffab",
-            bg_focus = "#6e96f9",
+            bg_empty = "#ffffffcc",
+            bg_occupied = "#6e96f9",
+            bg_focus = "#ffffffff",
             bg_urgent = "#ff3d74"
 
         }
     }
 
-    s:connect_signal("property::selected", function()
-        naughty.notification({ text = " : " ..
-        tostring(awful.screen.focused().selected_tag) .. " : " .. awful.screen.focused().selected_tag.index })
-    end)
+
     local wrapper = wibox.container.background(
         wibox.container.margin(taglist, 8, 8, 14, 14),
         -- "#000000dd",
