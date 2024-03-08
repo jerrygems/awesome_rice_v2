@@ -250,15 +250,13 @@ awful.screen.connect_for_each_screen(function(s)
     })
 
     s.left_bar:setup {
-        layout = wibox.layout.fixed.vertical,
-        {
-            layout = wibox.layout.fixed.vertical,
-            taglist.taglist_fun(s),
-            favs.favouriteList(s),
-            tools.toolBoxBar(s),
+
+        layout = wibox.layout.flex.vertical,
+        taglist.taglist_fun(s),
+        favs.favouriteList(s),
+        tools.toolBoxBar(s),
 
 
-        }
     }
 end)
 awful.screen.connect_for_each_screen(function(s)
@@ -303,7 +301,7 @@ awful.screen.connect_for_each_screen(function(s)
         height = s.geometry.height * (92 / 100),
         visible = true,
         x = 5,
-        margins = { right = 3 },
+        margins = { right = 5, left = 5 },
         -- bg = "#00000077",
         bg = "#00000000",
         fg = "#ffffffff",

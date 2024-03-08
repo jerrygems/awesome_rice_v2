@@ -2,7 +2,6 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 local rubato = require("lib.rubato")
-local beautiful = require("beautiful")
 local naughty = require("naughty")
 
 
@@ -39,7 +38,7 @@ local function taglist_fun(s)
                 if tag.selected then
                     self.animate.target = 30
                 else
-                    self.animate.target = 20
+                    self.animate.target = 15
                 end
             end
             self.update()
@@ -59,14 +58,14 @@ local function taglist_fun(s)
             layout = wibox.layout.fixed.vertical
         },
         widget_template = taglist_template,
-
+        
         style = {
             shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 30)
+                gears.shape.rounded_rect(cr, width, height, 3)
             end,
             spacing = 15,
             shape_empty = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 30)
+                gears.shape.rounded_rect(cr, width, height, 20)
             end,
             bg_empty = "#ffffffcc",
             bg_occupied = "#6e96f9",

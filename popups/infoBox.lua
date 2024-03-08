@@ -2,6 +2,7 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 local vol = require("popups.infoBoxComps.volume")
+local clock = require("popups.infoBoxComps.clock")
 
 
 local function infoBox(s)
@@ -13,7 +14,7 @@ local function infoBox(s)
 
     local popup = awful.popup {
         widget = {
-            wibox.container.place(box, 'center', 'center'),
+            wibox.container.place(clock.clock(), 'center', 'center'),
             widget = wibox.container.background,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
