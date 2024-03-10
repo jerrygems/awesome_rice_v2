@@ -325,7 +325,7 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- musicBox.musicBox(s)
     infoBox.infoBox(s)
+    -- musicBox.musicBox(s)
 end)
 -- bookmarks.bookmarks()

@@ -2,25 +2,57 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 local vol = require("popups.infoBoxComps.volume")
+local sysperf = require("popups.infoBoxComps.sysperf")
 local clock = require("popups.infoBoxComps.clock")
+local arcbox = require("popups.infoBoxComps.ArcBox")
+local musicBox = require("popups.musicBox")
+local naughty = require("naughty")
 
 
 local function infoBox(s)
-    local box = wibox.widget {
-        vol.volume(s),
-        widget = wibox.container.background,
-    }
-
+    -- naughty.notification({ text = tostring(s.geometry.width) })
 
     local popup = awful.popup {
         widget = {
-            wibox.container.place(clock.clock(), 'center', 'center'),
+            {
+                {
+                    {
+                        {
+                            vol.volume(),
+                            clock.clock(),
+                            spacing = 30,
+                            layout = wibox.layout.fixed.horizontal,
+
+                        },
+                        widget = wibox.container.place,
+                        align = 'center',
+                    },
+                    musicBox.musicBox(s),
+                    {
+                        {
+                            sysperf.sysperf(),
+                            arcbox.ArcBox(),
+                            spacing = 30,
+                            layout = wibox.layout.fixed.horizontal,
+
+                        },
+                        widget = wibox.container.place,
+                        align = 'center',
+                    },
+                    spacing=20,
+
+                    layout = wibox.layout.flex.vertical
+                },
+                widget = wibox.container.place,
+                align = "center",
+
+            },
             widget = wibox.container.background,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
             end,
             bg = "#00000077",
-            forced_width = 1000,
+            forced_width = 400,
             forced_height = 600,
         },
         placement = awful.placement.centered,

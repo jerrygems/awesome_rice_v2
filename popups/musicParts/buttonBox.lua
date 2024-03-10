@@ -14,9 +14,7 @@ local next = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/next-
 local prev = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/prev-btn.svg", "#ffffff")
 
 
-local function buttonBox(s)
-    local WW = s.geometry.width
-    local WH = s.geometry.height
+local function buttonBox()
 
 
 
@@ -169,39 +167,39 @@ local function buttonBox(s)
             { -- 10 sec back
                 revbtn,
                 widget = wibox.container.margin,
-                margins = { top = 10, bottom = 10, left = 5, right = 5 }
+                margins = { top = 5, bottom = 5, left = 5, right = 5 }
             },
             { -- prev
                 prevbtn,
                 widget = wibox.container.margin,
-                margins = { top = 10, bottom = 10, left = 5, right = 5 }
+                margins = { top = 5, bottom = 5, left = 5, right = 5 }
             },
             { -- play
                 playbtn,
                 widget = wibox.container.margin,
-                margins = { top = 10, bottom = 10, left = 5, right = 5 }
+                margins = { top = 5, bottom = 5, left = 5, right = 5 }
             },
             {
                 nextbtn,
                 widget = wibox.container.margin,
-                margins = { top = 10, bottom = 10, left = 5, right = 5 }
+                margins = { top = 5, bottom = 5, left = 5, right = 5 }
             },
             { -- 10 sec forward
                 forwardbtn,
                 widget = wibox.container.margin,
-                margins = { top = 10, bottom = 10, left = 5, right = 5 }
+                margins = { top = 5, bottom = 5, left = 5, right = 5 }
             },
             { -- repeat
                 repeatbtn,
                 widget = wibox.container.margin,
-                margins = { top = 10, bottom = 10, left = 5, right = 5 }
+                margins = { top = 5, bottom = 5, left = 5, right = 5 }
             },
             layout = wibox.layout.fixed.horizontal,
             align = "center"
         },
         widget = wibox.container.background,
         bg = "#00000000",
-        forced_height = WH * (4 / 100)
+        forced_height = 30
     }
     return btnBox
 end

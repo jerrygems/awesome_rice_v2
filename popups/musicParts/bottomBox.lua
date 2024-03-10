@@ -2,11 +2,7 @@ local wibox = require("wibox")
 local gears = require("gears")
 local naughty = require("naughty")
 
-local function bottomBox(s)
-    local WW = s.geometry.width
-    local WH = s.geometry.height
-
-
+local function bottomBox()
     local currentPosition = nil
     local seconds = nil
     local seekbar = wibox.widget {
@@ -38,10 +34,9 @@ local function bottomBox(s)
         {
             seekbar,
             widget = wibox.container.background,
-            forced_height = 10
         },
         widget = wibox.container.margin,
-        margins = { top = 5, bottom = 5, left = 0, right = 0 }
+        margins = { top = 15, bottom = 15, left = 0, right = 0 }
     }
     return btmBox
 end

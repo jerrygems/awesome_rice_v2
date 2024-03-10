@@ -1,41 +1,35 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
-local getImage = require("scripts.getImage")
-local naughty = require("naughty")
-local bottomBox = require("popups.musicParts.bottomBox")
 local topBox = require("popups.musicParts.topBox")
 
 
 local function musicBox(s)
 
-    local WW = s.geometry.width
-    local WH = s.geometry.height
-
     local music = wibox.widget {
         wibox.container.place(topBox.topBox(s), "center", "top"),
         widget = wibox.container.margin,
-        margins = { top = WH * (0.7 / 100), bottom = WH * (0.7 / 100), left = WW * (0.5 / 100), right = WW * (0.5 / 100) }
+        margins = { top = 6, bottom = 6, left = 10, right = 10 }
 
     }
-    local popup = awful.popup {
-        widget = {
+    local box = wibox.widget {
+        {
             music,
             widget = wibox.container.background,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
             end,
-            bg = "#00000099",
-            forced_width = WW * (20 / 100),
-            forced_height = WH * (18 / 100),
+            bg = "#000000dd",
+            forced_width = 300,
+            forced_height = 180,
         },
-        placement = awful.placement.centered,
+        widget = wibox.widget.background,
         visible = true,
         ontop = false,
         bg = "#00000000",
 
     }
 
-    return popup
+    return box
 end
 return { musicBox = musicBox }

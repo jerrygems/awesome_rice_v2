@@ -11,12 +11,12 @@ local artUrl = "Unknown"
 local titleBox = wibox.widget {
     widget = wibox.widget.textbox,
     markup = "<span color='#ffffff'><b>" .. artist .. "</b></span>",
-    font = "JetBrainsMono 15",
+    font = "JetBrainsMono 12",
 }
 local artistBox = wibox.widget {
     widget = wibox.widget.textbox,
     markup = "<span color='#ffffff'><b>" .. artist .. "</b></span>",
-    font = "JetBrainsMono 15",
+    font = "JetBrainsMono 12",
 }
 local imageBox = wibox.widget {
     widget = wibox.widget.imagebox,
@@ -48,9 +48,7 @@ gears.timer {
     end
 }
 
-local function topBox(s)
-    local WW = s.geometry.width
-    local WH = s.geometry.height
+local function topBox()
     local box = wibox.widget {
         { -- buttons and information of media
             {
@@ -64,7 +62,7 @@ local function topBox(s)
                             },
                             widget = wibox.container.background,
                             bg = "#00000000",
-                            forced_height = WH * (4 / 100),
+                            forced_height = 30,
                         },
                         {
                             {
@@ -74,21 +72,20 @@ local function topBox(s)
                                     margins = { top = 0, bottom = 0, left = 25, right = 25 }
                                 },
                                 {
-                                    bottomBox.bottomBox(s),
+                                    bottomBox.bottomBox(),
                                     widget = wibox.container.margin,
-                                    margins = { top = 10, bottom = 10, left = 25, right = 25 }
+                                    margins = { top = 0, bottom = 0, left = 25, right = 25 }
                                 },
                                 layout = wibox.layout.align.vertical
                             },
                             widget = wibox.container.background,
-                            forced_height = WH * (3 / 100),
                             bg = "#00000000",
                         },
 
                         {
                             {
                                 {
-                                    buttonBox.buttonBox(s),
+                                    buttonBox.buttonBox(),
                                     widget = wibox.container.margin,
                                     margins = { top = 5, bottom = 5, left = 20, right = 20 }
                                 },
@@ -106,7 +103,6 @@ local function topBox(s)
                     },
                     widget = wibox.container.background,
                     bg = "#00000000",
-                    forced_width = WW * (20 / 100)
                 },
                 widget = wibox.container.margin,
                 margins = { top = 10, bottom = 10, left = 10, right = 10 }
@@ -118,8 +114,7 @@ local function topBox(s)
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
         end,
-        forced_height = WH * (18 / 100),
-        forced_width = WW * (20 / 100),
+        
 
     }
 
