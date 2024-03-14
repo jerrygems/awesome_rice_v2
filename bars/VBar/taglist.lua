@@ -44,9 +44,8 @@ local function taglist_fun(s)
             self.update()
         end,
 
-        update_callback=function (self)
+        update_callback = function(self)
             self.update()
-            
         end
 
     }
@@ -58,7 +57,7 @@ local function taglist_fun(s)
             layout = wibox.layout.fixed.vertical
         },
         widget_template = taglist_template,
-        
+
         style = {
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 3)
@@ -67,9 +66,9 @@ local function taglist_fun(s)
             shape_empty = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 20)
             end,
-            bg_empty = "#ffffffcc",
-            bg_occupied = "#6e96f9",
-            bg_focus = "#ffffffff",
+            bg_empty = "#ccf7feff",
+            bg_occupied = "#ff035bff",
+            bg_focus = "#04d9ffff",
             bg_urgent = "#ff3d74"
 
         }

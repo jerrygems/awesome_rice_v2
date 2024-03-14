@@ -8,7 +8,7 @@ local function bottomBox()
     local seekbar = wibox.widget {
         widget           = wibox.widget.progressbar,
         shape            = gears.shape.rounded_bar,
-        color            = "#ffffff",
+        color            = "#04d9ffff",
         background_color = "#ffffff44",
         value            = 0,
         max_value        = 100,

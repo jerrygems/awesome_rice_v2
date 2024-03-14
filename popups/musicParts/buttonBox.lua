@@ -5,13 +5,13 @@ local naughty = require("naughty")
 
 
 local home_dir = os.getenv("HOME")
-local reverse10 = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/10SecRev.svg", "#ffffff")
-local play = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/play.svg", "#ffffff")
-local pause = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/pause.svg", "#ffffff")
-local forward10 = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/10SecForward.svg", "#ffffff")
-local repeatit = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/repeat.svg", "#ffffff")
-local next = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/next-btn.svg", "#ffffff")
-local prev = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/prev-btn.svg", "#ffffff")
+local reverse10 = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/10SecRev.svg", "#ff035bff")
+local play = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/play.svg", "#ff035bff")
+local pause = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/pause.svg", "#ff035bff")
+local forward10 = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/10SecForward.svg", "#ff035bff")
+local repeatit = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/repeat.svg", "#ff035bff")
+local next = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/next-btn.svg", "#ff035bff")
+local prev = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/prev-btn.svg", "#ff035bff")
 
 
 local function buttonBox()

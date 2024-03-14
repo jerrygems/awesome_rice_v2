@@ -7,12 +7,12 @@ local flist = require("confs.favourites_list")
 
 
 local home_dir = os.getenv("HOME")
-local imga = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#ffffff")
-local imgb = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/flameshot.svg", "#ffffff")
-local imgc = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/obsidian.svg", "#ffffff")
-local imgd = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/vbox.png", "#ffffff")
-local imge = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/spotify.png", "#ffffff")
-local imgf = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#ffffff")
+local imga = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#ff035bff")
+local imgb = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/flameshot.svg", "#ff035bff")
+local imgc = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/obsidian.svg", "#ff035bff")
+local imgd = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/vbox.png", "#ff035bff")
+local imge = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/spotify.png", "#ff035bff")
+local imgf = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#ff035bff")
 
 
 local img
@@ -37,10 +37,10 @@ local function toolBoxBar(s)
         image = imga
     }
     tool1:connect_signal("mouse::enter", function()
-        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#000000")
+        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#777777")
     end)
     tool1:connect_signal("mouse::leave", function()
-        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#ffffff")
+        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#ff035bff")
     end)
     tool1:buttons(
         gears.table.join(
@@ -62,7 +62,7 @@ local function toolBoxBar(s)
         tool2.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/flameshot.svg", "#FF4D00")
     end)
     tool2:connect_signal("mouse::leave", function()
-        tool2.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/flameshot.svg", "#ffffff")
+        tool2.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/flameshot.svg", "#ff035bff")
     end)
     tool2:buttons(
         gears.table.join(
@@ -84,7 +84,7 @@ local function toolBoxBar(s)
         tool3.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/obsidian.svg", "#00F0FF")
     end)
     tool3:connect_signal("mouse::leave", function()
-        tool3.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/obsidian.svg", "#ffffff")
+        tool3.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/obsidian.svg", "#ff035bff")
     end)
     tool3:buttons(
         gears.table.join(
@@ -107,7 +107,7 @@ local function toolBoxBar(s)
         tool4.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/vbox.png", "#FFD154")
     end)
     tool4:connect_signal("mouse::leave", function()
-        tool4.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/vbox.png", "#ffffff")
+        tool4.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/vbox.png", "#ff035bff")
     end)
     tool4:buttons(
         gears.table.join(
@@ -129,7 +129,7 @@ local function toolBoxBar(s)
         tool5.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/spotify.png", "#1DB954")
     end)
     tool5:connect_signal("mouse::leave", function()
-        tool5.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/spotify.png", "#ffffff")
+        tool5.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/spotify.png", "#ff035bff")
     end)
     tool5:buttons(
         gears.table.join(
@@ -151,7 +151,7 @@ local function toolBoxBar(s)
         tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#FB6950")
     end)
     tool6:connect_signal("mouse::leave", function()
-        tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#ffffff")
+        tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#ff035bff")
     end)
     tool6:buttons(
         gears.table.join(

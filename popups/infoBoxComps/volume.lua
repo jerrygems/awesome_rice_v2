@@ -1,82 +1,201 @@
 local wibox = require("wibox")
 local gears = require("gears")
+local naughty = require("naughty")
 local awful = require("awful")
 
 local function volume(s)
+    local volProgress = wibox.widget {
+        max_value        = 100,
+        value            = 30,
+        color            = "#ff035b",
+        background_color = "#ffffff44",
+        widget           = wibox.widget.progressbar,
+        shape            = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 18)
+        end,
+    }
     local vol = wibox.widget {
-        {
-            {
-                max_value        = 100,
-                value            = 30,
-                color            = "#6e96f9",
-                background_color = "#6e96f999",
-                widget           = wibox.widget.progressbar,
-                shape            = function(cr, width, height)
-                    gears.shape.rounded_rect(cr, width, height, 18)
-                end,
-            },
-            forced_height = 60,
-            forced_width  = 10,
-            direction     = "east",
-            layout        = wibox.container.rotate,
-        },
-        widget = wibox.container.margin,
-        margins = { top = 20, bottom = 20, left = 20, right = 0 },
+        max_value        = 100,
+        -- value        = 30,
+        -- color            = "#ff0000",
+        handle_color     = "#00000000",
+        value            = 70,
+        minimum          = 10,
+        maximum          = 100,
+        handle_width     = 0,
+        -- handle_shape     = function(cr, width, height)
+        --     gears.shape.hexagon(cr, 0, height)
+        -- end,
+        bar_border_width = 1,
+        bar_color        = "#ff035b00",
+        bar_shape        = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 18)
+        end,
+        widget           = wibox.widget.slider,
     }
-    local brightness = wibox.widget {
+    local volBox = wibox.widget {
         {
             {
-                max_value        = 100,
-                value            = 30,
-                color            = "#6e96f9",
-                background_color = "#6e96f999",
-                widget           = wibox.widget.progressbar,
-                shape            = function(cr, width, height)
-                    gears.shape.rounded_rect(cr, width, height, 18)
-                end,
-            },
-            forced_height = 60,
-            forced_width  = 10,
-            direction     = "east",
-            layout        = wibox.container.rotate,
-        },
-        widget = wibox.container.margin,
-        margins = { top = 20, bottom = 20, left = 10, right = 10 },
-    }
-    local mic = wibox.widget {
-        {
-            {
-                max_value        = 100,
-                -- value        = 30,
-                -- color            = "#ff0000",
-                handle_color     = "#ffff00",
-                value            = 70,
-                minimum          = 0,
-                maximum          = 100,
-                handle_width     = 10,
-                handle_shape     = function(cr, width, height)
-                    gears.shape.rounded_rect(cr, width, height, 18)
-                end,
-                bar_border_width = 1,
-                bar_color        = "#6e96f999",
-                bar_shape        = function(cr, width, height)
-                    gears.shape.rounded_rect(cr, width, height, 18)
-                end,
-                widget           = wibox.widget.slider,
+                volProgress,
+                vol,
+                {
+                    {
+                        widget = wibox.widget.textbox,
+                        markup = "<span color='#04d9ff'><b>󰕾</b></span>",
+                        font = "JetBrainsMono 14",
+                        align = "center",
+                        valign = "bottom",
+                    },
+                    widget = wibox.container.rotate,
+                    direction = "west"
+                },
+                widget = wibox.layout.stack,
             },
             direction = "east",
             layout    = wibox.container.rotate,
         },
         widget = wibox.container.margin,
-        margins = { top = 20, bottom = 20, left = 0, right = 20 },
+        margins = { top = 20, bottom = 20, left = 30, right = 0 },
+    }
+    local prevvol = vol.value
+    gears.timer {
+        timeout = 0.3, -- Check every second (adjust as needed)
+        autostart = true,
+        call_now = false,
+        callback = function()
+            if prevvol ~= vol.value then
+                awful.spawn("pulsemixer --set-volume " .. vol.value .. "")
+                volProgress.value = vol.value
+            end
+        end
+    }
+
+
+    local temperature = wibox.widget {
+        max_value        = 100,
+        value            = 30,
+        color            = "#04d9ff",
+        background_color = "#ffffff44",
+        widget           = wibox.widget.progressbar,
+        shape            = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 18)
+        end,
+    }
+    local tempBox = wibox.widget {
+        {
+            {
+                temperature,
+                {
+                    {
+                        widget = wibox.widget.textbox,
+                        markup = "<span color='#ff035b'><b>󰔄</b></span>",
+                        font = "JetBrainsMono 14",
+                        align = "center",
+                        valign = "bottom",
+                    },
+                    widget = wibox.container.rotate,
+                    direction = "west"
+                },
+                layout = wibox.layout.stack
+            },
+            direction = "east",
+            layout    = wibox.container.rotate,
+        },
+        widget = wibox.container.margin,
+        margins = { top = 20, bottom = 20, left = 15, right = 15 },
+    }
+    -- sensors | grep 'Composite' | awk '{print substr($2,2,length($2-3))}'
+    local prevtemp = temperature.val
+    gears.timer {
+        timeout = 1,
+        autostart = true,
+        call_now = false,
+        callback = function()
+            if prevtemp ~= temperature.value then
+                awful.spawn.easy_async_with_shell("sensors | grep 'Composite' | awk '{print substr($2,2,length($2-3))}'",
+                    function(arg)
+                        -- naughty.notification({ text = "" .. tonumber(arg) })
+                        temperature.value = tonumber(arg)
+                    end)
+            end
+        end
+    }
+    --
+    --
+    --
+
+    local brightProgress = wibox.widget {
+        max_value        = 100,
+        value            = 30,
+        color            = "#ff035b",
+        background_color = "#ffffff44",
+        widget           = wibox.widget.progressbar,
+        shape            = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 18)
+        end,
+    }
+    local bright = wibox.widget {
+        max_value        = 100,
+        -- value        = 30,
+        -- color         = "#ff0000",
+        handle_color     = "#00000000",
+        value            = 70,
+        minimum          = 10,
+        maximum          = 100,
+        handle_width     = 0,
+        -- handle_shape     = function(cr, width, height)
+        --     gears.shape.hexagon(cr, 0, height)
+        -- end,
+        bar_border_width = 1,
+        bar_color        = "#ff035b00",
+        bar_shape        = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 18)
+        end,
+        widget           = wibox.widget.slider,
+    }
+    local brightBox = wibox.widget {
+        {
+            {
+                brightProgress,
+                bright,
+                {
+                    {
+                        widget = wibox.widget.textbox,
+                        markup = "<span color='#04d9ff'><b>󰃟</b></span>",
+                        font = "JetBrainsMono 14",
+                        align = "center",
+                        valign = "bottom",
+                    },
+                    widget = wibox.container.rotate,
+                    direction = "west"
+                },
+                widget = wibox.layout.stack,
+            },
+            direction = "east",
+            layout    = wibox.container.rotate,
+        },
+        widget = wibox.container.margin,
+        margins = { top = 20, bottom = 20, left = 0, right = 30 },
+    }
+    local prevbright = bright.value
+    gears.timer {
+        timeout = 0.3, -- Check every second (adjust as needed)
+        autostart = true,
+        call_now = false,
+        callback = function()
+            if prevbright ~= bright.value then
+                awful.spawn("brightnessctl s " .. bright.value .. "%")
+                brightProgress.value = bright.value
+            end
+        end
     }
 
 
     local box = wibox.widget {
         {
-            vol,
-            brightness,
-            mic,
+            volBox,
+            tempBox,
+            brightBox,
 
 
             layout = wibox.layout.flex.horizontal
@@ -85,7 +204,7 @@ local function volume(s)
         widget = wibox.container.background,
         forced_height = 150,
         forced_width = 150,
-        bg = "#000000ff",
+        bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
         end

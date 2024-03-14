@@ -25,9 +25,9 @@ local function voicechats()
     box:buttons(
         awful.button({}, 1, function()
             -- Add your command here
-            awful.spawn.easy_async("python ~/.config/awesome/AI_integration/LLMs/app.py",function ()
-                naughty.notification({ text = "Button clicked!" })
-                
+            awful.spawn.easy_async_with_shell("python ~/.config/awesome/AI_integration/GAN/LLMs/app.py", function()
+                -- naughty.notification({ text = "Button clicked!" })
+                return nil
             end)
         end)
     )

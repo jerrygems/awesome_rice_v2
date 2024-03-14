@@ -4,7 +4,7 @@ local vicious = require("vicious")
 
 local function gizmoBar(s, icon, textbox, box_width)
     local texty = wibox.widget {
-        markup = "<b>" .. icon .. " </b><small>" .. textbox.text .. "</small> ",
+        markup = "<span color='#ff035b'><b>" .. icon .. " </b></span><span color='#04d9ff'><small>" .. textbox.text .. "</small></span> ",
         font = "JetBrainsMono 13",
         color = "#000000",
         align = 'left',
@@ -29,7 +29,8 @@ local function gizmoBar(s, icon, textbox, box_width)
         forced_width = box_width
     }
     textbox:connect_signal("widget::redraw_needed", function()
-        texty.markup = "<b>" .. icon .. " </b><small>" .. textbox.text .. "</small> "
+        texty.markup = "<span color='#ff035b'><b>" ..
+            icon .. " </b></span><span color='#04d9ff'><small>" .. textbox.text .. "</small></span> "
     end)
     return gizmoBox
 end

@@ -6,19 +6,16 @@ local awful = require("awful")
 local function activityBar(s)
     local status = "Unknown"
     local box = wibox.widget {
-        markup = '<b>Just got restart</b>',
+        markup = "<<span color='#ff035b'><b>Just got restart</b></span>",
         font = "JetBrainsMono 8",
         widget = wibox.widget.textbox
     }
     client.connect_signal("focus", function(c)
-        box.markup = '<b>' .. c.name .. '</b>'
+        box.markup = "<span color='#ff035b'><b>" .. c.name .. "</b></span>"
     end)
     client.connect_signal("property::name", function(c)
-        box.markup = '<b>' .. c.name .. '</b>'
+        box.markup = "<span color='#ff035b'><b>" .. c.name .. "</b></span>"
     end)
-    -- awful.connect_signal(client.focus,function ()
-    --     naughty.notification({text="whatever"})
-    -- end)
 
     local activity = {
         {

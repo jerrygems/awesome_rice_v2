@@ -95,7 +95,7 @@ local function sysperf(s)
         widget = wibox.container.background,
         forced_height = 150,
         forced_width = 150,
-        bg = "#000000ff",
+        bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
         end

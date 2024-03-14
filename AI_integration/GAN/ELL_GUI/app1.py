@@ -1,6 +1,11 @@
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
+import os
+
+script_path = os.path.abspath(__file__)
+script_dir = os.path.dirname(script_path)
+css_path = os.path.join(script_dir, "../style.css")
 
 class MainWindow(Gtk.Window):
     def __init__(self):
@@ -81,7 +86,7 @@ win.connect("destroy", Gtk.main_quit)
 win.show_all()
 
 provider = Gtk.CssProvider()
-provider.load_from_path("../style.css")
+provider.load_from_path(css_path)
 screen = Gdk.Screen.get_default()
 context = Gtk.StyleContext()
 context.add_provider_for_screen(screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)

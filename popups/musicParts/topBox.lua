@@ -42,8 +42,8 @@ gears.timer {
 
         -- awful.spawn.easy_async_with_shell("wget " .. artUrl .. " -O /home/spidey/.config/awesome/dust/waste/music")
 
-        titleBox.markup  = "<span color='#ffffff'><b>" .. title .. "</b></span>"
-        artistBox.markup = "<span color='#ffffff'><b>" .. artist .. "</b></span>"
+        titleBox.markup  = "<span color='#ff035bff'><b>" .. title .. "</b></span>"
+        artistBox.markup = "<span color='#ff035bff'><b>" .. artist .. "</b></span>"
         imageBox.image   = "/home/spidey/.config/awesome/dust/waste/music"
     end
 }

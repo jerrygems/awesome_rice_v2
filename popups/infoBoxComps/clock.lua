@@ -16,6 +16,7 @@ local function clock(s)
         align = "center"
     }
     local separator = wibox.widget {
+        color = "#04d9ff",
         widget = wibox.widget.separator
     }
     gears.timer {
@@ -23,8 +24,8 @@ local function clock(s)
         autostart = true,
         call_now = false,
         callback = function()
-            timeBox.markup = "<span color='#ffffff'><b>" .. os.date("%H:%M:%S") .. "</b></span>"
-            dateBox.markup = "<span color='#ffffff'><b>" .. os.date("%d/%m/%y") .. "</b></span>"
+            timeBox.markup = "<span color='#ff035b'><b>" .. os.date("%H:%M:%S") .. "</b></span>"
+            dateBox.markup = "<span color='#ff035b'><b>" .. os.date("%d/%m/%y") .. "</b></span>"
         end
     }
 
@@ -44,7 +45,7 @@ local function clock(s)
         widget = wibox.container.background,
         forced_height = 150,
         forced_width = 150,
-        bg = "#000000ff",
+        bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
         end

@@ -139,7 +139,7 @@ local function ArcBox(s)
                 layout = wibox.layout.grid.horizontal,
                 forced_num_rows = 2,
                 expand = true,
-                spacing = 10
+                spacing = 20
             },
             widget = wibox.container.margin,
             margins = { top = 10, bottom = 10, left = 10, right = 10 }
@@ -148,7 +148,7 @@ local function ArcBox(s)
         widget = wibox.container.background,
         forced_height = 150,
         forced_width = 150,
-        bg = "#000000ff",
+        bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
         end

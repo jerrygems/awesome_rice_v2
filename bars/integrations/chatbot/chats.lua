@@ -1,5 +1,7 @@
 local wibox = require("wibox")
 local gears = require("gears")
+local awful = require("awful")
+local naughty = require("naughty")
 
 local function chats()
     local img = gears.color.recolor_image("/home/spidey/.config/awesome/icons/chatbot.svg", "#ffffff")
@@ -26,6 +28,15 @@ local function chats()
         margins = 3
 
     }
+    box:buttons(
+        awful.button({}, 1, function()
+            -- Add your command here
+            awful.spawn.easy_async_with_shell("python ~/.config/awesome/AI_integration/GAN/ELL_GUI/app1.py", function()
+                -- naughty.notification({ text = "Button clicked!" })
+                return nil
+            end)
+        end)
+    )
 
     chatter:connect_signal("mouse::enter", function()
         box.bg = "#00000077"
