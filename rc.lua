@@ -30,6 +30,9 @@ local bookmarks = require("popups.bookmarks")
 -- drawers
 local drawer = require("drawers.btmDrawer")
 
+-- notificationcenter
+local notifications = require("notifications.notificationCenter")
+
 
 
 
@@ -262,6 +265,8 @@ awful.screen.connect_for_each_screen(function(s)
 
     }
 end)
+
+
 awful.screen.connect_for_each_screen(function(s)
     s.top_bar = awful.wibar({
         position = "top",
@@ -296,6 +301,9 @@ awful.screen.connect_for_each_screen(function(s)
 
     }
 end)
+
+
+
 awful.screen.connect_for_each_screen(function(s)
     s.integration_bar = awful.wibar({
         position = "right",
@@ -334,19 +342,23 @@ end)
 -- bookmarks.bookmarks()
 
 
-
-
 awful.screen.connect_for_each_screen(function(s)
-    local bottom_wibox = awful.wibar({
-        position = "bottom",
-        screen = s,
-        height = 50,
-        bg = "#00000000",
-        visible = true,
-    })
-
-    bottom_wibox:setup({
-        -- drawer(),
-        layout = wibox.layout.flex.horizontal
-    })
+    notifications(s)
 end)
+
+
+
+-- awful.screen.connect_for_each_screen(function(s)
+--     local bottom_wibox = awful.wibar({
+--         position = "bottom",
+--         screen = s,
+--         height = 50,
+--         bg = "#00000000",
+--         visible = true,
+--     })
+
+--     bottom_wibox:setup({
+--         -- drawer(),
+--         layout = wibox.layout.flex.horizontal
+--     })
+-- end)
