@@ -4,14 +4,11 @@ local awful = require("awful")
 local naughty = require("naughty")
 local function notificationCenter(s)
     local current_notification = naughty.active[1]
-
     local notifWidget = naughty.list.notifications {
         base_layout = wibox.widget {
-
-            forced_height = 200,
-            forced_width  = 400,
-            spacing       = 5,
-            layout        = wibox.layout.fixed.vertical
+            forced_width = 300,
+            spacing      = 5,
+            layout       = wibox.layout.fixed.vertical
         },
         widget_template = {
 
@@ -52,26 +49,33 @@ local function notificationCenter(s)
             },
             widget = wibox.container.background,
             bg = "#6e96f9",
-            fg = '#000000',
+            -- fg = '#000000',
             forced_height = 60,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
-            end
+            end,
 
 
         },
+
     }
 
 
     local notifbar = awful.popup {
         widget = {
-            wibox.container.margin(notifWidget, 5, 5, 5, 5),
-            layout = wibox.layout.align.vertical,
+            {
+                wibox.container.margin(notifWidget, 5, 5, 5, 5),
+                layout = wibox.layout.align.vertical,
+            },
+            widget = wibox.container.constraint,
+            height = 140,
         },
         placement = function(popup)
             awful.placement.top(popup, { margins = { top = 20 } }) -- Adjust the top margin value here
         end,
-        bg = "#000000ff",
+        -- bg = "#ff035bff",
+        bg = "#6e96f900",
+        fg = "#000000ff",
         visible = #naughty.active > 0,
         ontop = true,
         shape = function(cr, width, height)
@@ -82,8 +86,12 @@ local function notificationCenter(s)
     }
 
     naughty.connect_signal("property::active", function()
-        current_notification = naughty.active[1]
-        notifbar.visible = current_notification ~= nil
+        notifbar.visible = true ~= nil
+
+        gears.timer.start_new(2.5, function()
+            notifbar.visible = false
+            return false
+        end)
     end)
 
     return notifbar

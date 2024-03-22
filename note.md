@@ -1,6 +1,6 @@
 ## https://developer-old.gnome.org/gio/stable/index.html
 
-
+<!-- bluetoothctl info | tail -n 1 | awk '{print $4}' | tr -d  '()' -->
 ```Button 1: Primary mouse button (usually left-click)
 Button 2: Middle mouse button (often used for scrolling)
 Button 3: Right mouse button (usually right-click)

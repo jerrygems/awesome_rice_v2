@@ -240,6 +240,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.left_bar = awful.wibar({
         position = "left",
+        screen = s,
         type = "normal",
         width = s.geometry.width * (2 / 100),
         height = s.geometry.height * (92 / 100),
@@ -270,6 +271,7 @@ end)
 awful.screen.connect_for_each_screen(function(s)
     s.top_bar = awful.wibar({
         position = "top",
+        screen = s,
         type = "normal",
         width = s.geometry.width * (98 / 100),
         height = s.geometry.height * (3.5 / 100),
@@ -307,6 +309,7 @@ end)
 awful.screen.connect_for_each_screen(function(s)
     s.integration_bar = awful.wibar({
         position = "right",
+        screen = s,
         type = "normal",
         width = s.geometry.width * (2 / 100),
         height = s.geometry.height * (92 / 100),
