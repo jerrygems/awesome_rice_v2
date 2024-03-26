@@ -6,7 +6,7 @@ local beautiful = require("beautiful")
 
 
 local function notifCenter(n)
-    local function textBox(txt, txtcolor, fnt)
+    local function textBox(txt, txtcolor, fnt, wrp)
         local box = wibox.widget {
             markup = "<span color='" .. txtcolor .. "' font='" .. fnt .. "'>" .. txt .. "</span>",
             widget = wibox.widget.textbox,
@@ -17,7 +17,6 @@ local function notifCenter(n)
 
     local container = wibox.widget {
         {
-
             {
                 {
                     {
@@ -30,40 +29,52 @@ local function notifCenter(n)
                     shape = function(cr, width, height)
                         gears.shape.rounded_rect(cr, width, height, 6)
                     end
-                }, -- for icon
+                },
+                widget = wibox.container.margin,
+                margins = 10
+            }
+
+            , -- for icon
+            {
+
                 {
+                    wibox.container.constraint(wibox.container.margin(textBox(n.title, "#ffffff", "KodeMono 14"), 0, 0, 5, 0), "exact", 0,30),
+                    wibox.container.margin(textBox("<b>" .. n.message .. "</b>", "#f00fff", "JetBrainsMono 8"), 0, 0, 0, 0),
 
-                    {
-                        textBox(n.title, "#ffffff", "KodeMono 14"),
-                        textBox("<b>" .. n.message .. "</b>", "#f00fff", "JetBrainsMono 8"),
-
-                        layout = wibox.layout.align.vertical
-                    },
-                    widget = wibox.container.margin,
-                    margins = { left = 10, right = 10 }
-                }, -- for title and message
-                layout = wibox.layout.align.horizontal,
-            },
-            nil,
-            -- {}, -- for actions
-            layout = wibox.layout.fixed.vertical,
+                    layout = wibox.layout.fixed.vertical
+                },
+                widget = wibox.container.margin,
+                forced_width = 400,
+                margins = { left = 10, right = 10 }
+            }, -- for title and message
+            layout = wibox.layout.align.horizontal,
         },
-        margins = 10,
-        widget = wibox.container.margin,
+        {
+            -- incase of error check this section
+            {
+                {
+                    text = 'hell',
+                    widget = wibox.widget.textbox,
+                },
+                widget = naughty.list.actions,
+            },
+            widget = wibox.container.background,
+            bg = "#ff00ff",
+        }, -- for actions
+        layout = wibox.layout.fixed.vertical,
     }
 
     naughty.layout.box {
         notification = n,
         type = "notification",
-        bg = "#000000",
-        border_width = 0,
+        bg = "#111111",
         placement = awful.placement.centered,
         shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 10) end,
         widget_template = {
             container,
             bg = beautiful.bg,
             widget = wibox.container.background,
-        }
+        },
     }
 end
 

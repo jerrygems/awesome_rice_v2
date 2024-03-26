@@ -49,13 +49,13 @@ local gen = function(ic, txt, cmd)
         margins = { top = 10, bottom = 10, left = 10, right = 10 },
 
     }
-    btn:connect_signal("mouse::enter", function()
+    imgbox:connect_signal("mouse::enter", function()
         imgbox.image = gears.color.recolor_image(ic, "#ff035bff")
     end)
-    btn:connect_signal("mouse::leave", function()
+    imgbox:connect_signal("mouse::leave", function()
         imgbox.image = gears.color.recolor_image(ic, "#ffffffff")
     end)
-    btn:buttons(
+    imgbox:buttons(
         gears.table.join(
             awful.button({}, 1, function()
                 awful.spawn.easy_async(cmd, function()

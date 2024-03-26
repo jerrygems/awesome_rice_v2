@@ -335,12 +335,6 @@ awful.screen.connect_for_each_screen(function(s)
     }
 end)
 
-awful.screen.connect_for_each_screen(function(s)
-    infoBox.infoBox(s)
-    -- musicBox.musicBox()
-    -- shutdrawer()
-    -- notifdrawer(s)
-end)
 
 
 
@@ -369,4 +363,11 @@ end)
     Caveat
     BlackOpsOne
     ArchivoBlack
-]]
+    ]]
+
+awful.screen.connect_for_each_screen(function(s)
+    infoBox.infoBox(s)
+    -- musicBox.musicBox()
+    -- shutdrawer()
+    -- notifdrawer(s)
+end)
