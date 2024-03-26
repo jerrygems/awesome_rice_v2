@@ -16,14 +16,14 @@ local function favouriteList(s)
         {
             widget = wibox.widget.background,
             bg = "#00000099",
-            forced_height = HT*(24/100),
+            forced_height = HT * (24 / 100),
             forced_width = 2,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)
             end,
         },
     }
-    return wibox.container.margin(favList,5,5,HT*(4/100),0)
+    return wibox.container.margin(favList, 3, 3, HT * (4 / 100), 0)
 end
 
 return { favouriteList = favouriteList }

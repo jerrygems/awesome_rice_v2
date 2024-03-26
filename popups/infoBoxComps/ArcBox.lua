@@ -132,8 +132,8 @@ local function ArcBox(s)
         {
             {
                 arc1,
-                arc2,
-                arc3,
+                -- arc2,
+                -- arc3,
                 arc4,
 
                 layout = wibox.layout.grid.horizontal,

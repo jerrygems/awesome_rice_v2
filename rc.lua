@@ -28,7 +28,8 @@ local infoBox = require("popups.infoBox")
 local bookmarks = require("popups.bookmarks")
 
 -- drawers
-local drawer = require("drawers.btmDrawer")
+local shutdrawer = require("drawers.centerDrawer")
+local notifdrawer = require("drawers.notifDrawer")
 
 -- notificationcenter
 local notifications = require("notifications.notificationCenter")
@@ -245,12 +246,10 @@ awful.screen.connect_for_each_screen(function(s)
         width = s.geometry.width * (2 / 100),
         height = s.geometry.height * (92 / 100),
         visible = true,
-        margins = { left = 3 },
+        margins = { left = 5, right = 5 },
         bg = "#00000000",
         fg = "#ffffffff",
         ontop = false,
-        -- border_width = 4,
-        -- border_color = "#000000",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 8)
         end
@@ -258,9 +257,8 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.left_bar:setup {
 
-        layout = wibox.layout.flex.vertical,
+        layout = wibox.layout.align.vertical,
         taglist.taglist_fun(s),
-        favs.favouriteList(s),
         tools.toolBoxBar(s),
 
 
@@ -314,7 +312,7 @@ awful.screen.connect_for_each_screen(function(s)
         width = s.geometry.width * (2 / 100),
         height = s.geometry.height * (92 / 100),
         visible = true,
-        x = 5,
+        -- x = 5,
         margins = { right = 5, left = 5 },
         -- bg = "#00000077",
         bg = "#00000000",
@@ -330,6 +328,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.integration_bar:setup {
 
         wibox.container.place(integrate.integrations(s), "center", "center"),
+        favs.favouriteList(s),
 
         layout = wibox.layout.flex.vertical,
 
@@ -341,27 +340,26 @@ end)
 awful.screen.connect_for_each_screen(function(s)
     infoBox.infoBox(s)
     -- musicBox.musicBox()
+    -- shutdrawer()
+    -- notifdrawer(s)
+    -- notifications()
+end)
+naughty.connect_signal("request::display", function(n)
+    local icon_widget = naughty.widget.icon {
+        notification = n,
+    }
+
+  
+
+    -- Create the title widget
+    local title_widget = naughty.widget.title {
+        notification = n,
+    }
+
+    -- Create the message widget
+    local message_widget = naughty.widget.message {
+        notification = n,
+    }
+    naughty.notification({ text = title_widget})
 end)
 -- bookmarks.bookmarks()
-
-
-awful.screen.connect_for_each_screen(function(s)
-    notifications(s)
-end)
-
-
-
--- awful.screen.connect_for_each_screen(function(s)
---     local bottom_wibox = awful.wibar({
---         position = "bottom",
---         screen = s,
---         height = 50,
---         bg = "#00000000",
---         visible = true,
---     })
-
---     bottom_wibox:setup({
---         -- drawer(),
---         layout = wibox.layout.flex.horizontal
---     })
--- end)

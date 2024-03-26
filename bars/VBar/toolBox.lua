@@ -167,12 +167,12 @@ local function toolBoxBar(s)
         {
             {
                 {
-                    wibox.container.margin(tool1, 4, 4, 8, 8),
-                    wibox.container.margin(tool2, 4, 4, 8, 8),
-                    wibox.container.margin(tool3, 4, 4, 8, 8),
-                    wibox.container.margin(tool4, 4, 4, 8, 8),
-                    wibox.container.margin(tool5, 4, 4, 8, 8),
-                    wibox.container.margin(tool6, 4, 4, 8, 8),
+                    wibox.container.margin(tool1, 5, 5, 8, 8),
+                    wibox.container.margin(tool2, 5, 5, 8, 8),
+                    wibox.container.margin(tool3, 5, 5, 8, 8),
+                    wibox.container.margin(tool4, 5, 5, 8, 8),
+                    wibox.container.margin(tool5, 5, 5, 8, 8),
+                    wibox.container.margin(tool6, 5, 5, 8, 8),
                     layout = wibox.layout.flex.vertical,
                 },
                 widget = wibox.container.place,
@@ -186,7 +186,7 @@ local function toolBoxBar(s)
             end,
         },
     }
-    return wibox.container.margin(toolBox, 5, 5, HT * (1 / 100), 0)
+    return wibox.container.margin(toolBox, 3, 3, HT * (30 / 100), 0)
 end
 
 return { toolBoxBar = toolBoxBar }

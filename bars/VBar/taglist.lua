@@ -16,7 +16,7 @@ local function taglist_fun(s)
                 id = 'text_role',
                 align = 'center',
                 valign = 'center',
-                visible = false, --text visibility
+                visible = false,
                 widget = wibox.widget.textbox
             },
             margins = { 5, 5, 5, 5 },
@@ -69,21 +69,27 @@ local function taglist_fun(s)
             bg_empty = "#ccf7feff",
             bg_occupied = "#ff035bff",
             bg_focus = "#04d9ffff",
-            bg_urgent = "#ff3d74"
+            bg_urgent = "#ff3d74",
 
         }
     }
 
+    local wrapper = wibox.widget {
+        {
+            wibox.container.margin(taglist, 10, 10, 14, 14),
+            -- "#000000dd",
+            bg = "#00000099",
+            widget = wibox.container.background,
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 5)
+            end,
+        },
+        widget = wibox.container.constraint,
 
-    local wrapper = wibox.container.background(
-        wibox.container.margin(taglist, 8, 8, 14, 14),
-        -- "#000000dd",
-        "#00000099",
-        function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 5)
-        end
-    )
-    return wibox.container.margin(wrapper, 5, 5, 5, 5)
+        strategy = "exact",
+        height = 300,
+    }
+    return wibox.container.margin(wrapper, 3, 3, 0, 0)
 end
 
 return {

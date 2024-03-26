@@ -1,0 +1,20 @@
+<svg width="108" height="123" viewBox="0 0 108 123" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_15_68)">
+<path d="M15.0004 38.6726C14.9769 33.5677 15.9953 28.5092 17.9962 23.7915C19.9972 19.0738 22.9407 14.7911 26.6556 11.1925C30.3705 7.59391 34.7826 4.75136 39.6351 2.83024C44.4876 0.909119 49.6837 -0.052212 54.9209 0.00218588C60.1581 0.0565837 65.332 1.12562 70.1414 3.1471C74.9508 5.16858 79.2997 8.10213 82.9351 11.7771C86.5705 15.452 89.4197 19.7949 91.3171 24.5531C93.2144 29.3113 94.1219 34.3898 93.9869 39.493L78.0352 39.0919C78.1157 36.0502 77.5748 33.0233 76.444 30.1873C75.3131 27.3513 73.6149 24.7628 71.4481 22.5724C69.2813 20.3821 66.6892 18.6336 63.8227 17.4287C60.9562 16.2239 57.8724 15.5867 54.7509 15.5543C51.6293 15.5219 48.5324 16.0948 45.6401 17.2399C42.7479 18.3849 40.1182 20.0791 37.904 22.224C35.6898 24.3688 33.9354 26.9215 32.7428 29.7334C31.5502 32.5452 30.9432 35.5602 30.9572 38.6029L15.0004 38.6726Z" fill="white"/>
+<line x1="86" y1="38" x2="86" y2="76" stroke="white" stroke-width="16"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15 54V38H31V42H24V46H31V48H24V52H31V54H15Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4 71C4 67.6863 6.68629 65 10 65H98C101.314 65 104 67.6863 104 71V109C104 112.314 101.314 115 98 115H10C6.68629 115 4 112.314 4 109V71ZM40.5 92.7106C43.1113 91.9319 45 89.6696 45 87C45 83.6863 42.0899 81 38.5 81C34.9101 81 32 83.6863 32 87C32 89.3148 33.4201 91.3235 35.5 92.3241V101C35.5 102.381 36.6193 103.5 38 103.5C39.3807 103.5 40.5 102.381 40.5 101V92.7106Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_15_68" x="0" y="0" width="108" height="123" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_68"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_68" result="shape"/>
+</filter>
+</defs>
+</svg>
