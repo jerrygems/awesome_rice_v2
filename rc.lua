@@ -32,7 +32,7 @@ local shutdrawer = require("drawers.centerDrawer")
 local notifdrawer = require("drawers.notifDrawer")
 
 -- notificationcenter
-local notifications = require("notifications.notificationCenter")
+local notifCenter = require("notifications.notifCenter")
 
 
 
@@ -332,8 +332,6 @@ awful.screen.connect_for_each_screen(function(s)
 
         layout = wibox.layout.flex.vertical,
 
-
-
     }
 end)
 
@@ -342,24 +340,33 @@ awful.screen.connect_for_each_screen(function(s)
     -- musicBox.musicBox()
     -- shutdrawer()
     -- notifdrawer(s)
-    -- notifications()
 end)
+
+
+
+
+naughty.config.defaults.ontop = true
+naughty.config.defaults.screen = awful.screen.focused()
+naughty.config.defaults.timeout = 5
+naughty.config.defaults.position = "bottom_right"
 naughty.connect_signal("request::display", function(n)
-    local icon_widget = naughty.widget.icon {
-        notification = n,
-    }
-
-  
-
-    -- Create the title widget
-    local title_widget = naughty.widget.title {
-        notification = n,
-    }
-
-    -- Create the message widget
-    local message_widget = naughty.widget.message {
-        notification = n,
-    }
-    naughty.notification({ text = title_widget})
+    notifCenter(n)
 end)
+
+
 -- bookmarks.bookmarks()
+--[[
+    KodeMono
+    MadimiOne
+    Micro5
+    Monoton
+    OleoScript
+    PermanentMarker
+    PlayfairDisplay
+    RubikGlitchPop
+    Satisfy
+    Sixtyfour
+    Caveat
+    BlackOpsOne
+    ArchivoBlack
+]]
