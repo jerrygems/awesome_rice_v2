@@ -4,7 +4,7 @@ local vicious = require("vicious")
 local naughty = require("naughty")
 
 
-local function wifi(s)
+local function wifi()
     local function arcGen(color, val, m_val, thick, angle, top)
         local arc = wibox.widget {
             {
