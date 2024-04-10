@@ -342,7 +342,7 @@ beautiful.notification_font = "JetBrainsMono 25"
 naughty.config.defaults.ontop = true
 naughty.config.defaults.screen = awful.screen.focused()
 -- naughty.config.defaults.timeout = 0
--- naughty.config.defaults.position = "bottom_right"
+naughty.config.defaults.position = "bottom_right"
 naughty.connect_signal("request::display", function(n)
     -- notifCenter(n)
     notifdrawer(n)

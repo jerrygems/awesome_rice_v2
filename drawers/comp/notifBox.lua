@@ -16,10 +16,26 @@ local function notifBox(n)
                     {
                         {
                             {
-                                naughty.widget.icon,
                                 {
-                                    naughty.widget.title,
-                                    naughty.widget.message,
+                                    widget = wibox.widget.imagebox,
+                                    image = n.image,
+                                    forced_height = 100,
+                                    forced_width = 100,
+                                },
+                                {
+                                    {
+                                        widget = wibox.widget.textbox,
+                                        text = n.title,
+                                        font = "JetBrainsMono 15",
+
+                                    },
+                                    {
+                                        widget = wibox.widget.textbox,
+                                        text = n.message,
+                                        font = "JetBrainsMono 8",
+
+                                    },
+
                                     spacing = 4,
                                     layout = wibox.layout.fixed.vertical,
                                 },
@@ -41,7 +57,8 @@ local function notifBox(n)
                 strategy = "max",
                 width = 600,
                 widget = wibox.container.constraint,
-            },
+            }
+
         }
     }
     return box

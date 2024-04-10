@@ -12,7 +12,7 @@ local function notifDrawer(n)
         widget    = {
             {
                 {
-                    require("drawers.comp.buttonBox")(),
+                   require("drawers.comp.buttonBox")(),
                     createNotif(n),
                     layout = wibox.layout.align.vertical
                 },
