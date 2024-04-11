@@ -7,13 +7,22 @@ local awful = require("awful")
 local function createNotif(n)
     require("drawers.comp.notifBox")(n)
 end
+local function notifs(n)
+    return wibox.widget {
+        createNotif(n),
+        widget = wibox.container.background,
+    }
+end
 local function notifDrawer(n)
     awful.popup {
         widget    = {
             {
                 {
-                   require("drawers.comp.buttonBox")(),
-                    createNotif(n),
+                    require("drawers.comp.buttonBox")(),
+                    {
+                        createNotif(n),
+                        layout = wibox.layout.align.vertical
+                    },
                     layout = wibox.layout.align.vertical
                 },
                 widget = wibox.container.background,

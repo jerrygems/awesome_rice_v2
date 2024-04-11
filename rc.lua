@@ -345,7 +345,7 @@ naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.position = "bottom_right"
 naughty.connect_signal("request::display", function(n)
     -- notifCenter(n)
-    notifdrawer(n)
+    -- notifdrawer(n)
 end)
 -- naughty.notification({ title = "Let's Create Something osm" })
 
