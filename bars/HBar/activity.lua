@@ -7,7 +7,7 @@ local function activityBar(s)
     local status = "Unknown"
     local box = wibox.widget {
         markup = "<<span color='#ff035b'><b>Just got restart</b></span>",
-        font = "JetBrainsMono 8",
+        font = "OleoScript 12",
         widget = wibox.widget.textbox
     }
     client.connect_signal("focus", function(c)
@@ -34,7 +34,7 @@ local function activityBar(s)
         widget = wibox.container.background,
         forced_width = 310
     }
-    return wibox.container.margin(activity, 0, 0, 5, 5)
+    return wibox.container.margin(activity, 7, 7, 5, 5)
 end
 
 return { activityBar = activityBar }

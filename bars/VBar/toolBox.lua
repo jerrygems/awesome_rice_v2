@@ -7,7 +7,7 @@ local flist = require("confs.favourites_list")
 
 
 local home_dir = os.getenv("HOME")
-local imga = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#ff035bff")
+local imga = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/discord.svg", "#ff035bff")
 local imgb = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/flameshot.svg", "#ff035bff")
 local imgc = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/obsidian.svg", "#ff035bff")
 local imgd = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/vbox.png", "#ff035bff")
@@ -37,15 +37,15 @@ local function toolBoxBar(s)
         image = imga
     }
     tool1:connect_signal("mouse::enter", function()
-        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#777777")
+        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/discord.svg", "#7289da")
     end)
     tool1:connect_signal("mouse::leave", function()
-        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/github.png", "#ff035bff")
+        tool1.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/discord.svg", "#ff035bff")
     end)
     tool1:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn.easy_async("firefox 'https://github.com/jerrygems/' ", function()
+                awful.spawn.easy_async("discord' ", function()
                     return nil
                 end)
             end)
@@ -89,7 +89,7 @@ local function toolBoxBar(s)
     tool3:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                naughty.notification({text="Wait a bit jerry it may take some time"})
+                naughty.notification({ text = "Wait a bit jerry it may take some time" })
                 awful.spawn.easy_async("obsidian", function()
                     return nil
                 end)
