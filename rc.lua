@@ -33,7 +33,7 @@ local notifdrawer = require("drawers.notifDrawer")
 
 -- notificationcenter
 local notifCenter = require("notifications.notifCenter")
-
+local bottomBar = require("bars.Bbar.Bbar")
 
 
 
@@ -301,6 +301,30 @@ awful.screen.connect_for_each_screen(function(s)
 
     }
 end)
+awful.screen.connect_for_each_screen(function(s)
+    s.bottom_bar = awful.wibar({
+        position = "bottom",
+        screen = s,
+        type = "normal",
+        width = s.geometry.width * (70 / 100),
+        height = s.geometry.height * (3.5 / 100),
+        visible = true,
+        -- margins = { top = 3 },
+        bg = "#00000077",
+        -- bg = "#00000000",
+        fg = "#ffffffff",
+        ontop = false,
+        shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 8)
+        end
+    })
+
+    s.bottom_bar:setup {
+        layout = wibox.layout.align.horizontal,
+        bottomBar.Bbar(s),
+
+    }
+end)
 
 
 
@@ -341,7 +365,7 @@ end)
 beautiful.notification_font = "JetBrainsMono 25"
 naughty.config.defaults.ontop = true
 naughty.config.defaults.screen = awful.screen.focused()
--- naughty.config.defaults.timeout = 0
+naughty.config.defaults.timeout = 8
 naughty.config.defaults.position = "bottom_right"
 naughty.connect_signal("request::display", function(n)
     notifCenter(n)

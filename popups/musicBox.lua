@@ -7,7 +7,7 @@ local topBox = require("popups.musicParts.topBox")
 local function musicBox(s)
 
     local music = wibox.widget {
-        wibox.container.place(topBox.topBox(s), "center", "top"),
+        wibox.container.place(topBox.topBox(), "center", "top"),
         widget = wibox.container.margin,
         margins = { top = 6, bottom = 6, left = 10, right = 10 }
 

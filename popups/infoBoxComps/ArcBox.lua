@@ -32,7 +32,7 @@ local function ArcBox(s)
 
     vicious.register(arc1, vicious.widgets.cpu, function(widget, args)
         arc1.update(tonumber(args[1]))
-    end, 0.5)
+    end, 1)
 
 
 
@@ -51,7 +51,7 @@ local function ArcBox(s)
         widget = wibox.container.arcchart,
     }
     arc2.animate = rubato.timed {
-        duration = 0.5,
+        duration = 1,
         subscribed = function(pos)
             arc2:get_children_by_id('arc2')[1].value = pos
         end
@@ -63,7 +63,7 @@ local function ArcBox(s)
 
     vicious.register(arc2, vicious.widgets.mem, function(widget, args)
         arc2.update(tonumber(args[1]))
-    end, 0.5)
+    end, 1)
 
 
     local arc3 = wibox.widget {
@@ -92,7 +92,7 @@ local function ArcBox(s)
 
     vicious.register(arc3, vicious.widgets.mem, function(widget, args)
         arc3.update(tonumber(args[1]))
-    end, 0.5)
+    end, 1)
 
 
 

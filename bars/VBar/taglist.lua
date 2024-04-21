@@ -89,7 +89,7 @@ local function taglist_fun(s)
         strategy = "exact",
         height = 300,
     }
-    return wibox.container.margin(wrapper, 3, 3, 0, 0)
+    return wibox.container.margin(wrapper, 3, 3, 100, 0)
 end
 
 return {

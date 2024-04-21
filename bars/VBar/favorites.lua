@@ -10,7 +10,7 @@ local imgb = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/githu
 local imgc = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/kaggle.svg", "#ff035bff")
 local imgd = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/gmail.svg", "#ff035bff")
 local imge = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/colab.svg", "#ff035bff")
-local imgf = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#ff035bff")
+local imgf = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/chatgpt.svg", "#ff035bff")
 
 
 
@@ -125,7 +125,7 @@ local function favourites(s)
     tool5:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn.easy_async("spotify", function()
+                awful.spawn.easy_async("firefox https://colab.research.google.com", function()
                     return nil
                 end)
             end)
@@ -139,15 +139,15 @@ local function favourites(s)
         image = imgf
     }
     tool6:connect_signal("mouse::enter", function()
-        tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#FB6950")
+        tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/chatgpt.svg", "#88a788")
     end)
     tool6:connect_signal("mouse::leave", function()
-        tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#ff035bff")
+        tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/chatgpt.svg", "#ff035bff")
     end)
     tool6:buttons(
         gears.table.join(
             awful.button({}, 1, function()
-                awful.spawn.easy_async("firefox 'https://www.reddit.com/user/Sp1d3y001/'", function()
+                awful.spawn.easy_async("firefox https://chat.openai.com/", function()
                     return nil
                 end)
             end)

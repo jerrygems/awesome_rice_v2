@@ -186,7 +186,7 @@ local function toolBoxBar(s)
             end,
         },
     }
-    return wibox.container.margin(toolBox, 3, 3, HT * (30 / 100), 0)
+    return wibox.container.margin(toolBox, 3, 3, HT * (20 / 100), 0)
 end
 
 return { toolBoxBar = toolBoxBar }

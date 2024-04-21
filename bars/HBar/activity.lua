@@ -7,7 +7,7 @@ local function activityBar(s)
     local status = "Unknown"
     local box = wibox.widget {
         markup = "<<span color='#ff035b'><b>Just got restart</b></span>",
-        font = "OleoScript 12",
+        font = "KodeMono 12",
         widget = wibox.widget.textbox
     }
     client.connect_signal("focus", function(c)

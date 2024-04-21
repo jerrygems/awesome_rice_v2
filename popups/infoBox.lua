@@ -39,7 +39,7 @@ local function infoBox(s)
                         widget = wibox.container.place,
                         align = 'center',
                     },
-                    spacing=20,
+                    spacing = 20,
 
                     layout = wibox.layout.flex.vertical
                 },
@@ -51,11 +51,12 @@ local function infoBox(s)
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
             end,
-            bg = "#00000077",
+            bg = "#22222277",
             forced_width = 400,
             forced_height = 600,
         },
-        placement = awful.placement.centered,
+        x = 120,
+        y = 380,
         visible = true,
         ontop = false,
         bg = "#00000000",
