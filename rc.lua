@@ -23,9 +23,7 @@ local systray = require("systray.systray")
 local integrate = require("bars.integrations.integrations")
 
 -- popups here
-local musicBox = require("popups.musicBox")
 local infoBox = require("popups.infoBox")
-local bookmarks = require("popups.bookmarks")
 
 -- drawers
 local shutdrawer = require("drawers.centerDrawer")
@@ -124,8 +122,8 @@ root.keys(keybindings.globalkeys)
 awful.rules.rules = { {
     rule = {},
     properties = {
-        border_width = beautiful.border_width,
-        border_color = "#ff0000",
+        border_width = 2,
+        border_color = "#00ffff",
         focus = awful.client.focus.filter,
         raise = true,
         keys = keybindings.clientkeys,
@@ -157,9 +155,9 @@ client.connect_signal("manage", function(c)
     end
 end)
 
--- client.connect_signal("request::titlebars", function(c)
---     titlebar(c)
--- end)
+client.connect_signal("request::titlebars", function(c)
+    titlebar(c)
+end)
 
 -- -- so here we can define the events of mouse
 -- client.connect_signal("mouse::enter", function(c)

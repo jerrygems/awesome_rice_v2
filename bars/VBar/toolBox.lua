@@ -3,7 +3,6 @@ local gears = require("gears")
 local wibox = require("wibox")
 local naughty = require("naughty")
 local getImage = require("scripts.getImage")
-local flist = require("confs.favourites_list")
 
 
 local home_dir = os.getenv("HOME")
@@ -18,11 +17,6 @@ local imgf = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddi
 local img
 local function getimg(imgPath)
     naughty.notification({ text = "" .. imgPath })
-end
-
-for i, felement in ipairs(flist) do
-    img = getImage.get_icon(felement, i, getimg)
-    -- naughty.notification({text="img : "..img})
 end
 
 local function toolBoxBar(s)
