@@ -10,23 +10,27 @@ local function integrations(s)
         {
             {
                 {
-                    chats.chats(),
-                    voicechat.voicechats(),
-                    IRC.IRC(),
-                    layout = wibox.layout.align.vertical,
+                    {
+                        chats.chats(),
+                        voicechat.voicechats(),
+                        IRC.IRC(),
+                        layout = wibox.layout.fixed.vertical,
+                    },
+                    widget = wibox.widget.background,
+                    forced_height = 500
                 },
                 widget = wibox.container.place,
                 valign = "center",
             },
             widget = wibox.container.background,
-            bg = "#00000088",
+            bg = "#00000000",
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)
             end,
-            forced_height=200
+            forced_height = 200
         },
         widget = wibox.container.margin,
-        margins = 0
+        margins = {top=200, left = 1, right = 1 }
     }
 
     return AI_bar

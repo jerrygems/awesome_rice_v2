@@ -6,9 +6,11 @@ local gears = require("gears")
 local home_dir = os.getenv("HOME")
 local function titlebar(c)
     local top_titlebar = awful.titlebar(c, {
-        height    = 50,
-        bg_normal = '#ff000000',
-        bg_active = '#00ffff'
+        size       = 26,
+        bg         = "#00000099",
+        bg_normal  = '#ff000000',
+        bg_active  = '#00ffff',
+        bg_unfocus = "#ff00ff",
     })
     -- close button
     local closebtn = wibox.widget {
@@ -25,19 +27,34 @@ local function titlebar(c)
         closebtn.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#ff5656")
     end)
 
-    -- minimize and maximize button is here 
+    -- minimize and maximize button is here
     local maxbtn = wibox.widget {
         image = "/home/spidey/.config/awesome/icons/reddit.png",
         widget = wibox.widget.imagebox,
     }
     maxbtn:connect_signal("button::press", function()
-        c:kill()
+        c.maximized = not c.maximized
     end)
     maxbtn:connect_signal("mouse::enter", function()
         maxbtn.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#111111")
     end)
     maxbtn:connect_signal("mouse::leave", function()
         maxbtn.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#87cb28")
+    end)
+
+    -- always on top feature is here
+    local alwaysontop = wibox.widget {
+        image = "/home/spidey/.config/awesome/icons/reddit.png",
+        widget = wibox.widget.imagebox,
+    }
+    alwaysontop:connect_signal("button::press", function()
+        c.ontop = not c.ontop
+    end)
+    alwaysontop:connect_signal("mouse::enter", function()
+        alwaysontop.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#111111")
+    end)
+    alwaysontop:connect_signal("mouse::leave", function()
+        alwaysontop.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png", "#87cb28")
     end)
 
     local buttons = gears.table.join(
@@ -72,9 +89,28 @@ local function titlebar(c)
                 layout  = wibox.layout.flex.horizontal
             },
             {
-                maxbtn,
-                closebtn,
-                layout = wibox.layout.fixed.horizontal()
+
+                {
+                    widget = wibox.widget.background,
+                    bg = "#00ffff77",
+                    shape = function(cr, width, height)
+                        gears.shape.rounded_rect(cr, width, height, 10)
+                    end,
+                    forced_width = 100,
+
+                    {
+                        wibox.container.margin(alwaysontop, 3, 3, 3, 3),
+                        wibox.container.margin(maxbtn, 3, 3, 3, 3),
+                        wibox.container.margin(closebtn, 3, 3, 3, 3),
+                        layout = wibox.layout.flex.horizontal
+                    }
+                },
+                widget = wibox.container.margin,
+                margins = { top = 0, bottom = 0, left = 20, right = 20 }
+
+
+
+
             },
             layout = wibox.layout.align.horizontal
         },

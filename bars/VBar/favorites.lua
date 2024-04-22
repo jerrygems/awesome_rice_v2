@@ -81,7 +81,7 @@ local function favourites(s)
         gears.table.join(
             awful.button({}, 1, function()
                 naughty.notification({ text = "Wait a bit jerry it may take some time" })
-                awful.spawn.easy_async("obsidian", function()
+                awful.spawn.easy_async("firefox https://www.kaggle.com", function()
                     return nil
                 end)
             end)
@@ -170,7 +170,7 @@ local function favourites(s)
             },
             widget = wibox.widget.background,
             bg = "#00000099",
-            forced_height = HT * (26 / 100),
+            forced_height = HT * (20 / 100),
             forced_width = 2,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)

@@ -349,7 +349,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.integration_bar:setup {
 
-        wibox.container.place(integrate.integrations(s), "center", "center"),
+        integrate.integrations(s),
         favs.favourites(s),
 
         layout = wibox.layout.flex.vertical,
@@ -393,4 +393,5 @@ awful.screen.connect_for_each_screen(function(s)
     -- notifdrawer()
     -- musicBox.musicBox()
     -- shutdrawer()
+    require("popups.Quotes").Quotes()
 end)
