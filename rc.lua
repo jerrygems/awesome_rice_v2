@@ -261,10 +261,8 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     }
-end)
 
-
-awful.screen.connect_for_each_screen(function(s)
+    -- -- --
     s.top_bar = awful.wibar({
         position = "top",
         screen = s,
@@ -298,6 +296,11 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     }
+end)
+
+
+awful.screen.connect_for_each_screen(function(s)
+
 end)
 awful.screen.connect_for_each_screen(function(s)
     s.bottom_bar = awful.wibar({
