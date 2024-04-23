@@ -78,7 +78,7 @@ local function btmDrawer()
                 gen(img3, "lock   ", "i3lock-fancy"),
                 layout = wibox.layout.flex.horizontal
             },
-            bg = "#00000099",
+            bg = "#00000044",
             forced_height = 240,
             forced_width = 800,
             widget = wibox.container.background,
@@ -86,7 +86,8 @@ local function btmDrawer()
         bg        = "#00000000",
         placement = awful.placement.centered,
         shape     = gears.shape.rounded_rect,
-        visible   = true,
+        visible   = false,
+        ontop = true
     }
 
     return draw

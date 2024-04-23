@@ -1,7 +1,9 @@
 local gears = require("gears")
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local shutter = require("drawers.centerDrawer")
 
+local shut = shutter()
 modkey = "Mod4"
 
 -- {{{ Key bindings
@@ -49,7 +51,25 @@ local globalkeys = gears.table.join(
 
     -- Prompt
     awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
-        { description = "run prompt", group = "launcher" })
+        { description = "run prompt", group = "launcher" }),
+
+
+    awful.key({ modkey }, "d",
+        function(c)
+            awful.spawn("rofi -show drun ")
+        end,
+        { description = "rofi", group = "client" }),
+    awful.key({ modkey }, "w",
+        function(c)
+            awful.spawn("rofi -show window ")
+        end,
+        { description = "rofi", group = "client" }),
+    awful.key({ modkey }, "x",
+
+        function(c)
+            shut.visible = not shut.visible
+        end,
+        { description = "rofi", group = "client" })
 )
 
 local clientkeys = gears.table.join(
@@ -92,20 +112,8 @@ local clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end,
-        { description = "(un)maximize horizontally", group = "client" }),
+        { description = "(un)maximize horizontally", group = "client" })
 
-
-        -- custom keys here
-    awful.key({ modkey }, "d",
-        function(c)
-            awful.spawn("rofi -show drun ")
-        end,
-        { description = "rofi", group = "client" }),
-    awful.key({ modkey }, "w",
-        function(c)
-            awful.spawn("rofi -show window ")
-        end,
-        { description = "rofi", group = "client" })
 )
 
 for i = 1, 9 do

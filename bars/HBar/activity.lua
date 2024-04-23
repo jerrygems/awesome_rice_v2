@@ -6,15 +6,15 @@ local awful = require("awful")
 local function activityBar(s)
     local status = "Unknown"
     local box = wibox.widget {
-        markup = "<<span color='#ff035b'><b>Just got restart</b></span>",
+        markup = "<<span color='#ff035b' font='KodeMono 10'><b>Just got restart</b></span>",
         font = "KodeMono 12",
         widget = wibox.widget.textbox
     }
     client.connect_signal("focus", function(c)
-        box.markup = "<span color='#ff035b'><b>" .. c.name .. "</b></span>"
+        box.markup = "<span color='#ff035b' font='KodeMono 10'><b>" .. c.name .. "</b></span>"
     end)
     client.connect_signal("property::name", function(c)
-        box.markup = "<span color='#ff035b'><b>" .. c.name .. "</b></span>"
+        box.markup = "<span color='#ff035b' font='KodeMono 10'><b>" .. c.name .. "</b></span>"
     end)
 
     local activity = {

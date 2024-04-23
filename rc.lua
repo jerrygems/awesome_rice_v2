@@ -236,16 +236,15 @@ end)
 
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
-
     s.left_bar = awful.wibar({
         position = "left",
         screen = s,
         type = "normal",
         width = s.geometry.width * (2 / 100),
-        height = s.geometry.height * (92 / 100),
+        height = s.geometry.height * (85 / 100),
         visible = true,
         margins = { left = 5, right = 5 },
-        bg = "#00000000",
+        bg = "#ffffff11",
         fg = "#ffffffff",
         ontop = false,
         shape = function(cr, width, height)
@@ -258,9 +257,8 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.vertical,
         taglist.taglist_fun(s),
         tools.toolBoxBar(s),
-
-
     }
+
 
     -- -- --
     s.top_bar = awful.wibar({
@@ -272,7 +270,7 @@ awful.screen.connect_for_each_screen(function(s)
         visible = true,
         margins = { top = 3 },
         -- bg = "#00000077",
-        bg = "#00000000",
+        bg = "#ffffff11",
         fg = "#ffffffff",
         ontop = false,
         -- border_width = 4,
@@ -311,7 +309,7 @@ awful.screen.connect_for_each_screen(function(s)
         height = s.geometry.height * (3.5 / 100),
         visible = true,
         -- margins = { top = 3 },
-        bg = "#00000077",
+        bg = "#ffffff11",
         -- bg = "#00000000",
         fg = "#ffffffff",
         ontop = false,
@@ -335,12 +333,12 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         type = "normal",
         width = s.geometry.width * (2 / 100),
-        height = s.geometry.height * (92 / 100),
+        height = s.geometry.height * (85 / 100),
         visible = true,
         -- x = 5,
         margins = { right = 5, left = 5 },
         -- bg = "#00000077",
-        bg = "#00000000",
+        bg = "#ffffff11",
         fg = "#ffffffff",
         ontop = false,
         -- border_width = 4,
@@ -390,11 +388,12 @@ end)
     BlackOpsOne
     ArchivoBlack
     ]]
-
+shutdrawer().visible = false
 awful.screen.connect_for_each_screen(function(s)
     infoBox.infoBox(s)
     -- notifdrawer()
     -- musicBox.musicBox()
-    -- shutdrawer()
+    shutdrawer()
+
     require("popups.Quotes").Quotes()
 end)
