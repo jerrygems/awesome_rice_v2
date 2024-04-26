@@ -5,6 +5,7 @@
 
 ```bash
     chmod +x setup.sh
+    chmod +x service.sh
 ```
 ### at the end when you've completed these steps then setup a service for running for running the picom compositor on reboot so that you don't have to do that manually for that
 
@@ -17,7 +18,8 @@
 Description=Picom X compositor
 
 [Service]
-ExecStart=/usr/bin/picom --config /path/to/your/picom.conf --experimental-backends && xinput set-prop $(xinput list | grep Touchpad | awk '{print $6}' | cut -d= -f2 ) "libinput Tapping Enabled" 1
+ExecStart=bash /home/{enter your username}/.config/awesome/service.sh
+Environment="DISPLAY=:0"
 Restart=always
 User=spidey
 
