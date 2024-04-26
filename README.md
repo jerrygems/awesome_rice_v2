@@ -26,3 +26,12 @@ User=spidey
 [Install]
 WantedBy=multi-user.target
 ```
+
+### if the picom doesn't work with blue then please try restarting it with below commands or you can run the command manually in setup.sh or put an command in your .bashrc or .zshrc file
+
+```bash
+sudo systemctl enable picom.service
+sudo systemctl restart picom.service
+```
+
+### and finally you can restart 
