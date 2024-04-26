@@ -2,10 +2,11 @@ local gears = require("gears")
 local wibox = require("wibox")
 local awful = require("awful")
 local naughty = require('naughty')
-
+local config = require("confs.config").vars
 
 local function ble(s)
-    local icon = gears.color.recolor_image(os.getenv("HOME") .. "/.config/awesome/icons/BLE.svg", "#ffffff")
+    local icon = gears.color.recolor_image(os.getenv("HOME") .. "/.config/awesome/icons/BLE.svg",
+        config.systray_ble_clr_on_disconnected)
     local box = wibox.widget {
         image = icon,
         widget = wibox.widget.imagebox
@@ -22,9 +23,9 @@ local function ble(s)
             output = output:gsub("^%s*(.-)%s*$", "%1")
 
             if output == "yes" then
-                box.image = gears.color.recolor_image(icon, "#00ffff")
+                box.image = gears.color.recolor_image(icon, config.systray_ble_clr_on_connected)
             else
-                box.image = gears.color.recolor_image(icon, "#ffffff")
+                box.image = gears.color.recolor_image(icon, config.systray_ble_clr_on_disconnected)
             end
         end
     }
@@ -32,7 +33,12 @@ local function ble(s)
         {
             box,
             widget = wibox.container.margin,
-            margins = { top = 5, bottom = 5, left = 15, right = 15 }
+            margins = {
+                top = 5,
+                bottom = 5,
+                left = 15,
+                right = 15
+            }
         },
         widget = wibox.container.background,
         bg = "#00000000",
@@ -40,15 +46,15 @@ local function ble(s)
             gears.shape.rounded_rect(cr, width, height, 8)
         end
     }
-    bluetooth:buttons(gears.table.join(
-        awful.button({}, 1, function()
-            awful.spawn.easy_async("blueman-manager", function()
-                return nil
-            end)
+    bluetooth:buttons(gears.table.join(awful.button({}, 1, function()
+        awful.spawn.easy_async("blueman-manager", function()
+            return nil
         end)
-    ))
+    end)))
 
     return bluetooth
 end
 
-return { ble = ble }
+return {
+    ble = ble
+}

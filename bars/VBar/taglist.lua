@@ -3,7 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 local rubato = require("lib.rubato")
 local naughty = require("naughty")
-
+local config = require("confs.config").vars
 
 local function taglist_fun(s)
     local prev_tag = nil
@@ -19,12 +19,11 @@ local function taglist_fun(s)
                 visible = false,
                 widget = wibox.widget.textbox
             },
-            margins = { 5, 5, 5, 5 },
+            margins = {5, 5, 5, 5},
             widget = wibox.container.margin
         },
         id = 'background_role',
         widget = wibox.container.background,
-
 
         create_callback = function(self, tag, index)
             self.animate = rubato.timed {
@@ -36,9 +35,9 @@ local function taglist_fun(s)
 
             self.update = function()
                 if tag.selected then
-                    self.animate.target = 30
+                    self.animate.target = config.tag_height
                 else
-                    self.animate.target = 15
+                    self.animate.target = config.tag_height_on_select
                 end
             end
             self.update()
@@ -64,12 +63,12 @@ local function taglist_fun(s)
             end,
             spacing = 15,
             shape_empty = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 20)
+                gears.shape.rounded_rect(cr, width, height, config.tag_inner_radius)
             end,
-            bg_empty = "#ccf7feff",
-            bg_occupied = "#ff035bff",
-            bg_focus = "#04d9ffff",
-            bg_urgent = "#ff3d74",
+            bg_empty = config.tag_bg_empty,
+            bg_occupied = config.tag_bg_occupied,
+            bg_focus = config.tag_bg_focus,
+            bg_urgent = config.tag_bg_urgent
 
         }
     }
@@ -78,16 +77,16 @@ local function taglist_fun(s)
         {
             wibox.container.margin(taglist, 10, 10, 14, 14),
             -- "#000000dd",
-            bg = "#00000099",
+            bg = config.tag_bg,
             widget = wibox.container.background,
             shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 5)
-            end,
+                gears.shape.rounded_rect(cr, width, height, config.tag_wrapper_radius)
+            end
         },
         widget = wibox.container.constraint,
 
         strategy = "exact",
-        height = 300,
+        height = 300
     }
     return wibox.container.margin(wrapper, 3, 3, 100, 0)
 end

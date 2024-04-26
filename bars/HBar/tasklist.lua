@@ -1,7 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
-local naughty = require("naughty")
+local config = require("confs.config").vars
 
 local function tasklistBar(s)
     local tasklist = awful.widget.tasklist({
@@ -23,22 +23,21 @@ local function tasklistBar(s)
 
                 {
                     id = 'icon_role',
-                    widget = wibox.widget.imagebox,
+                    widget = wibox.widget.imagebox
                 },
                 margins = 5,
-                widget = wibox.container.margin,
+                widget = wibox.container.margin
             },
             widget = wibox.container.background,
             forced_height = 30,
             forced_width = 30,
-            bg = "#000000",
+            bg = config.TB_task_bg,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)
-            end,
-        },
+            end
+        }
 
     })
-
 
     local c2 = wibox.widget {
         {
@@ -48,24 +47,26 @@ local function tasklistBar(s)
                     {
                         tasklist,
                         widget = wibox.container.constraint,
-                        width = 210
+                        width = config.TB_task_mx_width
                     },
                     widget = wibox.container.background,
-                    bg = "#00000055",
+                    bg = config.TB_task_back_bg,
                     shape = function(cr, width, height)
                         gears.shape.rounded_rect(cr, width, height, 5)
-                    end,
+                    end
                 },
                 widget = wibox.container.margin,
-                margins = { top = 0, bottom = 0, left = 5, right = 5 }
+                margins = config.TB_task_df_mgs
             },
             widget = wibox.container.place,
             halign = "left"
         },
         widget = wibox.container.background,
-        forced_width = 230
+        forced_width = config.TB_task_width
     }
 
     return c2
 end
-return { tasklistBar = tasklistBar }
+return {
+    tasklistBar = tasklistBar
+}
