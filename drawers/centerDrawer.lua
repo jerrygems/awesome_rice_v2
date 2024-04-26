@@ -73,8 +73,8 @@ local function btmDrawer()
 
         widget    = wibox.widget {
             {
-                gen(img1, "shutdown", "shutdown now"),
-                gen(img2, "reboot", "reboot"),
+                gen(img1, "shutdown", "systemctl poweroff -i"),
+                gen(img2, "reboot", "systemctl reboot"),
                 gen(img3, "lock   ", "i3lock-fancy"),
                 layout = wibox.layout.flex.horizontal
             },

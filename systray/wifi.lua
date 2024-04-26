@@ -68,7 +68,7 @@ local function wifi()
                 arc1.widget.colors = { "#FD7F2C" }
                 dot.widget.bg = "#FF6200"
             end
-        end, 2, "wlan0")
+        end, 2, "wlp61s0") -- wlp61s0 or wlan0
         return box
     end
 

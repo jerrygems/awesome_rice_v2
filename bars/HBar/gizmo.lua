@@ -44,7 +44,7 @@ local function gizmoZ(s)
 
     local netdown = wibox.widget.textbox()
     vicious.register(netdown, vicious.widgets.net,
-        "󰛀 ${wlan0 down_mb} Mb/s\t󰛃 ${wlan0 up_mb} Mb/s",
+        "󰛀 ${wlp61s0 down_mb} Mb/s   󰛃 ${wlp61s0 up_mb} Mb/s", -- wlp61s0 or wlan0 or anyother
         2)
 
 

@@ -361,7 +361,7 @@ end)
 
 
 
-beautiful.notification_font = "JetBrainsMono 25"
+beautiful.notification_font = "JetBrainsMono 15"
 naughty.config.defaults.ontop = true
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = 8
@@ -370,7 +370,7 @@ naughty.connect_signal("request::display", function(n)
     notifCenter(n)
     -- notifdrawer(n)
 end)
--- naughty.notification({ title = "Let's Create Something osm" })
+--naughty.notification({ title = "Let's Create Something osm" })
 
 -- bookmarks.bookmarks()
 --[[
