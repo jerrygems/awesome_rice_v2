@@ -3,18 +3,14 @@ local gears = require("gears")
 local awful = require("awful")
 local naughty = require("naughty")
 local beautiful = require("beautiful")
-
+local config = require("confs.config").vars
 
 local function notifCenter(n)
-
-    
-
-
 
     local function textBox(txt, txtcolor, fnt, wrp)
         local box = wibox.widget {
             markup = "<span color='" .. txtcolor .. "' font='" .. fnt .. "'>" .. txt .. "</span>",
-            widget = wibox.widget.textbox,
+            widget = wibox.widget.textbox
 
         }
         return box
@@ -37,49 +33,53 @@ local function notifCenter(n)
                 },
                 widget = wibox.container.margin,
                 margins = 10
-            },  -- for icon
+            }, -- for icon
             {
 
                 {
-                    wibox.container.constraint(wibox.container.margin(textBox(n.title, "#ffffff", "KodeMono 14"), 0, 0, 5, 0), "exact", 0, 30),
-                    wibox.container.margin(textBox("<b>" .. n.message .. "</b>", "#f00fff", "JetBrainsMono 8"), 0, 0, 0, 0),
+                    wibox.container.constraint(wibox.container.margin(
+                        textBox(n.title, config.notif_title_clr, config.notif_title_fnt), 0, 0, 5, 0), "exact", 0, 30),
+                    wibox.container.margin(textBox("<b>" .. n.message .. "</b>", config.notif_message_clr,
+                        config.notif_message_fnt), 0, 0, 0, 0),
 
                     layout = wibox.layout.fixed.vertical
                 },
                 widget = wibox.container.margin,
-                forced_width = 340,
-                margins = { left = 10, right = 10 }
+                forced_width = config.notif_width,
+                margins = {
+                    left = 10,
+                    right = 10
+                }
             }, -- for title and message
-            layout = wibox.layout.align.horizontal,
+            layout = wibox.layout.align.horizontal
         },
         -- {
         --     -- incase of error check this section
         --     {
-        --         {
-        --             text = 'hell',
-        --             widget = wibox.widget.textbox,
-        --         },
-        --         widget = naughty.list.actions,
+                
+        --         widget = naughty.list.actions
         --     },
         --     widget = wibox.container.background,
-        --     bg = "#ff00ff",
+        --     bg = "#00000000"
         -- }, -- for actions
-        layout = wibox.layout.fixed.vertical,
+        layout = wibox.layout.fixed.vertical
     }
 
     naughty.layout.box {
         notification = n,
         type = "notification",
-        bg = "#111111",
+        bg = config.notif_bg_clr,
         -- placement = awful.placement.bottom,
-        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 10) end,
+        shape = function(cr, w, h)
+            gears.shape.rounded_rect(cr, w, h, 10)
+        end,
         widget_template = {
             container,
-            bg = beautiful.bg,
-            widget = wibox.container.background,
-        },
+            bg = "#00000000",
+            widget = wibox.container.background
+        }
     }
-end
 
+end
 
 return notifCenter

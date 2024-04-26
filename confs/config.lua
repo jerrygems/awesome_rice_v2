@@ -122,7 +122,14 @@ local vars = {
         right = 10
     },
     shutbtns_btns_clr = "#ffffffff",
-    shutbtns_btns_clr_on_hover = "#ff035bff"
+    shutbtns_btns_clr_on_hover = "#ff035bff",
+
+    notif_bg_color = "#00000000",
+    notif_title_fnt = "KodeMono 14",
+    notif_message_fnt = "KodeMono 9",
+    notif_title_clr = "#ffffff",
+    notif_message_clr = "#ffffff",
+    notif_width = 340
 
 }
 

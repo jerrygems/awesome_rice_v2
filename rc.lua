@@ -33,17 +33,6 @@ local notifdrawer = require("drawers.notifDrawer")
 local notifCenter = require("notifications.notifCenter")
 local bottomBar = require("bars.Bbar.Bbar")
 
-
-
-
-
-
-
-
-
-
-
-
 if awesome.startup_errors then
     naughty.notify({
         preset = naughty.config.presets.critical,
@@ -84,11 +73,11 @@ editor_cmd = terminal .. " -e " .. editor
 -- Default modkey.
 -- modkey = "Mod4"
 
-awful.layout.layouts = { awful.layout.suit.floating,                                                                --
-    awful.layout.suit.tile, awful.layout.suit.tile.left, awful.layout.suit.tile.bottom, awful.layout.suit.tile.top, --
-    awful.layout.suit.fair, awful.layout.suit.fair.horizontal,                                                      --
-    awful.layout.suit.spiral, awful.layout.suit.max, awful.layout.suit.magnifier,                                   --
-    awful.layout.suit.corner.nw }
+awful.layout.layouts = {awful.layout.suit.floating, --
+awful.layout.suit.tile, awful.layout.suit.tile.left, awful.layout.suit.tile.bottom, awful.layout.suit.tile.top, --
+awful.layout.suit.fair, awful.layout.suit.fair.horizontal, --
+awful.layout.suit.spiral, awful.layout.suit.max, awful.layout.suit.magnifier, --
+awful.layout.suit.corner.nw}
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -119,7 +108,7 @@ root.keys(keybindings.globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = { {
+awful.rules.rules = {{
     rule = {},
     properties = {
         border_width = 2,
@@ -132,14 +121,14 @@ awful.rules.rules = { {
         placement = awful.placement.no_overlap + awful.placement.no_offscreen
     }
 }, -- Add titlebars to normal clients and dialogs
-    {
-        rule_any = {
-            type = { "normal", "dialog" }
-        },
-        properties = {
-            titlebars_enabled = true
-        }
-    } }
+{
+    rule_any = {
+        type = {"normal", "dialog"}
+    },
+    properties = {
+        titlebars_enabled = true
+    }
+}}
 -- }}}
 
 -- {{{ Signals
@@ -178,7 +167,7 @@ end)
 awful.screen.connect_for_each_screen(function(s)
     -- set_wallpaper(s)
 
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({"1", "2", "3", "4", "5", "6", "7", "8", "9"}, s, awful.layout.layouts[1])
 
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -228,12 +217,6 @@ awful.screen.connect_for_each_screen(function(s)
     -- }
 end)
 
-
-
-
-
-
-
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
     s.left_bar = awful.wibar({
@@ -243,7 +226,10 @@ awful.screen.connect_for_each_screen(function(s)
         width = s.geometry.width * (2 / 100),
         height = s.geometry.height * (85 / 100),
         visible = true,
-        margins = { left = 5, right = 5 },
+        margins = {
+            left = 5,
+            right = 5
+        },
         bg = "#ffffff11",
         fg = "#ffffffff",
         ontop = false,
@@ -252,13 +238,12 @@ awful.screen.connect_for_each_screen(function(s)
         end
     })
 
-    s.left_bar:setup {
+    s.left_bar:setup{
 
         layout = wibox.layout.align.vertical,
         taglist.taglist_fun(s),
-        tools.toolBoxBar(s),
+        tools.toolBoxBar(s)
     }
-
 
     -- -- --
     s.top_bar = awful.wibar({
@@ -268,7 +253,9 @@ awful.screen.connect_for_each_screen(function(s)
         width = s.geometry.width * (98 / 100),
         height = s.geometry.height * (3.5 / 100),
         visible = true,
-        margins = { top = 3 },
+        margins = {
+            top = 3
+        },
         -- bg = "#00000077",
         bg = "#ffffff11",
         fg = "#ffffffff",
@@ -280,22 +267,20 @@ awful.screen.connect_for_each_screen(function(s)
         end
     })
 
-    s.top_bar:setup {
+    s.top_bar:setup{
         layout = wibox.layout.align.horizontal,
 
         {
             task.tasklistBar(s),
             activity.activityBar(s),
             widget = wibox.container.place,
-            layout = wibox.layout.fixed.horizontal,
+            layout = wibox.layout.fixed.horizontal
         },
         wibox.container.place(gizmo.gizmoZ(s), "right", "center"),
-        wibox.container.place(systray.systray(s), "right", "center"),
-
+        wibox.container.place(systray.systray(s), "right", "center")
 
     }
 end)
-
 
 awful.screen.connect_for_each_screen(function(s)
 
@@ -318,14 +303,12 @@ awful.screen.connect_for_each_screen(function(s)
         end
     })
 
-    s.bottom_bar:setup {
+    s.bottom_bar:setup{
         layout = wibox.layout.align.horizontal,
-        bottomBar.Bbar(s),
+        bottomBar.Bbar(s)
 
     }
 end)
-
-
 
 awful.screen.connect_for_each_screen(function(s)
     s.integration_bar = awful.wibar({
@@ -336,7 +319,10 @@ awful.screen.connect_for_each_screen(function(s)
         height = s.geometry.height * (85 / 100),
         visible = true,
         -- x = 5,
-        margins = { right = 5, left = 5 },
+        margins = {
+            right = 5,
+            left = 5
+        },
         -- bg = "#00000077",
         bg = "#ffffff11",
         fg = "#ffffffff",
@@ -348,18 +334,15 @@ awful.screen.connect_for_each_screen(function(s)
         end
     })
 
-    s.integration_bar:setup {
+    s.integration_bar:setup{
 
         integrate.integrations(s),
         favs.favourites(s),
 
-        layout = wibox.layout.flex.vertical,
+        layout = wibox.layout.flex.vertical
 
     }
 end)
-
-
-
 
 beautiful.notification_font = "JetBrainsMono 15"
 naughty.config.defaults.ontop = true
@@ -370,7 +353,9 @@ naughty.connect_signal("request::display", function(n)
     notifCenter(n)
     -- notifdrawer(n)
 end)
---naughty.notification({ title = "Let's Create Something osm" })
+naughty.notification({
+    title = "Let's Create Something osm"
+})
 
 -- bookmarks.bookmarks()
 --[[
@@ -397,3 +382,4 @@ awful.screen.connect_for_each_screen(function(s)
 
     require("popups.Quotes").Quotes()
 end)
+
