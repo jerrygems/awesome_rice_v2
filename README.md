@@ -35,3 +35,4 @@ sudo systemctl restart picom.service
 ```
 
 ### and finally you can restart 
+**for customizing things easily just look at congs/config.lua where you can find few variables and can change them accordingly otherwise keep messing with code Xd**
