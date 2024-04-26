@@ -17,7 +17,7 @@
 Description=Picom X compositor
 
 [Service]
-ExecStart=/usr/bin/picom --config /path/to/your/picom.conf --experimental-backends
+ExecStart=/usr/bin/picom --config /path/to/your/picom.conf --experimental-backends && xinput set-prop $(xinput list | grep Touchpad | awk '{print $6}' | cut -d= -f2 ) "libinput Tapping Enabled" 1
 Restart=always
 User=spidey
 
