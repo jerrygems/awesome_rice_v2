@@ -333,10 +333,8 @@ awful.screen.connect_for_each_screen(function(s)
     })
 
     s.integration_bar:setup{
-
         integrate.integrations(s),
         favs.favourites(s),
-
         layout = wibox.layout.flex.vertical
 
     }
@@ -355,7 +353,6 @@ naughty.notification({
     title = "Let's Create Something osm"
 })
 
--- bookmarks.bookmarks()
 --[[
     KodeMono
     MadimiOne
@@ -374,8 +371,6 @@ naughty.notification({
 shutdrawer().visible = false
 awful.screen.connect_for_each_screen(function(s)
     infoBox.infoBox(s)
-    -- notifdrawer()
-    -- musicBox.musicBox()
     shutdrawer()
 
     require("popups.Quotes").Quotes()

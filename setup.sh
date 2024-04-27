@@ -15,6 +15,7 @@ cd ~/.config
 git clone https://github.com/jerrygems/awesome_rice_v2.git
 mv awesome_rice_v2 awesome
 cd ~/.config/awesome/
+mv ./Dots/fonts ~/.fonts
 git clone https://github.com/vicious-widgets/vicious.git -o vicious
 mkdir lib
 cd lib

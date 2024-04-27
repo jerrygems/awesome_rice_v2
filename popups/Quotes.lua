@@ -47,8 +47,8 @@ local function Quotes()
                 height = 600,
             }
         },
-        x = 800,
-        y = 560,
+        x = 600,
+        y = 500,
         visible = true,
         ontop = false,
         bg = "#ffffff11",

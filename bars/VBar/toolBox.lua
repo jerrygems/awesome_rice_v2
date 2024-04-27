@@ -120,7 +120,7 @@ local function toolBoxBar(s)
     end)
     tool6:connect_signal("mouse::leave", function()
         tool6.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/reddit.png",
-            config.config.icons_df_clr_on_hover)
+            config.icons_df_clr_on_hover)
     end)
     tool6:buttons(gears.table.join(awful.button({}, 1, function()
         awful.spawn.easy_async("firefox 'https://www.reddit.com/user/Sp1d3y001/'", function()
