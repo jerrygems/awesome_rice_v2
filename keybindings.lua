@@ -84,7 +84,17 @@ local globalkeys = gears.table.join(
         function(c)
             awful.spawn("playerctl position +10")
         end,
-    {description="music button", group="client"})
+    {description="music button", group="client"}),
+    awful.key({modkey, "Shift" }, "Up",
+        function(c)
+            awful.spawn("pulsemixer --change-volume +10")
+        end,
+    {description="music volume", group="client"}),
+    awful.key({modkey, "Shift" }, "Down",
+        function(c)
+            awful.spawn("pulsemixer --change-volume -10")
+        end,
+    {description="music volume", group="client"})
 )
 
 local clientkeys = gears.table.join(
