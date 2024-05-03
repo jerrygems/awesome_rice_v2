@@ -252,7 +252,8 @@ awful.screen.connect_for_each_screen(function(s)
         height = s.geometry.height * (3.5 / 100),
         visible = true,
         margins = {
-            top = 3
+            top = 3,
+	    bottom = 4,
         },
         -- bg = "#00000077",
         bg = "#ffffff11",
@@ -291,7 +292,7 @@ awful.screen.connect_for_each_screen(function(s)
         width = s.geometry.width * (70 / 100),
         height = s.geometry.height * (3.5 / 100),
         visible = true,
-        -- margins = { top = 3 },
+        margins = { top = 3 },
         bg = "#ffffff11",
         -- bg = "#00000000",
         fg = "#ffffffff",

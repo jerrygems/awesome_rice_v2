@@ -103,7 +103,7 @@ local function toolBoxBar(s)
     end)
     tool5:connect_signal("mouse::leave", function()
         tool5.image = gears.color.recolor_image(home_dir .. "/.config/awesome/icons/spotify.png",
-            config.config.icons_df_clr_on_hover)
+            config.icons_df_clr_on_hover)
     end)
     tool5:buttons(gears.table.join(awful.button({}, 1, function()
         awful.spawn.easy_async("spotify", function()

@@ -69,7 +69,22 @@ local globalkeys = gears.table.join(
         function(c)
             shut.visible = not shut.visible
         end,
-        { description = "rofi", group = "client" })
+        { description = "rofi", group = "client" }),
+    awful.key({modkey},"j",
+        function(c)
+            awful.spawn("playerctl position -10")
+        end,
+    {description="music button", group="client"}),
+    awful.key({modkey},"k",
+        function(c)
+            awful.spawn("playerctl play-pause")
+        end,
+    {description="music button", group="client"}),
+    awful.key({modkey},"l",
+        function(c)
+            awful.spawn("playerctl position +10")
+        end,
+    {description="music button", group="client"})
 )
 
 local clientkeys = gears.table.join(
