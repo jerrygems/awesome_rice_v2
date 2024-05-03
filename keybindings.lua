@@ -69,7 +69,7 @@ local globalkeys = gears.table.join(
         function(c)
             shut.visible = not shut.visible
         end,
-        { description = "rofi", group = "client" }),
+        { description = "shutdown widget visibility", group = "client" }),
     awful.key({modkey},"j",
         function(c)
             awful.spawn("playerctl position -10")
