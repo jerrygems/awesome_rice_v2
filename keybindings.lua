@@ -70,21 +70,31 @@ local globalkeys = gears.table.join(
             shut.visible = not shut.visible
         end,
         { description = "shutdown widget visibility", group = "client" }),
-    awful.key({modkey},"j",
+    awful.key({modkey},"h",
         function(c)
-            awful.spawn("playerctl position -10")
+            awful.spawn("playerctl position 10-")
         end,
+    {description="music seek", group="client"}),
+    awful.key({modkey},"j",
+    function(c)
+        awful.spawn("playerctl previous")
+    end,
     {description="music button", group="client"}),
     awful.key({modkey},"k",
-        function(c)
-            awful.spawn("playerctl play-pause")
-        end,
+    function(c)
+        awful.spawn("playerctl play-pause")
+    end,
     {description="music button", group="client"}),
     awful.key({modkey},"l",
-        function(c)
-            awful.spawn("playerctl position +10")
-        end,
+    function(c)
+        awful.spawn("playerctl next")
+    end,
     {description="music button", group="client"}),
+    awful.key({modkey},";",
+        function(c)
+            awful.spawn("playerctl position 10+")
+        end,
+    {description="music seek", group="client"}),
     awful.key({modkey, "Shift" }, "Up",
         function(c)
             awful.spawn("pulsemixer --change-volume +10")
