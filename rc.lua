@@ -63,8 +63,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-
+--beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.useless_gap=3
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
@@ -142,9 +142,9 @@ client.connect_signal("manage", function(c)
     end
 end)
 
-client.connect_signal("request::titlebars", function(c)
-    titlebar(c)
-end)
+--client.connect_signal("request::titlebars", function(c)
+--    titlebar(c)
+--end)
 
 -- -- so here we can define the events of mouse
 -- client.connect_signal("mouse::enter", function(c)
