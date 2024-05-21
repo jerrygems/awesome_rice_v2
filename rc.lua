@@ -63,8 +63,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
---beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.useless_gap=3
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.useless_gap = 3
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
@@ -142,9 +142,9 @@ client.connect_signal("manage", function(c)
     end
 end)
 
---client.connect_signal("request::titlebars", function(c)
+-- client.connect_signal("request::titlebars", function(c)
 --    titlebar(c)
---end)
+-- end)
 
 -- -- so here we can define the events of mouse
 -- client.connect_signal("mouse::enter", function(c)
@@ -180,6 +180,7 @@ awful.screen.connect_for_each_screen(function(s)
     end), awful.button({}, 5, function()
         awful.layout.inc(-1)
     end)))
+
     -- Create a taglist widget
     -- s.mytaglist = awful.widget.taglist {
     --     screen = s,
@@ -216,6 +217,7 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 awful.screen.connect_for_each_screen(function(s)
+
     set_wallpaper(s)
     s.left_bar = awful.wibar({
         position = "left",
@@ -253,7 +255,7 @@ awful.screen.connect_for_each_screen(function(s)
         visible = true,
         margins = {
             top = 3,
-	    bottom = 4,
+            bottom = 4
         },
         -- bg = "#00000077",
         bg = "#ffffff11",
@@ -279,12 +281,7 @@ awful.screen.connect_for_each_screen(function(s)
         wibox.container.place(systray.systray(s), "right", "center")
 
     }
-end)
 
-awful.screen.connect_for_each_screen(function(s)
-
-end)
-awful.screen.connect_for_each_screen(function(s)
     s.bottom_bar = awful.wibar({
         position = "bottom",
         screen = s,
@@ -292,7 +289,9 @@ awful.screen.connect_for_each_screen(function(s)
         width = s.geometry.width * (70 / 100),
         height = s.geometry.height * (3.5 / 100),
         visible = true,
-        margins = { top = 3 },
+        margins = {
+            top = 3
+        },
         bg = "#ffffff11",
         -- bg = "#00000000",
         fg = "#ffffffff",
@@ -307,9 +306,7 @@ awful.screen.connect_for_each_screen(function(s)
         bottomBar.Bbar(s)
 
     }
-end)
 
-awful.screen.connect_for_each_screen(function(s)
     s.integration_bar = awful.wibar({
         position = "right",
         screen = s,
@@ -339,6 +336,27 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.flex.vertical
 
     }
+
+    local toggle_bar = awful.key({modkey, "Shift"}, "b", function()
+        s.integration_bar.visible = not s.integration_bar.visible
+        s.left_bar.visible = not s.left_bar.visible
+        s.bottom_bar.visible = not s.bottom_bar.visible
+        s.top_bar.visible = not s.top_bar.visible
+    end, {
+        description = "Toggle integration bar",
+        group = "custom"
+    })
+    local basic_toggle = awful.key({modkey, "Shift"}, "b", function()
+        s.integration_bar.visible = not s.integration_bar.visible
+        s.left_bar.visible = not s.left_bar.visible
+        s.bottom_bar.visible = not s.bottom_bar.visible
+    end, {
+        description = "Toggle integration bar",
+        group = "custom"
+    })
+
+    root.keys(gears.table.join(root.keys(), toggle_bar, basic_toggle))
+
 end)
 
 beautiful.notification_font = "JetBrainsMono 15"
