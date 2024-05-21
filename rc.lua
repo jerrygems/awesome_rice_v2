@@ -346,7 +346,7 @@ awful.screen.connect_for_each_screen(function(s)
         description = "Toggle integration bar",
         group = "custom"
     })
-    local basic_toggle = awful.key({modkey, "Shift"}, "b", function()
+    local basic_toggle = awful.key({modkey}, "b", function()
         s.integration_bar.visible = not s.integration_bar.visible
         s.left_bar.visible = not s.left_bar.visible
         s.bottom_bar.visible = not s.bottom_bar.visible
