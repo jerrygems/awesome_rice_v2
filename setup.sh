@@ -1,4 +1,5 @@
 cd ~/
+sudo apt update &&s sudo apt upgrade
 sudo apt install git
 # few tools to install and dependencies
 sudo apt install xinput rofi pulsemixer i3lock-fancy lm-sensors awesome lua5.2 luarocks picom btop feh brightnessctl cava playerctl alacritty neofetch python3-pyaudio xcb-fixes xcb-randr liblua5.3-dev
