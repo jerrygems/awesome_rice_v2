@@ -2,7 +2,9 @@ cd ~/
 sudo apt update && sudo apt upgrade
 sudo apt install git
 # few tools to install and dependencies
-sudo apt install xinput rofi pulsemixer i3lock-fancy lm-sensors awesome lua5.2 luarocks picom btop feh brightnessctl cava playerctl alacritty neofetch python3-pyaudio xcb-fixes xcb-randr liblua5.3-dev
+sudo apt install make xinput rofi pulsemixer i3lock-fancy lm-sensors awesome lua5.2 luarocks picom btop feh brightnessctl cava playerctl alacritty neofetch python3-pyaudio liblua5.3-dev
+
+sudo apt-get install build-essential cmake libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-cursor-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev libglib2.0-dev libgdk-pixbuf2.0-dev libcairo2-dev libx11-dev libxcb-xtest0-dev libxcb-shape0-dev libxcb-xfixes0-dev libcairo2-dev libstartup-notification0-dev libxdg-basedir-dev libxcb-xrm-dev
 
 
 # awesome window manager installation
