@@ -11,7 +11,7 @@ sudo apt-get install build-essential cmake libxcb1-dev libxcb-util0-dev libxcb-r
 sudo apt build-dep awesome
 git clone https://github.com/awesomewm/awesome
 cd awesome
-make package
+sudo make package
 cd build
 sudo apt install ./*.deb
 
