@@ -8,10 +8,12 @@ sudo apt-get install build-essential cmake libxcb1-dev libxcb-util0-dev libxcb-r
 
 
 # awesome window manager installation
-git clone https://github.com/awesomeWM/awesome.git
+sudo apt build-dep awesome
+git clone https://github.com/awesomewm/awesome
 cd awesome
-make
-sudo make install
+make package
+cd build
+sudo apt install ./*.deb
 
 
 cd ~/.config
