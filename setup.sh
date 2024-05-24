@@ -13,7 +13,7 @@ git clone https://github.com/awesomewm/awesome
 cd awesome
 sudo make package
 cd build
-sudo apt install ./*.deb
+sudo dpkg -i ./*.deb
 
 
 cd ~/.config
