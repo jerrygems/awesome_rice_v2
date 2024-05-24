@@ -31,4 +31,4 @@ echo "Name=Awesome Window Manager" >> ~/.local/share/applications/awesome.deskto
 echo "Exec=awesome" >> ~/.local/share/applications/awesome.desktop
 echo "Terminal=false" >> ~/.local/share/applications/awesome.desktop
 
-systemctl reboot
+systemctl reboot -i
