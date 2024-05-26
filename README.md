@@ -1,18 +1,17 @@
 # Installation
 **for setting up this rice**
-
-### first of all follow the steps inside setup.sh or just run it after running the command below
+### before installing it make sure you're using debian distro cuz this is only tested on debian distro on other distros to make it work you'll have to mess with it
+**;-)**
+### Follow these steps
 
 ```bash
+    git clone https://github.com/jerrygems/awesome_rice_v2.git
+    cd awesome_rice_v2
     chmod +x setup.sh
     chmod +x service.sh
 ```
-### at the end when you've completed these steps then setup a service for running for running the picom compositor on reboot so that you don't have to do that manually for that
-
-```bash
-    sudo nano /etc/systemd/system/picom.service
-```
-### and then paste the below content in it and change the username accordingly
+### and you'll have to create a picom.service to start the picom itself on every restart and paste the below content in that
+**do not forget to put your username in the file "{enter your username}"**
 ```
 [Unit]
 Description=Picom X compositor
@@ -27,13 +26,12 @@ User=spidey
 WantedBy=multi-user.target
 ```
 
-### if the picom doesn't work with blue then please try restarting it with below commands or you can run the command manually in setup.sh or put an command in your .bashrc or .zshrc file
+### after setting the picom.server you'll have to run below commands
 
-```bash
+```
 sudo systemctl enable picom.service
 sudo systemctl restart picom.service
 ```
-
 ### and all the default keybindings are here 
 
 | Combinations           | Functionalities                                                     |
@@ -71,4 +69,4 @@ sudo systemctl restart picom.service
 | Mod+b                  | toggle three bars ( bottom, left, right )                           |
 | Mod+Shift+b            | toggle top bar                                                      |
 
-**for customizing things easily just look at congs/config.lua where you can find few variables and can change them accordingly otherwise keep messing with code Xd**
+**for customizing things easily just look at confs/config.lua where you can find few variables and can change them accordingly otherwise keep messing with code Xd**
