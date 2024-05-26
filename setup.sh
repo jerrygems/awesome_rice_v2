@@ -17,20 +17,26 @@ sudo dpkg -i ./*.deb
 
 
 cd ~/.config
-git clone https://github.com/jerrygems/awesome_rice_v2.git
-mv awesome_rice_v2 awesome
+
+mv ~/awesome_rice_v2 ~/.config/awesome
 cd ~/.config/awesome/
 mv ./Dots/fonts ~/.fonts
+mv ./Dots/Mousepad ~/.config/
+mv ./Dots/picom ~/.config/
+mv ./Dots/rofi ~/.config/
+
 git clone https://github.com/vicious-widgets/vicious.git -o vicious
 mkdir lib
 cd lib
 git clone https://github.com/andOrlando/rubato.git -o rubato
 
-touch ~/.local/share/applications/awesome.desktop
-echo "[Desktop Entry]" >> ~/.local/share/applications/awesome.desktop
-echo "Type=Application" >> ~/.local/share/applications/awesome.desktop
-echo "Name=Awesome Window Manager" >> ~/.local/share/applications/awesome.desktop
-echo "Exec=awesome" >> ~/.local/share/applications/awesome.desktop
-echo "Terminal=false" >> ~/.local/share/applications/awesome.desktop
+sudo touch /usr/share/xsessions/awesome.desktop
+sudo echo "[Desktop Entry]" >> /usr/share/xsessions/awesome.desktop
+sudo echo "Type=Application" >> /usr/share/xsessions/awesome.desktop
+sudo echo "Name=Awesome Window Manager" >> /usr/share/xsessions/awesome.desktop
+sudo echo "Exec=awesome" >> /usr/share/xsessions/awesome.desktop
+sudo echo "Terminal=false" >> /usr/share/xsessions/awesome.desktop
+
+
 
 systemctl reboot -i
