@@ -64,8 +64,9 @@ local function volume(s)
         call_now = false,
         callback = function()
             if prevvol ~= vol.value then
-                awful.spawn("pulsemixer --set-volume " .. vol.value .. "")
-                volProgress.value = vol.value
+                awful.spawn.easy_async("pulsemixer --set-volume " .. vol.value .. "",function()
+                    volProgress.value = vol.value
+                end)
             end
         end
     }
@@ -114,7 +115,6 @@ local function volume(s)
             if prevtemp ~= temperature.value then
                 awful.spawn.easy_async_with_shell("sensors | grep 'Composite' | awk '{print substr($2,2,length($2-3))}'",
                     function(arg)
-                        -- naughty.notification({ text = "" .. tonumber(arg) })
                         temperature.value = tonumber(arg)
                     end)
             end
@@ -184,8 +184,9 @@ local function volume(s)
         call_now = false,
         callback = function()
             if prevbright ~= bright.value then
-                awful.spawn("brightnessctl s " .. bright.value .. "%")
-                brightProgress.value = bright.value
+                awful.spawn.easy_async("brightnessctl s " .. bright.value .. "%",function()
+                    brightProgress.value = bright.value
+                end)
             end
         end
     }
