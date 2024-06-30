@@ -48,7 +48,7 @@ sudo systemctl restart picom.service
 | Mod+[                  | minimize client                                                     |
 | Mod+r                  | spawing prompt that will not be visible(esc for exiting from there) |
 | Mod+d                  | show rofi drun menu                                                 |
-| Mod+w                  | show rofi window menu                                               |
+| Mod+Shift+d            | show rofi window menu                                               |
 | Mod+x                  | toggle visiblity of shutdown options                                |
 | Mod+h                  | seek 10 sec backward                                                |
 | Mod+j                  | play previous audio or video                                        |
