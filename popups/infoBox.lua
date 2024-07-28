@@ -11,6 +11,12 @@ local naughty = require("naughty")
 
 local function infoBox(s)
     -- naughty.notification({ text = tostring(s.geometry.width) })
+    local screen_geometry = s.geometry
+
+    local pop_width = screen_geometry.width*(22/100)
+    local pop_height = screen_geometry.height*(53/100)
+    local pop_x = screen_geometry.x + pop_width *0.2
+    local pop_y = screen_geometry.y + pop_height *0.7
 
     local popup = awful.popup {
         widget = {
@@ -52,11 +58,12 @@ local function infoBox(s)
                 gears.shape.rounded_rect(cr, width, height, 10)
             end,
             bg = "#22222277",
-            forced_width = 400,
-            forced_height = 600,
+            forced_width = pop_width,   -- 400,
+            forced_height = pop_height, --600,
         },
-        x = 120,
-        y = 380,
+        screen = s,
+        x = pop_x,
+        y = pop_y,
         visible = true,
         ontop = false,
         bg = "#00000000",
