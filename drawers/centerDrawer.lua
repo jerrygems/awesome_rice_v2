@@ -63,9 +63,8 @@ local gen = function(ic, txt, cmd)
 
     return btn
 end
-local function btmDrawer()
+local function btmDrawer(s)
     local draw = awful.popup {
-
         widget = wibox.widget {
             {
                 gen(img1, "shutdown", "systemctl poweroff -i"),
@@ -78,6 +77,7 @@ local function btmDrawer()
             forced_width = 800,
             widget = wibox.container.background
         },
+        screen = s,
         bg = "#00000000",
         placement = awful.placement.centered,
         shape = gears.shape.rounded_rect,
