@@ -20,7 +20,7 @@ Description=Picom X compositor
 ExecStart=bash /home/{enter your username}/.config/awesome/service.sh
 Environment="DISPLAY=:0"
 Restart=always
-User=spidey
+User={enter you username}
 
 [Install]
 WantedBy=multi-user.target
