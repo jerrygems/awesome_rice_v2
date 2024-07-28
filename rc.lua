@@ -32,6 +32,9 @@ local notifdrawer = require("drawers.notifDrawer")
 -- notificationcenter
 local notifCenter = require("notifications.notifCenter")
 local bottomBar = require("bars.Bbar.Bbar")
+-- extra stuff
+
+
 
 if awesome.startup_errors then
     naughty.notify({
@@ -64,7 +67,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.useless_gap = 3
+beautiful.useless_gap = 5
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
@@ -73,16 +76,16 @@ editor_cmd = terminal .. " -e " .. editor
 -- Default modkey.
 -- modkey = "Mod4"
 
-awful.layout.layouts = {awful.layout.suit.floating, --
-awful.layout.suit.tile, awful.layout.suit.tile.left, awful.layout.suit.tile.bottom, awful.layout.suit.tile.top, --
-awful.layout.suit.fair, awful.layout.suit.fair.horizontal, --
-awful.layout.suit.spiral, awful.layout.suit.max, awful.layout.suit.magnifier, --
-awful.layout.suit.corner.nw}
+awful.layout.layouts = { awful.layout.suit.floating,                                                                --
+    awful.layout.suit.tile, awful.layout.suit.tile.left, awful.layout.suit.tile.bottom, awful.layout.suit.tile.top, --
+    awful.layout.suit.fair, awful.layout.suit.fair.horizontal,                                                      --
+    awful.layout.suit.spiral, awful.layout.suit.max, awful.layout.suit.magnifier,                                   --
+    awful.layout.suit.corner.nw }
 
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
+        local wallpaper = "~/Downloads/anime.png"
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
@@ -106,7 +109,7 @@ root.keys(keybindings.globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = {{
+awful.rules.rules = { {
     rule = {},
     properties = {
         border_width = 2,
@@ -119,14 +122,14 @@ awful.rules.rules = {{
         placement = awful.placement.no_overlap + awful.placement.no_offscreen
     }
 }, -- Add titlebars to normal clients and dialogs
-{
-    rule_any = {
-        type = {"normal", "dialog"}
-    },
-    properties = {
-        titlebars_enabled = true
-    }
-}}
+    {
+        rule_any = {
+            type = { "normal", "dialog" }
+        },
+        properties = {
+            titlebars_enabled = true
+        }
+    } }
 -- }}}
 
 -- {{{ Signals
@@ -165,7 +168,7 @@ end)
 awful.screen.connect_for_each_screen(function(s)
     -- set_wallpaper(s)
 
-    awful.tag({"1", "2", "3", "4", "5", "6", "7", "8", "9"}, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -217,149 +220,151 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 awful.screen.connect_for_each_screen(function(s)
+    if s.index == 2 then
+        set_wallpaper(s)
+        s.left_bar = awful.wibar({
+            position = "left",
+            screen = s,
+            type = "normal",
+            width = s.geometry.width * (2.2 / 100),
+            height = s.geometry.height * (85 / 100),
+            visible = true,
+            margins = {
+                left = 5,
+                right = 5
+            },
+            bg = "#ffffff11",
+            fg = "#ffffffff",
+            ontop = false,
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 8)
+            end
+        })
 
-    set_wallpaper(s)
-    s.left_bar = awful.wibar({
-        position = "left",
-        screen = s,
-        type = "normal",
-        width = s.geometry.width * (2 / 100),
-        height = s.geometry.height * (85 / 100),
-        visible = true,
-        margins = {
-            left = 5,
-            right = 5
-        },
-        bg = "#ffffff11",
-        fg = "#ffffffff",
-        ontop = false,
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 8)
-        end
-    })
+        s.left_bar:setup {
 
-    s.left_bar:setup{
+            layout = wibox.layout.align.vertical,
+            taglist.taglist_fun(s),
+            tools.toolBoxBar(s)
+        }
 
-        layout = wibox.layout.align.vertical,
-        taglist.taglist_fun(s),
-        tools.toolBoxBar(s)
-    }
+        -- -- --
+        s.top_bar = awful.wibar({
+            position = "top",
+            screen = s,
+            type = "normal",
+            width = s.geometry.width * (98 / 100),
+            height = s.geometry.height * (3.6 / 100),
+            visible = true,
+            margins = {
+                top = 3,
+                bottom = 4
+            },
+            -- bg = "#00000077",
+            bg = "#ffffff11",
+            fg = "#ffffffff",
+            ontop = false,
+            -- border_width = 4,
+            -- border_color = "#000000",
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 8)
+            end
+        })
 
-    -- -- --
-    s.top_bar = awful.wibar({
-        position = "top",
-        screen = s,
-        type = "normal",
-        width = s.geometry.width * (98 / 100),
-        height = s.geometry.height * (3.5 / 100),
-        visible = true,
-        margins = {
-            top = 3,
-            bottom = 4
-        },
-        -- bg = "#00000077",
-        bg = "#ffffff11",
-        fg = "#ffffffff",
-        ontop = false,
-        -- border_width = 4,
-        -- border_color = "#000000",
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 8)
-        end
-    })
+        s.top_bar:setup {
+            layout = wibox.layout.align.horizontal,
 
-    s.top_bar:setup{
-        layout = wibox.layout.align.horizontal,
+            {
+                task.tasklistBar(s),
+                activity.activityBar(s),
+                widget = wibox.container.place,
+                layout = wibox.layout.fixed.horizontal
+            },
+            wibox.container.place(gizmo.gizmoZ(s), "right", "center"),
+            wibox.container.place(systray.systray(s), "right", "center")
 
-        {
-            task.tasklistBar(s),
-            activity.activityBar(s),
-            widget = wibox.container.place,
-            layout = wibox.layout.fixed.horizontal
-        },
-        wibox.container.place(gizmo.gizmoZ(s), "right", "center"),
-        wibox.container.place(systray.systray(s), "right", "center")
+        }
 
-    }
 
-    s.bottom_bar = awful.wibar({
-        position = "bottom",
-        screen = s,
-        type = "normal",
-        width = s.geometry.width * (70 / 100),
-        height = s.geometry.height * (3.5 / 100),
-        visible = true,
-        margins = {
-            top = 3
-        },
-        bg = "#ffffff11",
-        -- bg = "#00000000",
-        fg = "#ffffffff",
-        ontop = false,
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 8)
-        end
-    })
+        s.bottom_bar = awful.wibar({
+            position = "bottom",
+            screen = s,
+            type = "normal",
+            width = s.geometry.width * (70 / 100),
+            height = s.geometry.height * (3.5 / 100),
+            visible = true,
+            margins = {
+                top = 3,
+                bottom = 3,
+            },
+            bg = "#ffffff11",
+            -- bg = "#00000000",
+            fg = "#DC143Cff",
+            ontop = false,
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 8)
+            end
+        })
 
-    s.bottom_bar:setup{
-        layout = wibox.layout.align.horizontal,
-        bottomBar.Bbar(s)
+        s.bottom_bar:setup {
+            layout = wibox.layout.align.horizontal,
+            bottomBar.Bbar(s)
 
-    }
+        }
 
-    s.integration_bar = awful.wibar({
-        position = "right",
-        screen = s,
-        type = "normal",
-        width = s.geometry.width * (2 / 100),
-        height = s.geometry.height * (85 / 100),
-        visible = true,
-        -- x = 5,
-        margins = {
-            right = 5,
-            left = 5
-        },
-        -- bg = "#00000077",
-        bg = "#ffffff11",
-        fg = "#ffffffff",
-        ontop = false,
-        -- border_width = 4,
-        -- border_color = "#000000",
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 8)
-        end
-    })
 
-    s.integration_bar:setup{
-        integrate.integrations(s),
-        favs.favourites(s),
-        layout = wibox.layout.flex.vertical
+        s.integration_bar = awful.wibar({
+            position = "right",
+            screen = s,
+            type = "normal",
+            width = s.geometry.width * (2.2 / 100),
+            height = s.geometry.height * (85 / 100),
+            visible = true,
+            margins = {
+                right = 5,
+                left = 5
+            },
+            bg = "#ffffff11",
+            fg = "#ffffffff",
+            ontop = false,
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 8)
+            end
+        })
 
-    }
+        s.integration_bar:setup {
+            integrate.integrations(s),
+            favs.favourites(s),
+            layout = wibox.layout.flex.vertical
 
-    local toggle_bar = awful.key({modkey, "Shift"}, "b", function()
-        s.integration_bar.visible = not s.integration_bar.visible
-        s.left_bar.visible = not s.left_bar.visible
-        s.bottom_bar.visible = not s.bottom_bar.visible
-        s.top_bar.visible = not s.top_bar.visible
-    end, {
-        description = "Toggle integration bar",
-        group = "custom"
-    })
-    local basic_toggle = awful.key({modkey}, "b", function()
-        s.integration_bar.visible = not s.integration_bar.visible
-        s.left_bar.visible = not s.left_bar.visible
-        s.bottom_bar.visible = not s.bottom_bar.visible
-    end, {
-        description = "Toggle integration bar",
-        group = "custom"
-    })
+        }
 
-    root.keys(gears.table.join(root.keys(), toggle_bar, basic_toggle))
 
+        local toggle_bar = awful.key({ modkey, "Shift" }, "b", function()
+            s.integration_bar.visible = not s.integration_bar.visible
+            s.left_bar.visible = not s.left_bar.visible
+            s.bottom_bar.visible = not s.bottom_bar.visible
+            s.top_bar.visible = not s.top_bar.visible
+        end, {
+            description = "Toggle integration bar",
+            group = "custom"
+        })
+        local basic_toggle = awful.key({ modkey }, "b", function()
+            s.integration_bar.visible = not s.integration_bar.visible
+            s.left_bar.visible = not s.left_bar.visible
+            s.bottom_bar.visible = not s.bottom_bar.visible
+        end, {
+            description = "Toggle integration bar",
+            group = "custom"
+        })
+
+        root.keys(gears.table.join(root.keys(), toggle_bar, basic_toggle))
+    end
 end)
 
 beautiful.notification_font = "JetBrainsMono 15"
+beautiful.notification_bg = "#000000aa"
+beautiful.notification_fg = "#fc035a"
 naughty.config.defaults.ontop = true
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = 8
@@ -371,6 +376,17 @@ end)
 naughty.notification({
     title = "Let's Create Something osm"
 })
+
+shutdrawer().visible = false
+local qt = [[
+...But, then again, isn't it all the same? Our senses just mediocre inputs to our brain? Sure, we rely on them, trust they accurately portray the real world around us, but what if the haunting truth is they can't? That what we perceive isn't the real world at all, but just our mind's best guess? That all we really have is a garbled reality, a truly fuzzy picture we will never make out?
+    ]]
+awful.screen.connect_for_each_screen(function(s)
+    infoBox.infoBox(s)
+    shutdrawer(s)
+    require("stuff.AiChat").AiChat(20, 45, 3.6, 0.5, "#00000066", s) -- AiChat(w,h,posx,posy,screen)
+    require("popups.Quotes").Quotes(30, 40, 1, 1.4, qt, s)           -- Quotes(w,h,posx,posy,quote_text,screen)
+end)
 
 --[[
     KodeMono
@@ -386,12 +402,4 @@ naughty.notification({
     Caveat
     BlackOpsOne
     ArchivoBlack
-    ]]
-shutdrawer().visible = false
-awful.screen.connect_for_each_screen(function(s)
-    infoBox.infoBox(s)
-    shutdrawer()
-
-    require("popups.Quotes").Quotes()
-end)
-
+]]
