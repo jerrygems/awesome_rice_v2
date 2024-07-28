@@ -8,7 +8,6 @@ local function activityBar(s)
     local status = "Unknown"
     local box = wibox.widget {
         markup = "<<span color='"..config.actvt_fnt_clr.."' font='"..config.actvt_fnt.."'><b>Hey, I Just got Started</b></span>",
-        font = "KodeMono 12",
         widget = wibox.widget.textbox
     }
     client.connect_signal("focus", function(c)
