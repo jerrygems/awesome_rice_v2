@@ -99,8 +99,8 @@ local vars = {
     icons_df_clr_on_hover = "#ff035bff",
 
     tag_bg = "#00000099",
-    tag_bg_empty = "#ccf7feff",
-    tag_bg_occupied = "#ff035bff",
+    tag_bg_empty = "#7FE5F022",
+    tag_bg_occupied = "#ff035b88",
     tag_bg_focus = "#04d9ffff",
     tag_bg_urgent = "#ff3d74",
     tag_inner_radius = 20,
