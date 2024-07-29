@@ -126,26 +126,26 @@ local function favourites(s)
         {
             {
                 {
-                    wibox.container.margin(tool1, 8, 5, 8, 8),
-                    wibox.container.margin(tool2, 5, 5, 8, 8),
-                    wibox.container.margin(tool3, 10, 5, 8, 8),
-                    wibox.container.margin(tool4, 5, 5, 8, 8),
-                    wibox.container.margin(tool5, 5, 5, 8, 8),
-                    wibox.container.margin(tool6, 5, 5, 8, 8),
+                    wibox.container.margin(tool1, 8, 5, 6, 6),
+                    wibox.container.margin(tool2, 5, 5, 6, 6),
+                    wibox.container.margin(tool3, 10, 5, 6, 6),
+                    wibox.container.margin(tool4, 5, 5, 6, 6),
+                    wibox.container.margin(tool5, 5, 5, 6, 6),
+                    wibox.container.margin(tool6, 5, 5, 6, 6),
                     layout = wibox.layout.flex.vertical
                 },
                 widget = wibox.container.place
             },
             widget = wibox.widget.background,
             bg = "#00000099",
-            forced_height = HT * (20 / 100),
-            forced_width = 2,
+            forced_height = HT * (24 / 100),
+            -- forced_width = 0,
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 5)
             end
         }
     }
-    return wibox.container.margin(toolBox, 3, 3, HT * (13 / 100), 0)
+    return wibox.container.margin(toolBox, 3, 3, HT * (7 / 100), 0)
 end
 
 return {

@@ -220,7 +220,7 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 awful.screen.connect_for_each_screen(function(s)
-    if s.index == 2 then
+    if s.index == 1 then
         set_wallpaper(s)
         s.left_bar = awful.wibar({
             position = "left",
