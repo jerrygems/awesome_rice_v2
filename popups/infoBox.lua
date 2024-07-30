@@ -9,14 +9,14 @@ local musicBox = require("popups.musicBox")
 local naughty = require("naughty")
 
 
-local function infoBox(s)
+local function infoBox(w, h, posx, posy, s)
     -- naughty.notification({ text = tostring(s.geometry.width) })
     local screen_geometry = s.geometry
 
-    local pop_width = screen_geometry.width*(22/100)
-    local pop_height = screen_geometry.height*(53/100)
-    local pop_x = screen_geometry.x + pop_width *0.2
-    local pop_y = screen_geometry.y + pop_height *0.7
+    local pop_width = screen_geometry.width * (w / 100)
+    local pop_height = screen_geometry.height * (h / 100)
+    local pop_x = screen_geometry.x + pop_width * posx
+    local pop_y = screen_geometry.y + pop_height * posy
 
     local popup = awful.popup {
         widget = {

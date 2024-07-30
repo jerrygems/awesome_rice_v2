@@ -69,7 +69,7 @@ end
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.useless_gap = 5
 -- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -109,27 +109,38 @@ root.keys(keybindings.globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = { {
-    rule = {},
-    properties = {
-        border_width = 2,
-        border_color = "#00ffff",
-        focus = awful.client.focus.filter,
-        raise = true,
-        keys = keybindings.clientkeys,
-        buttons = keybindings.clientbuttons,
-        screen = awful.screen.preferred,
-        placement = awful.placement.no_overlap + awful.placement.no_offscreen
-    }
-}, -- Add titlebars to normal clients and dialogs
+awful.rules.rules = {
     {
-        rule_any = {
-            type = { "normal", "dialog" }
-        },
+        rule = {},
         properties = {
-            titlebars_enabled = true
+            border_width = 2,
+            border_color = "#ff0000",
+            focus = awful.client.focus.filter,
+            raise = true,
+            keys = keybindings.clientkeys,
+            buttons = keybindings.clientbuttons,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen
         }
-    } }
+    },
+    {
+        rule = { class = "Firefox-esr" },
+        properties = { tag = "5", screen = 1 }
+    },
+    {
+        rule = { class = "obsidian" },
+        properties = { tag = "4", screen = 1 }
+    },
+    {
+        rule = { class = "discord" },
+        properties = { tag = "9", screen = 1 }
+    },
+    {
+        rule = { class = "spotify" },
+        properties = { tag = "8", screen = 1 }
+    }
+
+}
 -- }}}
 
 -- {{{ Signals
@@ -145,31 +156,48 @@ client.connect_signal("manage", function(c)
     end
 end)
 
--- client.connect_signal("request::titlebars", function(c)
---    titlebar(c)
--- end)
-
--- -- so here we can define the events of mouse
--- client.connect_signal("mouse::enter", function(c)
---     c:emit_signal("request::activate", "mouse_enter", {
---         raise = false
---     })
--- end)
-
--- client.connect_signal("focus", function(c)
---     c.border_color = "#00ffff"
--- end)
--- client.connect_signal("unfocus", function(c)
---     c.border_color = beautiful.border_normal
--- end)
-
 -- bars stuff will be from here
 
 awful.screen.connect_for_each_screen(function(s)
     -- set_wallpaper(s)
 
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-
+    awful.tag.add("1", {
+        layout = awful.layout.suit.spiral.dwindle,
+        screen = s,
+        selected = true,
+    })
+    awful.tag.add("2", {
+        layout = awful.layout.suit.corner.nw,
+        screen = s,
+    })
+    awful.tag.add("3", {
+        layout = awful.layout.suit.tile.bottom,
+        screen = s,
+    })
+    awful.tag.add("4", {
+        layout = awful.layout.suit.tile,
+        screen = s,
+    })
+    awful.tag.add("5", {
+        layout = awful.layout.suit.floating,
+        screen = s,
+    })
+    awful.tag.add("6", {
+        layout = awful.layout.suit.tile,
+        screen = s,
+    })
+    awful.tag.add("7", {
+        layout = awful.layout.suit.tile,
+        screen = s,
+    })
+    awful.tag.add("8", {
+        layout = awful.layout.suit.max,
+        screen = s,
+    })
+    awful.tag.add("9", {
+        layout = awful.layout.suit.max,
+        screen = s,
+    })
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
@@ -183,40 +211,6 @@ awful.screen.connect_for_each_screen(function(s)
     end), awful.button({}, 5, function()
         awful.layout.inc(-1)
     end)))
-
-    -- Create a taglist widget
-    -- s.mytaglist = awful.widget.taglist {
-    --     screen = s,
-    --     filter = awful.widget.taglist.filter.all,
-    --     buttons = tag_and_task_btn.taglist_buttons
-    -- }
-    -- Create a tasklist widget
-    -- s.mytasklist = awful.widget.tasklist {
-    --     screen = s,
-    --     filter = awful.widget.tasklist.filter.currenttags,
-    --     buttons = tag_and_task_btn.tasklist_buttons
-    -- }
-    -- Create the wibox
-    -- s.mywibox = awful.wibar({
-    --     position = "top",
-    --     screen = s
-    -- })
-
-    -- Add widgets to the wibox
-    -- s.mywibox:setup {
-    --     layout = wibox.layout.align.horizontal,
-    --     {
-    --         layout = wibox.layout.fixed.horizontal,
-    --         s.mytaglist,
-    --         s.mypromptbox
-    --     },
-    --     s.mytasklist,
-    --     {
-    --         layout = wibox.layout.fixed.horizontal,
-    --         wibox.widget.systray(),
-    --         s.mylayoutbox
-    --     }
-    -- }
 end)
 
 awful.screen.connect_for_each_screen(function(s)
@@ -382,10 +376,10 @@ local qt = [[
 ...But, then again, isn't it all the same? Our senses just mediocre inputs to our brain? Sure, we rely on them, trust they accurately portray the real world around us, but what if the haunting truth is they can't? That what we perceive isn't the real world at all, but just our mind's best guess? That all we really have is a garbled reality, a truly fuzzy picture we will never make out?
     ]]
 awful.screen.connect_for_each_screen(function(s)
-    infoBox.infoBox(s)
+    infoBox.infoBox(22, 53, 0.2, 0.7, s)
     shutdrawer(s)
     require("stuff.AiChat").AiChat(20, 45, 3.6, 0.5, "#00000066", s) -- AiChat(w,h,posx,posy,screen)
-    require("popups.Quotes").Quotes(30, 40, 1, 1.4, qt, s)           -- Quotes(w,h,posx,posy,quote_text,screen)
+    require("popups.Quotes").Quotes(30, 40, 1.1, 1.4, qt, s)         -- Quotes(w,h,posx,posy,quote_text,screen)
 end)
 
 --[[

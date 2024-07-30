@@ -2,14 +2,12 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 local rubato = require("lib.rubato")
-local naughty = require("naughty")
 local config = require("confs.config").vars
 
 local function taglist_fun(s)
     local prev_tag = nil
     local HT = s.geometry.height
     local WT = s.geometry.width
-    -- naughty.notification({ text = " : " .. index .. " : " .. tostring(tag)   })
     local taglist_template = {
         {
             {
@@ -76,7 +74,6 @@ local function taglist_fun(s)
     local wrapper = wibox.widget {
         {
             wibox.container.margin(taglist, 10, 10, 14, 14),
-            -- "#000000dd",
             bg = config.tag_bg,
             widget = wibox.container.background,
             shape = function(cr, width, height)

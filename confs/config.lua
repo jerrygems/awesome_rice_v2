@@ -99,8 +99,8 @@ local vars = {
     icons_df_clr_on_hover = "#ff035bff",
 
     tag_bg = "#00000099",
-    tag_bg_empty = "#ccf7feff",
-    tag_bg_occupied = "#ff035bff",
+    tag_bg_empty = "#7FE5F022",
+    tag_bg_occupied = "#ff035b88",
     tag_bg_focus = "#04d9ffff",
     tag_bg_urgent = "#ff3d74",
     tag_inner_radius = 20,
@@ -129,7 +129,9 @@ local vars = {
     notif_message_fnt = "KodeMono 9",
     notif_title_clr = "#ffffff",
     notif_message_clr = "#ffffff",
-    notif_width = 340
+    notif_width = 340,
+
+    -- left_bar_
 
 }
 
