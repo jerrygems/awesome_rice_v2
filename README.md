@@ -32,6 +32,24 @@ WantedBy=multi-user.target
 sudo systemctl enable picom.service
 sudo systemctl restart picom.service
 ```
+
+### required fonts 
+| required_fonts |
+|----------------|
+| KodeMono       |
+| MadimiOne      |
+| Micro5         |
+| Monoton    |
+| OleoScript |
+| PermanentMarker |
+| PlayfairDisplay |
+| RubikGlitchPop |
+| Satisfy |
+| Sixtyfour |
+| Caveat |
+| BlackOpsOne |
+| ArchivoBlack |
+
 ### and all the default keybindings are here 
 
 | Combinations           | Functionalities                                                     |
