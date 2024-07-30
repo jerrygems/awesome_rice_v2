@@ -384,7 +384,6 @@ local qt = [[
 awful.screen.connect_for_each_screen(function(s)
     infoBox.infoBox(s)
     shutdrawer(s)
-    require("stuff.AiChat").AiChat(20, 45, 3.6, 0.5, "#00000066", s) -- AiChat(w,h,posx,posy,screen)
     require("popups.Quotes").Quotes(30, 40, 1, 1.4, qt, s)           -- Quotes(w,h,posx,posy,quote_text,screen)
 end)
 
