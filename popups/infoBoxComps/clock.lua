@@ -5,13 +5,13 @@ local awful = require("awful")
 local function clock(s)
     local timeBox = wibox.widget {
         widget = wibox.widget.textbox,
-        markup = "<span color='#ffffff'><b>" .. os.date("%H:%M:%S") .. "</b></span>",
+        markup = "<span color='#ff035b'><b>" .. os.date("%H:%M:%S") .. "</b></span>",
         font = "ArchivoBlack 18",
         align = "center"
     }
     local dateBox = wibox.widget {
         widget = wibox.widget.textbox,
-        markup = "<span color='#ffffff'><b>" .. os.date("%d/%m/%y") .. "</b></span>",
+        markup = "<span color='#ff035b'><b>" .. os.date("%d/%m/%y") .. "</b></span>",
         font = "ArchivoBlack 18",
         align = "center"
     }
@@ -20,7 +20,7 @@ local function clock(s)
         widget = wibox.widget.separator
     }
     gears.timer {
-        timeout = 0.5, -- Check every second (adjust as needed)
+        timeout = 0.3, -- Check every second (adjust as needed)
         autostart = true,
         call_now = false,
         callback = function()

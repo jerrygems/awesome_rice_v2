@@ -175,7 +175,7 @@ local vars = {
 
     -- defaults
     -- def -> default
-    def_term = "kitty",
+    def_term = "alacritty",
     def_wall = "~/Downloads/anime.png",
     def_client_border_width = 2,
     def_client_border_color = "#ff0000",

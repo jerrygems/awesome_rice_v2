@@ -11,7 +11,7 @@ local function sysperf(s)
         align = "center",
         widget = wibox.widget.textbox,
     }
-    vicious.register(w1, vicious.widgets.cpu, "<span color='#04d9ff'>$1%</span>", 0.5)
+    vicious.register(w1, vicious.widgets.cpu, "<span color='#04d9ff'>$1%</span>", 2)
 
 
     local w2 = wibox.widget {
@@ -19,7 +19,7 @@ local function sysperf(s)
         align = "center",
         widget = wibox.widget.textbox,
     }
-    vicious.register(w2, vicious.widgets.mem, "<span color='#04d9ff'>$2</span>", 0.5, "cpu0")
+    vicious.register(w2, vicious.widgets.mem, "<span color='#04d9ff'>$2</span>", 2, "cpu0")
 
 
     local w3 = wibox.widget {
@@ -27,7 +27,7 @@ local function sysperf(s)
         align = "center",
         widget = wibox.widget.textbox,
     }
-    vicious.register(w3, vicious.widgets.fs, "<span color='#04d9ff'>${/ avail_gb}</span>", 0.5)
+    vicious.register(w3, vicious.widgets.fs, "<span color='#04d9ff'>${/ avail_gb}</span>", 2)
 
 
     local w4 = wibox.widget {
@@ -35,7 +35,21 @@ local function sysperf(s)
         align = "center",
         widget = wibox.widget.textbox,
     }
-    vicious.register(w4, vicious.widgets.fs, "<span color='#04d9ff'>${/ used_gb}</span>", 0.5)
+    vicious.register(w4, vicious.widgets.fs, "<span color='#04d9ff'>${/ used_gb}</span>", 2)
+
+    -- gears.timer {
+    --     timeout = 5,
+    --     autostart = true,
+    --     call_now = false,
+    --     callback = function()
+    --         awful.spawn.easy_async_with_shell(
+    --             "top -bn1 | grep 'Cpu' | awk '{print $2}'",
+    --             function(stdout, stderr, reason, exit_code)
+    --                 w1.markup = "<span color='#04d9ff'>"..stdout.."</span>"
+    --             end
+    --         )
+    --     end
+    -- }
 
 
     local wd1 = wibox.widget {

@@ -59,7 +59,7 @@ local function volume(s)
     }
     local prevvol = vol.value
     gears.timer {
-        timeout = 0.3, -- Check every second (adjust as needed)
+        timeout = 0.1, -- Check every second (adjust as needed)
         autostart = true,
         call_now = false,
         callback = function()
@@ -136,7 +136,6 @@ local function volume(s)
     }
     local bright = wibox.widget {
         max_value        = 100,
-        -- value        = 30,
         -- color         = "#ff0000",
         handle_color     = "#00000000",
         value            = 70,
@@ -179,7 +178,7 @@ local function volume(s)
     }
     local prevbright = bright.value
     gears.timer {
-        timeout = 0.3, -- Check every second (adjust as needed)
+        timeout = 0.1, -- Check every second (adjust as needed)
         autostart = true,
         call_now = false,
         callback = function()

@@ -10,7 +10,6 @@ local naughty = require("naughty")
 
 
 local function infoBox(w, h, posx, posy, s)
-    -- naughty.notification({ text = tostring(s.geometry.width) })
     local screen_geometry = s.geometry
 
     local pop_width = screen_geometry.width * (w / 100)

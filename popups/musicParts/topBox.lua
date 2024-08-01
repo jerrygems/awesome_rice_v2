@@ -1,12 +1,11 @@
 local wibox = require("wibox")
 local gears = require("gears")
+local awful = require("awful")
 local buttonBox = require("popups.musicParts.buttonBox")
 local bottomBox = require("popups.musicParts.bottomBox")
 
 local title = "Unknown"
 local artist = "Unknown"
-local img = "Unknown"
-local artUrl = "Unknown"
 
 local titleBox = wibox.widget {
     widget = wibox.widget.textbox,
@@ -16,35 +15,25 @@ local titleBox = wibox.widget {
 local artistBox = wibox.widget {
     widget = wibox.widget.textbox,
     markup = "<span color='#ffffff'><b>" .. artist .. "</b></span>",
-    font = "JetBrainsMono 12",
+    font = "JetBrainsMono 10",
 }
-local imageBox = wibox.widget {
-    widget = wibox.widget.imagebox,
-    image = img,
-    resize = true,
-}
+
 gears.timer {
     timeout = 1,
     autostart = true,
     call_now = true,
     callback = function()
-        title            = io.popen("playerctl metadata | awk '/:title/{for (i=3; i<=NF; i++) printf \"%s \", $i}'",
-            'r'):read(
-            "*a")
-        artist           = io.popen("playerctl metadata | awk '/:artist/{for (i=3; i<=NF; i++) printf \"%s \", $i}'",
-                'r')
-            :read(
-                "*a")
-        artUrl           = io.popen("playerctl metadata | awk '/:artUrl/{for (i=3; i<=NF; i++) printf \"%s \", $i}'",
-                'r')
-            :read(
-                "*a")
+        awful.spawn.easy_async_with_shell("playerctl metadata --format '{{ title }}'",
+            function(out)
+                titleBox.markup = "<span color='#ff035bff'><b>" .. out .. "</b></span>"
+            end
+        )
 
-        -- awful.spawn.easy_async_with_shell("wget " .. artUrl .. " -O /home/spidey/.config/awesome/dust/waste/music")
-
-        titleBox.markup  = "<span color='#ff035bff'><b>" .. title .. "</b></span>"
-        artistBox.markup = "<span color='#ff035bff'><b>" .. artist .. "</b></span>"
-        imageBox.image   = "/home/spidey/.config/awesome/dust/waste/music"
+        awful.spawn.easy_async_with_shell("playerctl metadata --format '{{ artist }}'",
+            function(out)
+                artistBox.markup = "<span color='#ff035bff'><b>" .. out .. "</b></span>"
+            end
+        )
     end
 }
 
@@ -58,7 +47,7 @@ local function topBox()
                             {
                                 titleBox,
                                 widget = wibox.container.margin,
-                                margins = { top = 10, bottom = 0, left = 25, right = 25 }
+                                margins = { top = 8, bottom = 0, left = 25, right = 25 }
                             },
                             widget = wibox.container.background,
                             bg = "#00000000",
@@ -67,18 +56,23 @@ local function topBox()
                         {
                             {
                                 {
-                                    artistBox,
+                                    {
+                                        artistBox,
+                                        widget = wibox.container.background,
+                                        forced_height = 15
+                                    },
                                     widget = wibox.container.margin,
-                                    margins = { top = 0, bottom = 0, left = 25, right = 25 }
+                                    margins = { top = 5, bottom = 0, left = 25, right = 25 }
                                 },
                                 {
                                     bottomBox.bottomBox(),
                                     widget = wibox.container.margin,
                                     margins = { top = 0, bottom = 0, left = 25, right = 25 }
                                 },
-                                layout = wibox.layout.align.vertical
+                                layout = wibox.layout.fixed.vertical
                             },
                             widget = wibox.container.background,
+                            forced_height = 100,
                             bg = "#00000000",
                         },
 
@@ -114,7 +108,7 @@ local function topBox()
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
         end,
-        
+
 
     }
 

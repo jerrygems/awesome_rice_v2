@@ -9,7 +9,7 @@ local function ArcBox(s)
     local arc1 = wibox.widget {
         id = "arc1",
         max_value = 100,
-        min_value = 10,
+        min_value = 1,
         thickness = 12,
         start_angle = 0,
         -- end_angle = 0 * math.pi / 180,
@@ -26,13 +26,12 @@ local function ArcBox(s)
         end
     }
     arc1.update = function(arg)
-        -- naughty.notification({ text = "" .. cpuval })
         arc1.animate.target = arg
     end
 
     vicious.register(arc1, vicious.widgets.cpu, function(widget, args)
         arc1.update(tonumber(args[1]))
-    end, 1)
+    end, 2)
 
 
 
@@ -61,7 +60,7 @@ local function ArcBox(s)
         arc2.animate.target = arg
     end
 
-    vicious.register(arc2, vicious.widgets.mem, function(widget, args)
+    vicious.register(arc1, vicious.widgets.cpu, function(widget, args)
         arc2.update(tonumber(args[1]))
     end, 1)
 
@@ -123,7 +122,7 @@ local function ArcBox(s)
 
     vicious.register(arc3, vicious.widgets.mem, function(widget, args)
         arc4.update(tonumber(args[1]))
-    end, 0.5)
+    end, 10)
 
 
 
@@ -131,8 +130,8 @@ local function ArcBox(s)
     local box = wibox.widget {
         {
             {
-                arc1,
-                -- arc2,
+                -- arc1,
+                arc2,
                 -- arc3,
                 arc4,
 

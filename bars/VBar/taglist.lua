@@ -17,7 +17,7 @@ local function taglist_fun(s)
                 visible = false,
                 widget = wibox.widget.textbox
             },
-            margins = {5, 5, 5, 5},
+            margins = { 5, 5, 5, 5 },
             widget = wibox.container.margin
         },
         id = 'background_role',
@@ -25,10 +25,12 @@ local function taglist_fun(s)
 
         create_callback = function(self, tag, index)
             self.animate = rubato.timed {
-                duration = 0.20,
+                override_dt = true,
+                duration = 0.2,
                 subscribed = function(pos)
                     self:get_children_by_id('background_role')[1].forced_height = pos
-                end
+                end,
+                easing = rubato.bouncy
             }
 
             self.update = function()
@@ -73,7 +75,7 @@ local function taglist_fun(s)
 
     local wrapper = wibox.widget {
         {
-            wibox.container.margin(taglist, 10, 10, 14, 14),
+            wibox.container.margin(taglist, 10, 10, 13, 13),
             bg = config.tag_bg,
             widget = wibox.container.background,
             shape = function(cr, width, height)

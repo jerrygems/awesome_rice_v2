@@ -12,9 +12,10 @@ local function bottomBox()
         background_color = "#ffffff44",
         value            = 0,
         max_value        = 100,
+        forced_height    = 20
     }
     gears.timer {
-        timeout = 0.5,
+        timeout = 1,
         autostart = true,
         call_now = true,
         callback = function()
@@ -33,7 +34,7 @@ local function bottomBox()
 
         {
             seekbar,
-            widget = wibox.container.background,
+            widget = wibox.container.background
         },
         widget = wibox.container.margin,
         margins = { top = 15, bottom = 15, left = 0, right = 0 }

@@ -256,11 +256,9 @@ naughty.notification({
 shutdrawer().visible = config.default_shutdrawer_visibility
 
 awful.screen.connect_for_each_screen(function(s)
-    switches(s)
-    require("popups.musicBoxPopup")(s)
     infoBox.infoBox(config.pop_infobox.width, config.pop_infobox.height, config.pop_infobox.posx, config.pop_infobox
         .posy, s)
-    shutdrawer(s)
+
     -- require("stuff.AiChat").AiChat(config.pop_aichat.width, config.pop_aichat.height, config.pop_aichat.posx,
     -- config.pop_aichat.posy, config.pop_aichat.bg, s)    -- AiChat(w,h,posx,posy,screen)
     require("popups.Quotes").Quotes(config.pop_quotes.width, config.pop_quotes.height, config.pop_quotes.posx,
