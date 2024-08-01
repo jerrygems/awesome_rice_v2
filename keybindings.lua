@@ -3,8 +3,12 @@ local awful = require("awful")
 local naughty = require("naughty")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local shutter = require("drawers.centerDrawer")
+local switchboard = require("drawers.switchDrawer")
+local musicBox = require("popups.musicBoxPopup")
 
 local shut = shutter()
+local switch = switchboard()
+local music = musicBox()
 modkey = "Mod4"
 
 -- {{{ Key bindings
@@ -27,9 +31,11 @@ local globalkeys = gears.table.join(
         { description = "go back", group = "client" }),
 
     -- Standard program
-    awful.key({ modkey, }, "Return", function() awful.spawn.easy_async(terminal,function ()
-        return nil
-    end) end,
+    awful.key({ modkey, }, "Return", function()
+            awful.spawn.easy_async(terminal, function()
+                return nil
+            end)
+        end,
         { description = "open a terminal", group = "launcher" }),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
         { description = "reload awesome", group = "awesome" }),
@@ -37,7 +43,7 @@ local globalkeys = gears.table.join(
         { description = "quit awesome", group = "awesome" }),
     awful.key({ modkey, }, "t", function() awful.layout.inc(1) end,
         { description = "select next", group = "layout" }),
-    awful.key({ modkey, "Shift" }, "t", function() awful.layout.set(awful.layout.layouts[1]) end,
+    awful.key({ modkey, "Shift" }, "t", function() awful.layout.inc(-1) end,
         { description = "select previous", group = "layout" }),
 
     awful.key({ modkey }, "]",
@@ -59,73 +65,82 @@ local globalkeys = gears.table.join(
 
     awful.key({ modkey }, "d",
         function(c)
-            awful.spawn.easy_async("rofi -show drun ",function ()
+            awful.spawn.easy_async("rofi -show drun ", function()
                 return nil
             end)
         end,
         { description = "rofi", group = "client" }),
     awful.key({ modkey, "Shift" }, "d",
         function(c)
-            awful.spawn.easy_async("rofi -show window ",function ()
+            awful.spawn.easy_async("rofi -show window ", function()
                 return nil
             end)
         end,
         { description = "rofi", group = "client" }),
-    awful.key({ modkey }, "x",
-
+    awful.key({ modkey }, "x", function(c)
+        shut.visible = not shut.visible
+        music.visible = false
+        switch.visible = false
+    end),
+    awful.key({ modkey }, "s", function()
+        switch.visible = not switch.visible
+        music.visible = false
+        shut.visible = false
+    end),
+    awful.key({ modkey, "Shift" }, "m", function()
+        music.visible = not music.visible
+        switch.visible = false
+        shut.visible = false
+    end),
+    awful.key({ modkey }, "h",
         function(c)
-            shut.visible = not shut.visible
-        end,
-        { description = "shutdown widget visibility", group = "client" }),
-    awful.key({modkey},"h",
-        function(c)
-            awful.spawn.easy_async("playerctl position 10-",function ()
+            awful.spawn.easy_async("playerctl position 10-", function()
                 return nil
             end)
         end,
-    {description="music seek", group="client"}),
-    awful.key({modkey},"j",
-    function(c)
-        awful.spawn.easy_async("playerctl previous",function ()
-            return nil
-        end)
-    end,
-    {description="music button", group="client"}),
-    awful.key({modkey},"k",
-    function(c)
-        awful.spawn.easy_async("playerctl play-pause",function ()
-            return nil
-        end)
-    end,
-    {description="music button", group="client"}),
-    awful.key({modkey},"l",
-    function(c)
-        awful.spawn.easy_async("playerctl next",function ()
-            return nil
-        end)
-    end,
-    {description="music button", group="client"}),
-    awful.key({modkey},";",
+        { description = "music seek", group = "client" }),
+    awful.key({ modkey }, "j",
         function(c)
-            awful.spawn.easy_async("playerctl position 10+",function ()
+            awful.spawn.easy_async("playerctl previous", function()
                 return nil
             end)
         end,
-    {description="music seek", group="client"}),
-    awful.key({modkey, "Shift" }, "Up",
+        { description = "music button", group = "client" }),
+    awful.key({ modkey }, "k",
         function(c)
-            awful.spawn.easy_async("pulsemixer --change-volume +10", function ()
+            awful.spawn.easy_async("playerctl play-pause", function()
                 return nil
             end)
         end,
-    {description="music volume", group="client"}),
-    awful.key({modkey, "Shift" }, "Down",
+        { description = "music button", group = "client" }),
+    awful.key({ modkey }, "l",
         function(c)
-            awful.spawn.easy_async("pulsemixer --change-volume -10",function ()
+            awful.spawn.easy_async("playerctl next", function()
                 return nil
             end)
         end,
-    {description="music volume", group="client"})
+        { description = "music button", group = "client" }),
+    awful.key({ modkey }, ";",
+        function(c)
+            awful.spawn.easy_async("playerctl position 10+", function()
+                return nil
+            end)
+        end,
+        { description = "music seek", group = "client" }),
+    awful.key({ modkey, "Shift" }, "Up",
+        function(c)
+            awful.spawn.easy_async("pulsemixer --change-volume +10", function()
+                return nil
+            end)
+        end,
+        { description = "music volume", group = "client" }),
+    awful.key({ modkey, "Shift" }, "Down",
+        function(c)
+            awful.spawn.easy_async("pulsemixer --change-volume -10", function()
+                return nil
+            end)
+        end,
+        { description = "music volume", group = "client" })
 )
 
 local clientkeys = gears.table.join(
@@ -148,7 +163,7 @@ local clientkeys = gears.table.join(
         { description = "move to master", group = "client" }),
     awful.key({ modkey, }, "o", function(c) c:move_to_screen() end,
         { description = "move to screen", group = "client" }),
-    awful.key({ modkey,}, "`", function(c) c.ontop = not c.ontop end,
+    awful.key({ modkey, }, "`", function(c) c.ontop = not c.ontop end,
         { description = "toggle keep on top", group = "client" }),
 
     awful.key({ modkey, }, "m",

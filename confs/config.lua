@@ -19,16 +19,7 @@ local username = os.getenv("USER") or os.getenv("USERNAME")
 -- mgs for margins
 -- clr for color
 local vars = {
-    TB_task_bg = "#000000",
-    TB_task_back_bg = "#00000055",
-    TB_task_width = 230,
-    TB_task_mx_width = 210,
-    TB_task_df_mgs = {
-        top = 0,
-        bottom = 0,
-        left = 5,
-        right = 5
-    },
+    startup_message = "Let's Create Something osm",
 
     actvt_fnt = "KodeMono 10",
     actvt_fnt_clr = "#ff035b",
@@ -124,15 +115,111 @@ local vars = {
     shutbtns_btns_clr = "#ffffffff",
     shutbtns_btns_clr_on_hover = "#ff035bff",
 
+
+    -- left_bar
+    -- LB -> left bar
+    LB_width = 2.2, -- in %
+    LB_height = 85, -- in %
+    LB_MG_left = 5,
+    LB_MG_right = 5,
+    LB_bg = "#ffffff11",
+    LB_fg = "#ffffffff",
+    LB_radius = 8,
+    LB_ontop = false,
+    LB_visible = true,
+
+    -- top_bar
+    TB_width = 98,
+    TB_height = 3.6,
+    TB_MG_top = 3,
+    TB_MG_bottom = 4,
+    TB_bg = "#ffffff11",
+    TB_fg = "#ffffffff",
+    TB_ontop = false,
+    TB_radius = 8,
+    TB_visible = true,
+
+    TB_task_bg = "#000000",
+    TB_task_back_bg = "#00000055",
+    TB_task_width = 230,
+    TB_task_mx_width = 210,
+    TB_task_df_mgs = {
+        top = 0,
+        bottom = 0,
+        left = 5,
+        right = 5
+    },
+
+    -- bottom_bar
+    BB_width = 70,
+    BB_height = 3.5,
+    BB_MG_top = 3,
+    BB_MG_bottom = 3,
+    BB_bg = "#ffffff11",
+    BB_fg = "#DC143Cff",
+    BB_ontop = false,
+    BB_visible = true,
+    BB_radius = 8,
+
+    -- right_bar
+    RB_width = 2.2,
+    RB_height = 85,
+    RB_visible = true,
+    RB_MG_right = 5,
+    RB_MG_left = 5,
+    RB_bg = "#ffffff11",
+    RB_fg = "#ffffffff",
+    RB_ontop = false,
+    RB_radius = 8,
+
+
+    -- defaults
+    -- def -> default
+    def_term = "kitty",
+    def_wall = "~/Downloads/anime.png",
+    def_client_border_width = 2,
+    def_client_border_color = "#ff0000",
+    default_shutdrawer_visibility = false,
+
+    -- popup_configs
+    pop_infobox = {
+        width = 22,
+        height = 53,
+        posx = 0.2,
+        posy = 0.7
+    },
+    pop_aichat = {
+        width = 20,
+        height = 45,
+        posx = 3.6,
+        posy = 0.5,
+        bg = "#00000066",
+    },
+    pop_quotes = {
+        width = 30,
+        height = 40,
+        posx = 1.1,
+        posy = 1.4,
+        quote = [[
+            ...But, then again, isn't it all the same? Our senses just mediocre inputs to our brain? Sure, we rely on them, trust they accurately portray the real world around us, but what if the haunting truth is they can't? That what we perceive isn't the real world at all, but just our mind's best guess? That all we really have is a garbled reality, a truly fuzzy picture we will never make out?
+                ]]
+    },
+
+    -- notifications stuff here
+    notifs = {
+        position = "bottom_right",
+        bg = "#000000aa",
+        fg = "#fc035a",
+        font = "JetBrainsMono 15",
+        ontop = true,
+        timeout = 8,
+    },
     notif_bg_color = "#00000000",
     notif_title_fnt = "KodeMono 14",
     notif_message_fnt = "KodeMono 9",
     notif_title_clr = "#ffffff",
     notif_message_clr = "#ffffff",
     notif_width = 340,
-
-    -- left_bar_
-
 }
 
 return {

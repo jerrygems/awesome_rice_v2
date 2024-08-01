@@ -4,8 +4,7 @@ local wibox = require("wibox")
 local topBox = require("popups.musicParts.topBox")
 
 
-local function musicBox(s)
-
+local function musicBox(s, bg)
     local music = wibox.widget {
         wibox.container.place(topBox.topBox(), "center", "top"),
         widget = wibox.container.margin,
@@ -19,13 +18,13 @@ local function musicBox(s)
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
             end,
-            bg = "#000000dd",
+            bg = bg,
             forced_width = 300,
             forced_height = 180,
         },
         widget = wibox.widget.background,
         visible = true,
-        ontop = false,
+        -- ontop = true,
         bg = "#00000000",
 
     }

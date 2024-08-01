@@ -27,19 +27,22 @@ local infoBox = require("popups.infoBox")
 
 -- drawers
 local shutdrawer = require("drawers.centerDrawer")
-local notifdrawer = require("drawers.notifDrawer")
+local switches = require("drawers.switchDrawer")
 
 -- notificationcenter
 local notifCenter = require("notifications.notifCenter")
 local bottomBar = require("bars.Bbar.Bbar")
 -- extra stuff
 
+--config
+local config = require("confs.config").vars
+local bars = require("bars.bars")
 
 
 if awesome.startup_errors then
     naughty.notify({
         preset = naughty.config.presets.critical,
-        title = "Oops, there were errors during startup!",
+        title = "Oops! Jerry, errors during startup!",
         text = awesome.startup_errors
     })
 end
@@ -62,30 +65,34 @@ do
         in_error = false
     end)
 end
--- }}}
 
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
--- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.useless_gap = 5
--- This is used later as the default terminal and editor to run.
-terminal = "kitty"
+
+-- default terminal editor
+terminal = config.def_term
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
--- Default modkey.
--- modkey = "Mod4"
 
-awful.layout.layouts = { awful.layout.suit.floating,                                                                --
-    awful.layout.suit.tile, awful.layout.suit.tile.left, awful.layout.suit.tile.bottom, awful.layout.suit.tile.top, --
-    awful.layout.suit.fair, awful.layout.suit.fair.horizontal,                                                      --
-    awful.layout.suit.spiral, awful.layout.suit.max, awful.layout.suit.magnifier,                                   --
-    awful.layout.suit.corner.nw }
+
+awful.layout.layouts = {
+    awful.layout.suit.floating,
+    awful.layout.suit.tile,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.spiral,
+    awful.layout.suit.max,
+    awful.layout.suit.magnifier,
+    awful.layout.suit.corner.nw
+}
 
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
-        local wallpaper = "~/Downloads/anime.png"
+        local wallpaper = config.def_wall
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
@@ -93,9 +100,9 @@ local function set_wallpaper(s)
         gears.wallpaper.maximized(wallpaper, s, true)
     end
 end
-
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
+
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(awful.button({}, 3, function()
@@ -113,8 +120,8 @@ awful.rules.rules = {
     {
         rule = {},
         properties = {
-            border_width = 2,
-            border_color = "#ff0000",
+            border_width = config.def_client_border_width,
+            border_color = config.def_client_border_color,
             focus = awful.client.focus.filter,
             raise = true,
             keys = keybindings.clientkeys,
@@ -136,7 +143,7 @@ awful.rules.rules = {
         properties = { tag = "9", screen = 1 }
     },
     {
-        rule = { class = "spotify" },
+        rule = { class = "Spotify" },
         properties = { tag = "8", screen = 1 }
     }
 
@@ -159,45 +166,18 @@ end)
 -- bars stuff will be from here
 
 awful.screen.connect_for_each_screen(function(s)
-    -- set_wallpaper(s)
+    set_wallpaper(s)
 
-    awful.tag.add("1", {
-        layout = awful.layout.suit.spiral.dwindle,
-        screen = s,
-        selected = true,
-    })
-    awful.tag.add("2", {
-        layout = awful.layout.suit.corner.nw,
-        screen = s,
-    })
-    awful.tag.add("3", {
-        layout = awful.layout.suit.tile.bottom,
-        screen = s,
-    })
-    awful.tag.add("4", {
-        layout = awful.layout.suit.tile,
-        screen = s,
-    })
-    awful.tag.add("5", {
-        layout = awful.layout.suit.floating,
-        screen = s,
-    })
-    awful.tag.add("6", {
-        layout = awful.layout.suit.tile,
-        screen = s,
-    })
-    awful.tag.add("7", {
-        layout = awful.layout.suit.tile,
-        screen = s,
-    })
-    awful.tag.add("8", {
-        layout = awful.layout.suit.max,
-        screen = s,
-    })
-    awful.tag.add("9", {
-        layout = awful.layout.suit.max,
-        screen = s,
-    })
+    awful.tag.add("1", { layout = awful.layout.suit.spiral.dwindle, screen = s, selected = true, })
+    awful.tag.add("2", { layout = awful.layout.suit.corner.nw, screen = s, })
+    awful.tag.add("3", { layout = awful.layout.suit.tile.bottom, screen = s, })
+    awful.tag.add("4", { layout = awful.layout.suit.tile, screen = s, })
+    awful.tag.add("5", { layout = awful.layout.suit.floating, screen = s, })
+    awful.tag.add("6", { layout = awful.layout.suit.tile, screen = s, })
+    awful.tag.add("7", { layout = awful.layout.suit.tile, screen = s, })
+    awful.tag.add("8", { layout = awful.layout.suit.max, screen = s, })
+    awful.tag.add("9", { layout = awful.layout.suit.max, screen = s, })
+
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
@@ -216,58 +196,20 @@ end)
 awful.screen.connect_for_each_screen(function(s)
     if s.index == 1 then
         set_wallpaper(s)
-        s.left_bar = awful.wibar({
-            position = "left",
-            screen = s,
-            type = "normal",
-            width = s.geometry.width * (2.2 / 100),
-            height = s.geometry.height * (85 / 100),
-            visible = true,
-            margins = {
-                left = 5,
-                right = 5
-            },
-            bg = "#ffffff11",
-            fg = "#ffffffff",
-            ontop = false,
-            shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 8)
-            end
-        })
 
+        local bars_element = bars.funbars(s)
+
+        s.left_bar = bars_element.left
         s.left_bar:setup {
-
             layout = wibox.layout.align.vertical,
             taglist.taglist_fun(s),
             tools.toolBoxBar(s)
         }
 
-        -- -- --
-        s.top_bar = awful.wibar({
-            position = "top",
-            screen = s,
-            type = "normal",
-            width = s.geometry.width * (98 / 100),
-            height = s.geometry.height * (3.6 / 100),
-            visible = true,
-            margins = {
-                top = 3,
-                bottom = 4
-            },
-            -- bg = "#00000077",
-            bg = "#ffffff11",
-            fg = "#ffffffff",
-            ontop = false,
-            -- border_width = 4,
-            -- border_color = "#000000",
-            shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 8)
-            end
-        })
 
+        s.top_bar = bars_element.top
         s.top_bar:setup {
             layout = wibox.layout.align.horizontal,
-
             {
                 task.tasklistBar(s),
                 activity.activityBar(s),
@@ -276,124 +218,51 @@ awful.screen.connect_for_each_screen(function(s)
             },
             wibox.container.place(gizmo.gizmoZ(s), "right", "center"),
             wibox.container.place(systray.systray(s), "right", "center")
-
         }
 
 
-        s.bottom_bar = awful.wibar({
-            position = "bottom",
-            screen = s,
-            type = "normal",
-            width = s.geometry.width * (70 / 100),
-            height = s.geometry.height * (3.5 / 100),
-            visible = true,
-            margins = {
-                top = 3,
-                bottom = 3,
-            },
-            bg = "#ffffff11",
-            -- bg = "#00000000",
-            fg = "#DC143Cff",
-            ontop = false,
-            shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 8)
-            end
-        })
-
+        s.bottom_bar = bars_element.bottom
         s.bottom_bar:setup {
             layout = wibox.layout.align.horizontal,
             bottomBar.Bbar(s)
-
         }
 
-
-        s.integration_bar = awful.wibar({
-            position = "right",
-            screen = s,
-            type = "normal",
-            width = s.geometry.width * (2.2 / 100),
-            height = s.geometry.height * (85 / 100),
-            visible = true,
-            margins = {
-                right = 5,
-                left = 5
-            },
-            bg = "#ffffff11",
-            fg = "#ffffffff",
-            ontop = false,
-            shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 8)
-            end
-        })
-
+        s.integration_bar = bars_element.right
         s.integration_bar:setup {
             integrate.integrations(s),
             favs.favourites(s),
             layout = wibox.layout.flex.vertical
-
         }
 
 
-        local toggle_bar = awful.key({ modkey, "Shift" }, "b", function()
-            s.integration_bar.visible = not s.integration_bar.visible
-            s.left_bar.visible = not s.left_bar.visible
-            s.bottom_bar.visible = not s.bottom_bar.visible
-            s.top_bar.visible = not s.top_bar.visible
-        end, {
-            description = "Toggle integration bar",
-            group = "custom"
-        })
-        local basic_toggle = awful.key({ modkey }, "b", function()
-            s.integration_bar.visible = not s.integration_bar.visible
-            s.left_bar.visible = not s.left_bar.visible
-            s.bottom_bar.visible = not s.bottom_bar.visible
-        end, {
-            description = "Toggle integration bar",
-            group = "custom"
-        })
-
-        root.keys(gears.table.join(root.keys(), toggle_bar, basic_toggle))
+        root.keys(gears.table.join(root.keys(), bars_element.toggle_bar, bars_element.basic_toggle))
     end
 end)
 
-beautiful.notification_font = "JetBrainsMono 15"
-beautiful.notification_bg = "#000000aa"
-beautiful.notification_fg = "#fc035a"
-naughty.config.defaults.ontop = true
+beautiful.notification_font = config.notifs.font
+beautiful.notification_bg = config.notifs.bg
+beautiful.notification_fg = config.notifs.fg
+naughty.config.defaults.ontop = config.notifs.ontop
 naughty.config.defaults.screen = awful.screen.focused()
-naughty.config.defaults.timeout = 8
-naughty.config.defaults.position = "bottom_right"
+naughty.config.defaults.timeout = config.notifs.timeout
+naughty.config.defaults.position = config.notifs.position
 naughty.connect_signal("request::display", function(n)
-    notifCenter(n)
-    -- notifdrawer(n)
+    require("notifications.notifMain").notifMain(n)
 end)
 naughty.notification({
-    title = "Let's Create Something osm"
+    title = config.startup_message
 })
 
-shutdrawer().visible = false
-local qt = [[
-...But, then again, isn't it all the same? Our senses just mediocre inputs to our brain? Sure, we rely on them, trust they accurately portray the real world around us, but what if the haunting truth is they can't? That what we perceive isn't the real world at all, but just our mind's best guess? That all we really have is a garbled reality, a truly fuzzy picture we will never make out?
-    ]]
-awful.screen.connect_for_each_screen(function(s)
-    infoBox.infoBox(22, 53, 0.2, 0.7, s)
-    shutdrawer(s)
-    require("stuff.AiChat").AiChat(20, 45, 3.6, 0.5, "#00000066", s) -- AiChat(w,h,posx,posy,screen)
-    require("popups.Quotes").Quotes(30, 40, 1.1, 1.4, qt, s)         -- Quotes(w,h,posx,posy,quote_text,screen)
-end)
+shutdrawer().visible = config.default_shutdrawer_visibility
 
---[[
-    KodeMono
-    MadimiOne
-    Micro5
-    Monoton
-    OleoScript
-    PermanentMarker
-    PlayfairDisplay
-    RubikGlitchPop
-    Satisfy
-    Sixtyfour
-    Caveat
-    BlackOpsOne
-    ArchivoBlack
-]]
+awful.screen.connect_for_each_screen(function(s)
+    switches(s)
+    require("popups.musicBoxPopup")(s)
+    infoBox.infoBox(config.pop_infobox.width, config.pop_infobox.height, config.pop_infobox.posx, config.pop_infobox
+        .posy, s)
+    shutdrawer(s)
+    -- require("stuff.AiChat").AiChat(config.pop_aichat.width, config.pop_aichat.height, config.pop_aichat.posx,
+    -- config.pop_aichat.posy, config.pop_aichat.bg, s)    -- AiChat(w,h,posx,posy,screen)
+    require("popups.Quotes").Quotes(config.pop_quotes.width, config.pop_quotes.height, config.pop_quotes.posx,
+        config.pop_quotes.posy, config.pop_quotes.quote, s) -- Quotes(w,h,posx,posy,quote_text,screen)
+end)

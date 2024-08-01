@@ -5,8 +5,8 @@ local naughty = require("naughty")
 local beautiful = require("beautiful")
 local config = require("confs.config").vars
 
-local function notifCenter(n)
 
+local function notifCenter(n)
     local function textBox(txt, txtcolor, fnt, wrp)
         local box = wibox.widget {
             markup = "<span color='" .. txtcolor .. "' font='" .. fnt .. "'>" .. txt .. "</span>",
@@ -56,7 +56,7 @@ local function notifCenter(n)
         -- {
         --     -- incase of error check this section
         --     {
-                
+
         --         widget = naughty.list.actions
         --     },
         --     widget = wibox.container.background,
@@ -67,6 +67,7 @@ local function notifCenter(n)
 
     naughty.layout.box {
         notification = n,
+        visible = true,
         type = "notification",
         bg = config.notif_bg_clr,
         -- placement = awful.placement.bottom,
@@ -81,5 +82,8 @@ local function notifCenter(n)
     }
 
 end
+
+
+
 
 return notifCenter

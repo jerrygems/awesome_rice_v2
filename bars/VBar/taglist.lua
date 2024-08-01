@@ -25,7 +25,7 @@ local function taglist_fun(s)
 
         create_callback = function(self, tag, index)
             self.animate = rubato.timed {
-                duration = 0.15,
+                duration = 0.20,
                 subscribed = function(pos)
                     self:get_children_by_id('background_role')[1].forced_height = pos
                 end

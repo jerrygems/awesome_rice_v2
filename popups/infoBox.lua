@@ -33,7 +33,7 @@ local function infoBox(w, h, posx, posy, s)
                         widget = wibox.container.place,
                         align = 'center',
                     },
-                    musicBox.musicBox(s),
+                    musicBox.musicBox(s,"#000000dd"),
                     {
                         {
                             sysperf.sysperf(),
