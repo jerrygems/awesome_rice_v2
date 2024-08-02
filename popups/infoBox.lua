@@ -8,6 +8,8 @@ local arcbox = require("popups.infoBoxComps.ArcBox")
 local musicBox = require("popups.musicBox")
 local naughty = require("naughty")
 
+local config = require("confs.config").vars
+
 
 local function infoBox(w, h, posx, posy, s)
     local screen_geometry = s.geometry
@@ -23,28 +25,28 @@ local function infoBox(w, h, posx, posy, s)
                 {
                     {
                         {
-                            vol.volume(),
-                            clock.clock(),
-                            spacing = 30,
+                            vol.volume(pop_width, pop_height),
+                            clock.clock(pop_width, pop_height),
+                            spacing = w * (100 / 100),
                             layout = wibox.layout.fixed.horizontal,
 
                         },
                         widget = wibox.container.place,
                         align = 'center',
                     },
-                    musicBox.musicBox(s,"#000000dd"),
+                    musicBox.musicBox(s, "#00000099", pop_width, pop_height),
                     {
                         {
-                            sysperf.sysperf(),
-                            arcbox.ArcBox(),
-                            spacing = 30,
+                            sysperf.sysperf(pop_width, pop_height),
+                            arcbox.ArcBox(pop_width, pop_height),
+                            spacing = w * (100 / 100),
                             layout = wibox.layout.fixed.horizontal,
 
                         },
                         widget = wibox.container.place,
                         align = 'center',
                     },
-                    spacing = 20,
+                    spacing = h * (10 / 100),
 
                     layout = wibox.layout.flex.vertical
                 },
@@ -54,9 +56,9 @@ local function infoBox(w, h, posx, posy, s)
             },
             widget = wibox.container.background,
             shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 10)
+                gears.shape.rounded_rect(cr, width, height, config.pop_infobox.radius)
             end,
-            bg = "#22222277",
+            bg = config.pop_infobox.container_bg,
             forced_width = pop_width,   -- 400,
             forced_height = pop_height, --600,
         },
@@ -65,10 +67,10 @@ local function infoBox(w, h, posx, posy, s)
         y = pop_y,
         visible = true,
         ontop = false,
-        bg = "#00000000",
+        bg = config.pop_infobox.popup_bg,
         -- shape = gears.shape.rounded_rect,
-        -- border_width = 2,
-        -- border_color = "#000000",
+        border_width = config.pop_infobox.popup_border_width,
+        border_color = config.pop_infobox.popup_border_color,
     }
     return popup
 end

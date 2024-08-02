@@ -5,7 +5,7 @@ local rubato = require("lib.rubato")
 local naughty = require("naughty")
 local awful = require("awful")
 
-local function ArcBox(s)
+local function ArcBox(w, h)
     local arc1 = wibox.widget {
         id = "arc1",
         max_value = 100,
@@ -56,7 +56,6 @@ local function ArcBox(s)
         end
     }
     arc2.update = function(arg)
-        -- naughty.notification({ text = "" .. cpuval })
         arc2.animate.target = arg
     end
 
@@ -89,8 +88,8 @@ local function ArcBox(s)
         arc3.animate.target = arg
     end
 
-    vicious.register(arc3, vicious.widgets.mem, function(widget, args)
-        arc3.update(tonumber(args[1]))
+    vicious.register(arc3, vicious.widgets.fs, function(widget, args)
+        arc3.update(tonumber(args["{/ used_gb}"]))
     end, 1)
 
 
@@ -116,12 +115,11 @@ local function ArcBox(s)
         end
     }
     arc4.update = function(arg)
-        -- naughty.notification({ text = "" .. cpuval })
         arc4.animate.target = arg
     end
 
-    vicious.register(arc3, vicious.widgets.mem, function(widget, args)
-        arc4.update(tonumber(args[1]))
+    vicious.register(arc3, vicious.widgets.fs, function(widget, args)
+        arc4.update(tonumber(args["{/ used_gb}"]) * (100 / args["{/ size_gb}"]))
     end, 10)
 
 
@@ -145,8 +143,8 @@ local function ArcBox(s)
         },
 
         widget = wibox.container.background,
-        forced_height = 150,
-        forced_width = 150,
+        forced_height = h * 0.28,
+        forced_width = w * 0.4,
         bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)

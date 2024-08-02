@@ -5,7 +5,7 @@ local rubato = require("lib.rubato")
 local naughty = require("naughty")
 local awful = require("awful")
 
-local function sysperf(s)
+local function sysperf(w, h)
     local w1 = wibox.widget {
         markup = "",
         align = "center",
@@ -107,8 +107,8 @@ local function sysperf(s)
         },
 
         widget = wibox.container.background,
-        forced_height = 150,
-        forced_width = 150,
+        forced_height = h * 0.28,
+        forced_width = w * 0.4,
         bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)

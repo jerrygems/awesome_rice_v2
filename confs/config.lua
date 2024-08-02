@@ -126,7 +126,7 @@ local vars = {
     LB_fg = "#ffffffff",
     LB_radius = 8,
     LB_ontop = false,
-    LB_visible = true,
+    LB_visible = false,
 
     -- top_bar
     TB_width = 98,
@@ -158,13 +158,13 @@ local vars = {
     BB_bg = "#ffffff11",
     BB_fg = "#DC143Cff",
     BB_ontop = false,
-    BB_visible = true,
+    BB_visible = false,
     BB_radius = 8,
 
     -- right_bar
     RB_width = 2.2,
     RB_height = 85,
-    RB_visible = true,
+    RB_visible = false,
     RB_MG_right = 5,
     RB_MG_left = 5,
     RB_bg = "#ffffff11",
@@ -175,18 +175,28 @@ local vars = {
 
     -- defaults
     -- def -> default
-    def_term = "alacritty",
-    def_wall = "~/Downloads/anime.png",
-    def_client_border_width = 2,
-    def_client_border_color = "#ff0000",
-    default_shutdrawer_visibility = false,
+    def = {
+        term = "alacritty",
+        wall = "~/Downloads/anime.png",
+        client_border_width = 2,
+        client_border_color = "#ff0000",
+        shutdrawer_visibility = false,
+    },
 
     -- popup_configs
     pop_infobox = {
         width = 22,
-        height = 53,
+        height = 52,
         posx = 0.2,
-        posy = 0.7
+        posy = 0.7,
+        radius = 10,
+        popup_bg = "#00000000",
+        popup_border_width = 0,
+        popup_border_color = "#00000000",
+        container_bg = "#22222277",
+    },
+    music_box = {
+        
     },
     pop_aichat = {
         width = 20,

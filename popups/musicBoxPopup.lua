@@ -9,7 +9,7 @@ local function musicBoxPopup(s)
     local musicPop = awful.popup {
         widget    = {
             {
-                require("popups.musicBox").musicBox(s, "#00000077"),
+                require("popups.musicBox").musicBox(s, "#00000077", 300, 180),
                 widget = wibox.container.background,
                 forced_width = 400
 

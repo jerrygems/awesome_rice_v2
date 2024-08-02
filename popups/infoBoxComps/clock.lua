@@ -2,17 +2,17 @@ local wibox = require("wibox")
 local gears = require("gears")
 local awful = require("awful")
 
-local function clock(s)
+local function clock(w, h)
     local timeBox = wibox.widget {
         widget = wibox.widget.textbox,
         markup = "<span color='#ff035b'><b>" .. os.date("%H:%M:%S") .. "</b></span>",
-        font = "ArchivoBlack 18",
+        font = "ArchivoBlack 16",
         align = "center"
     }
     local dateBox = wibox.widget {
         widget = wibox.widget.textbox,
         markup = "<span color='#ff035b'><b>" .. os.date("%d/%m/%y") .. "</b></span>",
-        font = "ArchivoBlack 18",
+        font = "ArchivoBlack 16",
         align = "center"
     }
     local separator = wibox.widget {
@@ -43,8 +43,8 @@ local function clock(s)
         },
 
         widget = wibox.container.background,
-        forced_height = 150,
-        forced_width = 150,
+        forced_height = h * 0.28,
+        forced_width = w * 0.40,
         bg = "#00000099",
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)

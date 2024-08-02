@@ -3,7 +3,7 @@ local gears = require("gears")
 local naughty = require("naughty")
 local awful = require("awful")
 
-local function volume(s)
+local function volume(w, h)
     local volProgress = wibox.widget {
         max_value        = 100,
         value            = 30,
@@ -16,16 +16,11 @@ local function volume(s)
     }
     local vol = wibox.widget {
         max_value        = 100,
-        -- value        = 30,
-        -- color            = "#ff0000",
         handle_color     = "#00000000",
         value            = 70,
         minimum          = 10,
         maximum          = 100,
         handle_width     = 0,
-        -- handle_shape     = function(cr, width, height)
-        --     gears.shape.hexagon(cr, 0, height)
-        -- end,
         bar_border_width = 1,
         bar_color        = "#ff035b00",
         bar_shape        = function(cr, width, height)
@@ -40,11 +35,15 @@ local function volume(s)
                 vol,
                 {
                     {
-                        widget = wibox.widget.textbox,
-                        markup = "<span color='#04d9ff'><b>󰕾</b></span>",
-                        font = "JetBrainsMono 14",
-                        align = "center",
-                        valign = "bottom",
+                        {
+                            widget = wibox.widget.textbox,
+                            markup = "<span color='#04d9ff'><b>󰕾</b></span>",
+                            font = "JetBrainsMono 14",
+                            align = "center",
+                            valign = "bottom",
+                        },
+                        widget = wibox.container.margin,
+                        margins = { right = 4 }
                     },
                     widget = wibox.container.rotate,
                     direction = "west"
@@ -64,7 +63,7 @@ local function volume(s)
         call_now = false,
         callback = function()
             if prevvol ~= vol.value then
-                awful.spawn.easy_async("pulsemixer --set-volume " .. vol.value .. "",function()
+                awful.spawn.easy_async("pulsemixer --set-volume " .. vol.value .. "", function()
                     volProgress.value = vol.value
                 end)
             end
@@ -88,11 +87,15 @@ local function volume(s)
                 temperature,
                 {
                     {
-                        widget = wibox.widget.textbox,
-                        markup = "<span color='#ff035b'><b>󰔄</b></span>",
-                        font = "JetBrainsMono 14",
-                        align = "center",
-                        valign = "bottom",
+                        {
+                            widget = wibox.widget.textbox,
+                            markup = "<span color='#ff035b'><b>󰔄</b></span>",
+                            font = "JetBrainsMono 14",
+                            align = "center",
+                            valign = "bottom",
+                        },
+                        widget = wibox.container.margin,
+                        margins = { right = 4 }
                     },
                     widget = wibox.container.rotate,
                     direction = "west"
@@ -135,22 +138,22 @@ local function volume(s)
         end,
     }
     local bright = wibox.widget {
-        max_value        = 100,
+        max_value    = 100,
         -- color         = "#ff0000",
-        handle_color     = "#00000000",
-        value            = 70,
-        minimum          = 10,
-        maximum          = 100,
-        handle_width     = 0,
+        handle_color = "#00000000",
+        value        = 70,
+        minimum      = 10,
+        maximum      = 100,
+        handle_width = 0,
         -- handle_shape     = function(cr, width, height)
         --     gears.shape.hexagon(cr, 0, height)
         -- end,
-        bar_border_width = 1,
-        bar_color        = "#ff035b00",
-        bar_shape        = function(cr, width, height)
+        -- bar_border_width = 1,
+        bar_color    = "#ff035b00",
+        bar_shape    = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 18)
         end,
-        widget           = wibox.widget.slider,
+        widget       = wibox.widget.slider,
     }
     local brightBox = wibox.widget {
         {
@@ -159,11 +162,15 @@ local function volume(s)
                 bright,
                 {
                     {
-                        widget = wibox.widget.textbox,
-                        markup = "<span color='#04d9ff'><b>󰃟</b></span>",
-                        font = "JetBrainsMono 14",
-                        align = "center",
-                        valign = "bottom",
+                        {
+                            widget = wibox.widget.textbox,
+                            markup = "<span color='#04d9ff'><b>󰃟</b></span>",
+                            font = "JetBrainsMono 14",
+                            align = "center",
+                            valign = "bottom",
+                        },
+                        widget = wibox.container.margin,
+                        margins = { right = 5 }
                     },
                     widget = wibox.container.rotate,
                     direction = "west"
@@ -183,7 +190,7 @@ local function volume(s)
         call_now = false,
         callback = function()
             if prevbright ~= bright.value then
-                awful.spawn.easy_async("brightnessctl s " .. bright.value .. "%",function()
+                awful.spawn.easy_async("brightnessctl s " .. bright.value .. "%", function()
                     brightProgress.value = bright.value
                 end)
             end
@@ -193,21 +200,23 @@ local function volume(s)
 
     local box = wibox.widget {
         {
-            volBox,
-            tempBox,
-            brightBox,
+            {
+                volBox,
+                tempBox,
+                brightBox,
+                layout = wibox.layout.flex.horizontal
+            },
 
-
-            layout = wibox.layout.flex.horizontal
+            widget = wibox.container.background,
+            forced_height = h * 0.28,
+            forced_width = w * 0.4,
+            bg = "#00000099",
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 10)
+            end
         },
-
-        widget = wibox.container.background,
-        forced_height = 150,
-        forced_width = 150,
-        bg = "#00000099",
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 10)
-        end
+        widget = wibox.container.margin,
+        margins = 0
     }
 
     return box

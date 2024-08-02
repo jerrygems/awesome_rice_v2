@@ -69,7 +69,7 @@ end
 beautiful.useless_gap = 5
 
 -- default terminal editor
-terminal = config.def_term
+terminal = config.def.term
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -92,7 +92,7 @@ awful.layout.layouts = {
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
-        local wallpaper = config.def_wall
+        local wallpaper = config.def.wall
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
@@ -120,8 +120,8 @@ awful.rules.rules = {
     {
         rule = {},
         properties = {
-            border_width = config.def_client_border_width,
-            border_color = config.def_client_border_color,
+            border_width = config.def.client_border_width,
+            border_color = config.def.client_border_color,
             focus = awful.client.focus.filter,
             raise = true,
             keys = keybindings.clientkeys,
@@ -253,14 +253,16 @@ naughty.notification({
     title = config.startup_message
 })
 
-shutdrawer().visible = config.default_shutdrawer_visibility
+shutdrawer().visible = config.def.shutdrawer_visibility
 
 awful.screen.connect_for_each_screen(function(s)
-    infoBox.infoBox(config.pop_infobox.width, config.pop_infobox.height, config.pop_infobox.posx, config.pop_infobox
-        .posy, s)
+    -- if s.index == 1 then
+        infoBox.infoBox(config.pop_infobox.width, config.pop_infobox.height, config.pop_infobox.posx, config.pop_infobox
+            .posy, s)
 
-    -- require("stuff.AiChat").AiChat(config.pop_aichat.width, config.pop_aichat.height, config.pop_aichat.posx,
-    -- config.pop_aichat.posy, config.pop_aichat.bg, s)    -- AiChat(w,h,posx,posy,screen)
-    require("popups.Quotes").Quotes(config.pop_quotes.width, config.pop_quotes.height, config.pop_quotes.posx,
-        config.pop_quotes.posy, config.pop_quotes.quote, s) -- Quotes(w,h,posx,posy,quote_text,screen)
+        -- require("stuff.AiChat").AiChat(config.pop_aichat.width, config.pop_aichat.height, config.pop_aichat.posx,
+        -- config.pop_aichat.posy, config.pop_aichat.bg, s)    -- AiChat(w,h,posx,posy,screen)
+        require("popups.Quotes").Quotes(config.pop_quotes.width, config.pop_quotes.height, config.pop_quotes.posx,
+            config.pop_quotes.posy, config.pop_quotes.quote, s) -- Quotes(w,h,posx,posy,quote_text,screen)
+    -- end
 end)
