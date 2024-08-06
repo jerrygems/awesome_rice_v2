@@ -3,6 +3,9 @@ local awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local bars = require("bars.bars")
+local taglist = require("bars.VBar.taglist")
+local tools = require("bars.VBar.toolBox")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -13,9 +16,9 @@ require("awful.hotkeys_popup.keys")
 local keybindings = require("keybindings")
 local titlebar = require("titlebar")
 local tag_and_task_btn = require("tag_and_task_btn")
-local taglist = require("bars.VBar.taglist")
+-- local taglist = require("bars.VBar.taglist")
 local favs = require("bars.VBar.favorites")
-local tools = require("bars.VBar.toolBox")
+-- local tools = require("bars.VBar.toolBox")
 local task = require("bars.HBar.tasklist")
 local activity = require("bars.HBar.activity")
 local gizmo = require("bars.HBar.gizmo")
@@ -193,51 +196,10 @@ awful.screen.connect_for_each_screen(function(s)
     end)))
 end)
 
-awful.screen.connect_for_each_screen(function(s)
-    if s.index == 1 then
-        set_wallpaper(s)
-
-        local bars_element = bars.funbars(s)
-
-        s.left_bar = bars_element.left
-        s.left_bar:setup {
-            layout = wibox.layout.align.vertical,
-            taglist.taglist_fun(s),
-            tools.toolBoxBar(s)
-        }
 
 
-        s.top_bar = bars_element.top
-        s.top_bar:setup {
-            layout = wibox.layout.align.horizontal,
-            {
-                task.tasklistBar(s),
-                activity.activityBar(s),
-                widget = wibox.container.place,
-                layout = wibox.layout.fixed.horizontal
-            },
-            wibox.container.place(gizmo.gizmoZ(s), "right", "center"),
-            wibox.container.place(systray.systray(s), "right", "center")
-        }
+bars.create()
 
-
-        s.bottom_bar = bars_element.bottom
-        s.bottom_bar:setup {
-            layout = wibox.layout.align.horizontal,
-            bottomBar.Bbar(s)
-        }
-
-        s.integration_bar = bars_element.right
-        s.integration_bar:setup {
-            integrate.integrations(s),
-            favs.favourites(s),
-            layout = wibox.layout.flex.vertical
-        }
-
-
-        root.keys(gears.table.join(root.keys(), bars_element.toggle_bar, bars_element.basic_toggle))
-    end
-end)
 
 beautiful.notification_font = config.notifs.font
 beautiful.notification_bg = config.notifs.bg
@@ -256,13 +218,29 @@ naughty.notification({
 shutdrawer().visible = config.def.shutdrawer_visibility
 
 awful.screen.connect_for_each_screen(function(s)
-    -- if s.index == 1 then
-        infoBox.infoBox(config.pop_infobox.width, config.pop_infobox.height, config.pop_infobox.posx, config.pop_infobox
-            .posy, s)
+    if s.index == 1 then
+        local IB = nil
+        root.keys(gears.table.join(root.keys(), awful.key({ modkey, "Shift" }, "i", function()
+            if IB == nil then
+                IB = infoBox.infoBox(
+                    config.pop_infobox.width,
+                    config.pop_infobox.height,
+                    config.pop_infobox.posx,
+                    config.pop_infobox.posy,
+                    s
+                )
+                IB.visible = true
+            else
+                IB.visible = not IB.visible
 
+                pcall(function()
+                    IB.destroy()
+                end)
+            end
+        end)))
         -- require("stuff.AiChat").AiChat(config.pop_aichat.width, config.pop_aichat.height, config.pop_aichat.posx,
         -- config.pop_aichat.posy, config.pop_aichat.bg, s)    -- AiChat(w,h,posx,posy,screen)
         require("popups.Quotes").Quotes(config.pop_quotes.width, config.pop_quotes.height, config.pop_quotes.posx,
             config.pop_quotes.posy, config.pop_quotes.quote, s) -- Quotes(w,h,posx,posy,quote_text,screen)
-    -- end
+    end
 end)

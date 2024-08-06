@@ -3,7 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 local lfs = require("lfs")
 local bars = require("bars.bars")
-
+local naughty = require("naughty")
 local home_dir = os.getenv("HOME")
 
 
@@ -90,7 +90,6 @@ local function btngen(name, img, match_string, opposite_string, status_cmd, togg
                     toggle_cmd()
                 else
                     awful.spawn.with_shell(toggle_cmd, function()
-                        -- Update the button status after toggling
                         update_state()
                     end)
                 end
@@ -137,7 +136,10 @@ local function buttonBox(s)
                         btngen("Volume Medium", "󰖀", "50 50", "", "pulsemixer --get-volume", "if [ \"$(pulsemixer --get-volume)\" = \"50 50\" ]; then echo 1; else pulsemixer --set-volume 50; fi", "#fc450377"),
                         btngen("Volume Full", "󰕾", "100 100", "", "pulsemixer --get-volume", "if [ \"$(pulsemixer --get-volume)\" = \"100 100\" ]; then echo 1; else pulsemixer --set-volume 100; fi", "#ff412b"),
                         btngen("Bars Toggle", "󱒆", "", "", "", function()
-                            bars.funbars(s).toggler_for_all_bar()
+                            local scr = awful.screen.focused()
+                            if scr.index == 1 then
+                                bars.funbars(scr).basic_toggle_fun()
+                            end
                         end),
                         btngen("Lock", "󰷛", "yes", "no", "", "i3lock-fancy"),
                         btngen("Close All Windows", "", "yes", "no", "", function()

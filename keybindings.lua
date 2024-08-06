@@ -2,6 +2,7 @@ local gears = require("gears")
 local awful = require("awful")
 local naughty = require("naughty")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local bars = require("bars.bars")
 local shutter = require("drawers.centerDrawer")
 local switchboard = require("drawers.switchDrawer")
 local musicBox = require("popups.musicBoxPopup")
@@ -9,6 +10,7 @@ local musicBox = require("popups.musicBoxPopup")
 local shut = shutter()
 local switch = switchboard()
 local music = musicBox()
+
 modkey = "Mod4"
 
 -- {{{ Key bindings
@@ -91,6 +93,24 @@ local globalkeys = gears.table.join(
         music.visible = not music.visible
         switch.visible = false
         shut.visible = false
+    end),
+    awful.key({ modkey, "Shift" }, "b", function()
+        bars.all_toggle_bar_visibility()
+    end),
+    awful.key({ modkey }, "b", function()
+        bars.basic_toggle_bar_visibility()
+    end),
+    awful.key({ modkey, "Control" }, "j", function()
+        bars.toggle_one_bar(1)
+    end),
+    awful.key({ modkey, "Control" }, "l", function()
+        bars.toggle_one_bar(4)
+    end),
+    awful.key({ modkey, "Control" }, "i", function()
+        bars.toggle_one_bar(2)
+    end),
+    awful.key({ modkey, "Control" }, "k", function()
+        bars.toggle_one_bar(3)
     end),
     awful.key({ modkey }, "h",
         function(c)

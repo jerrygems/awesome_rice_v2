@@ -65,7 +65,7 @@ local function infoBox(w, h, posx, posy, s)
         screen = s,
         x = pop_x,
         y = pop_y,
-        visible = true,
+        visible = false,
         ontop = false,
         bg = config.pop_infobox.popup_bg,
         -- shape = gears.shape.rounded_rect,
