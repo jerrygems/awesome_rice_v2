@@ -19,7 +19,8 @@ local username = os.getenv("USER") or os.getenv("USERNAME")
 -- mgs for margins
 -- clr for color
 local vars = {
-    startup_message = "Let's Create Something osm",
+    startup_message_title = "Let's Create Something osm",
+    startup_message = "That makes your blood flow laminar and makes sure you mind doesn't get load Xd",
 
     actvt_fnt = "KodeMono 10",
     actvt_fnt_clr = "#ff035b",
@@ -196,7 +197,7 @@ local vars = {
         container_bg = "#22222277",
     },
     music_box = {
-        
+
     },
     pop_aichat = {
         width = 20,
@@ -223,13 +224,13 @@ local vars = {
         font = "JetBrainsMono 15",
         ontop = true,
         timeout = 8,
+        max_width = 440,
+        title_clr = "#ffffff",
+        message_clr = "#ffffff",
+        message_fnt = "KodeMono 9",
+        title_fnt = "KodeMono 14",
+        bg_color = "#00000000",
     },
-    notif_bg_color = "#00000000",
-    notif_title_fnt = "KodeMono 14",
-    notif_message_fnt = "KodeMono 9",
-    notif_title_clr = "#ffffff",
-    notif_message_clr = "#ffffff",
-    notif_width = 340,
 }
 
 return {

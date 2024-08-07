@@ -6,16 +6,16 @@ local beautiful = require("beautiful")
 local config = require("confs.config").vars
 
 
-local function notifCenter(n)
+
+local function notif(n)
     local function textBox(txt, txtcolor, fnt, wrp)
         local box = wibox.widget {
             markup = "<span color='" .. txtcolor .. "' font='" .. fnt .. "'>" .. txt .. "</span>",
-            widget = wibox.widget.textbox
-
+            widget = wibox.widget.textbox,
+            width = 340
         }
         return box
     end
-
     local container = wibox.widget {
         {
             {
@@ -37,19 +37,20 @@ local function notifCenter(n)
             {
 
                 {
-                    wibox.container.constraint(wibox.container.margin(
-                        textBox(n.title, config.notif_title_clr, config.notif_title_fnt), 0, 0, 5, 0), "exact", 0, 30),
-                    wibox.container.margin(textBox("<b>" .. n.message .. "</b>", config.notif_message_clr,
-                        config.notif_message_fnt), 0, 0, 0, 0),
+                    {
+                        wibox.container.constraint(wibox.container.margin(
+                            textBox(n.title, config.notifs.title_clr, config.notifs.title_fnt), 0, 0, 5, 0), "exact", 0, 30),
+                        wibox.container.margin(textBox("<b>" .. n.message .. "</b>", config.notifs.message_clr,
+                            config.notifs.message_fnt), 0, 0, 0, 0),
 
-                    layout = wibox.layout.fixed.vertical
+                        layout = wibox.layout.fixed.vertical
+                    },
+                    widget = wibox.container.margin,
+                    width = 340,
+                    margins = { left = 10, right = 10 }
                 },
-                widget = wibox.container.margin,
-                forced_width = config.notif_width,
-                margins = {
-                    left = 10,
-                    right = 10
-                }
+                widget = wibox.container.constraint,
+                width = config.notifs.max_width,
             }, -- for title and message
             layout = wibox.layout.align.horizontal
         },
@@ -65,11 +66,12 @@ local function notifCenter(n)
         layout = wibox.layout.fixed.vertical
     }
 
+
     naughty.layout.box {
         notification = n,
         visible = true,
         type = "notification",
-        bg = config.notif_bg_clr,
+        bg = config.notifs.bg_clr,
         -- placement = awful.placement.bottom,
         shape = function(cr, w, h)
             gears.shape.rounded_rect(cr, w, h, 10)
@@ -77,13 +79,21 @@ local function notifCenter(n)
         widget_template = {
             container,
             bg = "#00000000",
-            widget = wibox.container.background
+            widget = wibox.container.background,
         }
     }
-
 end
 
 
+naughty.connect_signal("request::display", function(n)
+    beautiful.notification_font = config.notifs.font
+    beautiful.notification_bg = config.notifs.bg
+    beautiful.notification_fg = config.notifs.fg
+    notif(n)
+end)
 
 
-return notifCenter
+
+return {
+    notifCenter = notif,
+}

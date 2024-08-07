@@ -196,23 +196,23 @@ awful.screen.connect_for_each_screen(function(s)
     end)))
 end)
 
-
-
 bars.create()
 
-
-beautiful.notification_font = config.notifs.font
-beautiful.notification_bg = config.notifs.bg
-beautiful.notification_fg = config.notifs.fg
+-- beautiful.notification_font = config.notifs.font
+-- beautiful.notification_bg = config.notifs.bg
+-- beautiful.notification_fg = config.notifs.fg
 naughty.config.defaults.ontop = config.notifs.ontop
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = config.notifs.timeout
 naughty.config.defaults.position = config.notifs.position
-naughty.connect_signal("request::display", function(n)
-    require("notifications.notifMain").notifMain(n)
-end)
+-- naughty.connect_signal("request::display", function(n)
+--     require("notifications.notifCenter").notifCenter(n)
+-- require("notifications.notifCenter").notif_toggler()
+
+-- end)
 naughty.notification({
-    title = config.startup_message
+    title = config.startup_message_title,
+    text = config.startup_message
 })
 
 shutdrawer().visible = config.def.shutdrawer_visibility

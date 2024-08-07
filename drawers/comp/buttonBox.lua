@@ -3,6 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 local lfs = require("lfs")
 local bars = require("bars.bars")
+local notif = require("notifications.notifCenter")
 local naughty = require("naughty")
 local home_dir = os.getenv("HOME")
 
@@ -136,10 +137,7 @@ local function buttonBox(s)
                         btngen("Volume Medium", "󰖀", "50 50", "", "pulsemixer --get-volume", "if [ \"$(pulsemixer --get-volume)\" = \"50 50\" ]; then echo 1; else pulsemixer --set-volume 50; fi", "#fc450377"),
                         btngen("Volume Full", "󰕾", "100 100", "", "pulsemixer --get-volume", "if [ \"$(pulsemixer --get-volume)\" = \"100 100\" ]; then echo 1; else pulsemixer --set-volume 100; fi", "#ff412b"),
                         btngen("Bars Toggle", "󱒆", "", "", "", function()
-                            local scr = awful.screen.focused()
-                            if scr.index == 1 then
-                                bars.funbars(scr).basic_toggle_fun()
-                            end
+                            bars.basic_toggle_bar_visibility()
                         end),
                         btngen("Lock", "󰷛", "yes", "no", "", "i3lock-fancy"),
                         btngen("Close All Windows", "", "yes", "no", "", function()
@@ -150,7 +148,10 @@ local function buttonBox(s)
                         btngen("Layout", "", "yes", "no", "", function()
                             awful.layout.inc(1)
                         end),
-                        btngen("Notification Toggle", "󰎟", "", "", "", ""),
+                        btngen("Notification Toggle", "󰎟", "", "", "", function()
+                            naughty.destroy_all_notifications()
+                            naughty.toggle()
+                        end,"#ffffff77"),
                         btngen("Screen Recording", "󰑋", "yes", "no", "", "vokoscreenNG"),
                         btngen("ScreenShot", "", "yes", "no", "", "flameshot gui"),
                         btngen("File Manager", "󱧷", "yes", "no", "", "thunar"),
