@@ -1,41 +1,18 @@
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
-local wibox = require("wibox")
 local beautiful = require("beautiful")
-local bars = require("bars.bars")
-local taglist = require("bars.VBar.taglist")
-local tools = require("bars.VBar.toolBox")
 -- Notification library
 local naughty = require("naughty")
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
+-- local menubar = require("menubar")
+-- local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 local keybindings = require("keybindings")
 local titlebar = require("titlebar")
-local tag_and_task_btn = require("tag_and_task_btn")
--- local taglist = require("bars.VBar.taglist")
-local favs = require("bars.VBar.favorites")
--- local tools = require("bars.VBar.toolBox")
-local task = require("bars.HBar.tasklist")
-local activity = require("bars.HBar.activity")
-local gizmo = require("bars.HBar.gizmo")
-local systray = require("systray.systray")
-local integrate = require("bars.integrations.integrations")
-
 -- popups here
 local infoBox = require("popups.infoBox")
-
--- drawers
-local shutdrawer = require("drawers.centerDrawer")
-local switches = require("drawers.switchDrawer")
-
--- notificationcenter
-local notifCenter = require("notifications.notifCenter")
-local bottomBar = require("bars.Bbar.Bbar")
--- extra stuff
 
 --config
 local config = require("confs.config").vars
@@ -119,6 +96,7 @@ root.keys(keybindings.globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
+
 awful.rules.rules = {
     {
         rule = {},
@@ -130,7 +108,8 @@ awful.rules.rules = {
             keys = keybindings.clientkeys,
             buttons = keybindings.clientbuttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen
+            -- placement = awful.placement.no_overlap + awful.placement.no_offscreen
+            placement = nil
         }
     },
     {
@@ -155,16 +134,18 @@ awful.rules.rules = {
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
-client.connect_signal("manage", function(c)
+-- client.connect_signal("manage", function(c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
 
-    if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
-        awful.placement.no_offscreen(c)
-    end
-end)
+    -- if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
+    --     -- Prevent clients from being unreachable after screen count changes.
+    --     awful.placement.no_offscreen(c)
+    -- end
+
+
+-- end)
 
 -- bars stuff will be from here
 
@@ -198,24 +179,14 @@ end)
 
 bars.create()
 
--- beautiful.notification_font = config.notifs.font
--- beautiful.notification_bg = config.notifs.bg
--- beautiful.notification_fg = config.notifs.fg
 naughty.config.defaults.ontop = config.notifs.ontop
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = config.notifs.timeout
 naughty.config.defaults.position = config.notifs.position
--- naughty.connect_signal("request::display", function(n)
---     require("notifications.notifCenter").notifCenter(n)
--- require("notifications.notifCenter").notif_toggler()
-
--- end)
 naughty.notification({
     title = config.startup_message_title,
     text = config.startup_message
 })
-
-shutdrawer().visible = config.def.shutdrawer_visibility
 
 awful.screen.connect_for_each_screen(function(s)
     if s.index == 1 then
