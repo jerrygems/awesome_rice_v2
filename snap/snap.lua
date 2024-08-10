@@ -33,6 +33,6 @@ client.connect_signal("mouse::move", function(c)
             naughty.notification({ text = math.abs(geo.x - geo.width) .. " : " .. snap_distance })
     else
         naughty.notification({text="else"})
-    end
+    end 
 
 end)
