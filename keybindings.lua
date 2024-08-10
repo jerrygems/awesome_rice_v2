@@ -112,6 +112,10 @@ local globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "k", function()
         bars.toggle_one_bar(3)
     end),
+    awful.key({ modkey,"Shift" }, "space", function()
+        local c=client.focus
+        awful.titlebar.toggle(c)
+    end),
     awful.key({ modkey }, "h",
         function(c)
             awful.spawn.easy_async("playerctl position 10-", function()

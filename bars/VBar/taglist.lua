@@ -41,6 +41,16 @@ local function taglist_fun(s)
                 end
             end
             self.update()
+
+            self:connect_signal("button::press", function(_, _, _, button)
+                if button == 1 then
+                    -- Switch to the clicked tag
+                    tag:view_only()
+                elseif button == 3 then
+                    -- Toggle visibility of the clicked tag (optional)
+                    awful.tag.viewtoggle(tag)
+                end
+            end)
         end,
 
         update_callback = function(self)

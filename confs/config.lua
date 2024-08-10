@@ -19,6 +19,11 @@ local username = os.getenv("USER") or os.getenv("USERNAME")
 -- mgs for margins
 -- clr for color
 local vars = {
+
+    user={
+        titlebars_enabled=false,
+    },
+
     startup_message_title = "Let's Create Something osm",
     startup_message = "That makes your blood flow laminar and makes sure you mind doesn't get load Xd",
 

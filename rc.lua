@@ -94,6 +94,9 @@ end), awful.button({}, 4, awful.tag.viewnext), awful.button({}, 5, awful.tag.vie
 root.keys(keybindings.globalkeys)
 -- }}}
 
+client.connect_signal("request::titlebars", function(c)
+    titlebar(c)
+end)
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 
@@ -101,6 +104,7 @@ awful.rules.rules = {
     {
         rule = {},
         properties = {
+            titlebars_enabled = config.user.titlebars_enabled,
             border_width = config.def.client_border_width,
             border_color = config.def.client_border_color,
             focus = awful.client.focus.filter,
@@ -135,18 +139,19 @@ awful.rules.rules = {
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 -- client.connect_signal("manage", function(c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
+-- Set the windows at the slave,
+-- i.e. put it at the end of others instead of setting it master.
+-- if not awesome.startup then awful.client.setslave(c) end
 
-    -- if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
-    --     -- Prevent clients from being unreachable after screen count changes.
-    --     awful.placement.no_offscreen(c)
-    -- end
+-- if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
+--     -- Prevent clients from being unreachable after screen count changes.
+--     awful.placement.no_offscreen(c)
+-- end
 
 
 -- end)
 
+require("snap.snap")
 -- bars stuff will be from here
 
 awful.screen.connect_for_each_screen(function(s)
