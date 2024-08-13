@@ -13,7 +13,6 @@ local keybindings = require("keybindings")
 local titlebar = require("titlebar")
 -- popups here
 local infoBox = require("popups.infoBox")
-
 --config
 local config = require("confs.config").vars
 local bars = require("bars.bars")
@@ -220,3 +219,5 @@ awful.screen.connect_for_each_screen(function(s)
             config.pop_quotes.posy, config.pop_quotes.quote, s) -- Quotes(w,h,posx,posy,quote_text,screen)
     end
 end)
+
+

@@ -1,6 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
+-- local mg = require("mousegrabber")
 local naughty = require("naughty")
 
 local snap_distance = 100 -- Snap threshold in pixels
@@ -54,13 +55,19 @@ local function snapy(c)
     end
 end
 
-client.connect_signal("mouse::move", function(c)
-    if c.floating then
-        snapy(c)
-    end
-end)
-client.connect_signal("mouse::leave", function(c)
-    if c.floating then
-        box.visible = false
-    end
-end)
+-- client.connect_signal("mouse::move", function(c)
+--     if c.floating then
+--         snapy(c)
+--     end
+-- end)
+-- client.connect_signal("mouse::leave", function(c)
+--     if c.floating then
+--         box.visible = false
+--     end
+-- end)
+-- client.connect_signal("request::move", function(c)
+--     -- Custom behavior when a client requests to move
+--     naughty.notification({ text = "Client requested to move: " .. c.name })
+-- end)
+
+
