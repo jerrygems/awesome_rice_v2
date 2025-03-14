@@ -1,107 +1,77 @@
-local gears = require("gears")
+local naughty = require("gears")
 local wibox = require("wibox")
 local vicious = require("vicious")
-local naughty = require("naughty")
 local config = require("confs.config").vars
+local lgi = require("lgi")
+local Cairo = lgi.cairo
+
+local function wifi_draw(colors)
+    local width, height = 50, 50
+    local deg = math.pi / 180
+
+    local surface = Cairo.ImageSurface.create(Cairo.Format.ARGB32, width, height)
+    local cr = Cairo.Context(surface)
+
+    cr:set_line_width(5)
+    cr:set_source_rgb(table.unpack(colors[1] or { 1, 1, 1 }))
+    cr:arc(width / 2, height / 2, 24, 220 * deg, -40 * deg)
+    cr:stroke()
+
+    cr:set_line_width(5)
+    cr:set_source_rgb(table.unpack(colors[2] or { 1, 1, 1 }))
+    cr:arc(width / 2, height / 2, 16, 220 * deg, -40 * deg)
+    cr:stroke()
+
+    cr:set_line_width(5)
+    cr:set_source_rgb(table.unpack(colors[3] or { 1, 1, 1 }))
+    cr:arc(width / 2, height / 2, 8, 220 * deg, -40 * deg)
+    cr:stroke()
+
+    cr:set_line_width(3)
+    cr:set_source_rgb(table.unpack(colors[4] or { 1, 1, 1 }))
+    cr:arc(width / 2, height / 2, 3, 0 * deg, 360 * deg)
+    cr:fill()
+
+    return surface
+end
+
 
 local function wifi()
-    local function arcGen(color, val, m_val, thick, angle, top)
-        local arc = wibox.widget {
-            {
-                value = val,
-                max_value = m_val,
-                thickness = thick,
-                start_angle = angle * math.pi / 180,
-                -- end_angle = 0 * math.pi / 180,
-                rounded_edge = true,
-                bg = "#00000000",
-                colors = {color},
-                widget = wibox.container.arcchart
-            },
-            widget = wibox.container.margin,
-            margins = {
-                top = top,
-                bottom = 0,
-                left = 0,
-                right = 0
-            }
-
-        }
-        return arc
+    local function get_colors(signal_strength)
+        if signal_strength >= -40 and signal_strength < 0 then
+            return config.systray.wifi.high
+        elseif signal_strength >= -60 and signal_strength < -40 then
+            return config.systray.wifi.medium
+        elseif signal_strength >= -70 and signal_strength < -60 then
+            return config.systray.wifi.weak
+        elseif signal_strength >= -90 and signal_strength < -70 then
+            return config.systray.wifi.veryweak
+        else
+            return config.systray.wifi.no_signal
+        end
     end
 
-    local arc2 = arcGen(config.systray_wifi_df_clr, 1, 2, 2.5, 180, -8)
-    local arc1 = arcGen(config.systray_wifi_df_clr, 1, 2, 2.5, 180, 0)
-    local dot = wibox.widget {
-        {
-            bg = config.systray_wifi_df_clr,
-            shape = gears.shape.circle,
-            widget = wibox.container.background
-        },
-        widget = wibox.container.margin,
-        margins = config.systray_wifi_margins
+    local icon = wibox.widget {
+        image = wifi_draw(get_colors(-60)),
+        widget = wibox.widget.imagebox
     }
 
-    local function icon()
-        local box = wibox.widget {
-            arc2,
-            arc1,
-            dot,
-            layout = wibox.layout.stack
-        }
-        vicious.register(box, vicious.widgets.wifi, function(widget, args)
-            local signal = args["{sign}"]
-
-            if signal >= -30 and signal < 0 then -- very strong
-                arc2.widget.colors = {config.systray_arc2_clr_c1}
-                arc1.widget.colors = {config.systray_arc1_clr_c1}
-                dot.widget.bg = config.systray_dot_clr_c1
-            elseif signal >= -60 and signal < -30 then -- strong
-                arc2.widget.colors = {config.systray_arc2_clr_c2}
-                arc1.widget.colors = {config.systray_arc1_clr_c2}
-                dot.widget.bg = config.systray_dot_clr_c2
-            elseif signal >= -70 and signal < -60 then -- weak
-                arc2.widget.colors = {config.systray_arc2_clr_c3}
-                arc1.widget.colors = {config.systray_arc1_clr_c3}
-                dot.widget.bg = config.systray_dot_clr_c3
-            elseif signal > -100 and signal < -70 then -- very weak
-                arc2.widget.colors = {config.systray_arc2_clr_c4}
-                arc1.widget.colors = {config.systray_arc1_clr_c4}
-                dot.widget.bg = config.systray_dot_clr_c4
-            else
-                arc2.widget.colors = {config.systray_arc2_clr_c5}
-                arc1.widget.colors = {config.systray_arc1_clr_c5}
-                dot.widget.bg = config.systray_dot_clr_c5
-            end
-        end, 2, config.systray_wifi_iface_name) -- wlp61s0 or wlan0
-        return box
+    local function update_icon(signal_strength)
+        local colors = get_colors(signal_strength)
+        icon.image = wifi_draw(colors)
     end
 
+    vicious.register(icon, vicious.widgets.wifi, function(widget, args)
+        local signal = args["{sign}"]
+        update_icon(signal)
+        return ""
+    end, 5, config.systray_wifi_iface_name)
+
     local wlan0 = wibox.widget {
-        {
-
-            {
-                icon(),
-                align = 'center',
-                valign = 'center',
-                widget = wibox.container.place
-
-            },
-            margins = {
-                top = 12,
-                bottom = 2,
-                left = 10,
-                right = 10
-            },
-            widget = wibox.container.margin
-        },
-        bg = "#00000000",
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 8)
-        end,
-        forced_width = 50,
-        forced_height = 10,
-        widget = wibox.container.background
+        wibox.container.margin(icon, 0, 0, 5, -11),
+        align = 'center',
+        valign = 'center',
+        widget = wibox.container.place
     }
 
     return wlan0

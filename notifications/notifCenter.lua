@@ -6,7 +6,6 @@ local beautiful = require("beautiful")
 local config = require("confs.config").vars
 
 
-
 local function notif(n)
     local close_btn = wibox.widget {
         widget = wibox.widget.textbox,

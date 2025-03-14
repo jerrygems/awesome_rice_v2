@@ -1,6 +1,6 @@
 local beautiful = require("beautiful")
 local username = os.getenv("USER") or os.getenv("USERNAME")
-
+local home = os.getenv("HOME")
 -- LB stands for left bar
 -- RB stands for left bar
 -- TB stands for left bar
@@ -20,33 +20,151 @@ local username = os.getenv("USER") or os.getenv("USERNAME")
 -- clr for color
 local vars = {
 
-    user={
-        titlebars_enabled=false,
+
+    useless_gap = 5,
+    user = {
+        username = username,
+        home = home,
+        titlebars_enabled = false,
+        wlan_iface = "wlp61s0", -- wlp61s0 or wlan0 or anyother
+        term = "alacritty",
+        wall_index = 1,
+        wall = {
+            "/home/spidey/walls/wall1.png",
+            "/home/spidey/walls/wall2.jpg",
+            "/home/spidey/walls/wall3.jpeg",
+            "/home/spidey/walls/wall4.png",
+            "/home/spidey/walls/wall5.jpg",
+            "/home/spidey/walls/wall6.png",
+            "/home/spidey/walls/wall7.jpg",
+            "/home/spidey/walls/wall8.png",
+            "/home/spidey/walls/wall9.jpg",
+            "/home/spidey/walls/wall10.jpg",
+            "/home/spidey/walls/wall11.png",
+            "/home/spidey/walls/wall12.jpg",
+            "/home/spidey/walls/wall13.png",
+            "/home/spidey/walls/wall14.png",
+            "/home/spidey/walls/wall15.jpeg",
+            "/home/spidey/walls/wall16.jpg",
+            "/home/spidey/walls/wall17.png",
+        },
+    },
+
+    def = {
+        client_border_width = 2,
+        client_border_color = "",
+        shutdrawer_visibility = false,
     },
 
     startup_message_title = "Let's Create Something osm",
-    startup_message = "That makes your blood flow laminar and makes sure you mind doesn't get load Xd",
-
-    actvt_fnt = "KodeMono 10",
-    actvt_fnt_clr = "#ff035b",
-    actvt_bg = "#00000099",
-    actvt_mg_left = 7,
-    actvt_mg_right = 7,
-    actvt_mg_top = 5,
-    actvt_mg_bottom = 5,
-
-    gizmo_iface_name = "wlp61s0", -- or it could wlan0 or if it doesn't work then just remove the widget accordingly
-    gizmo_fnt = "JetBrainsMono 13",
-    gizmo_txt_fnt_clr = "#04d9ff",
-    gizmo_ic_fnt_clr = "#ff035b",
-    gizmo_bg = "#00000099",
-    gizmo_mgs = {
-        top = 0,
-        bottom = 0,
-        left = 5,
-        right = 5
+    startup_message = "That makes your blood flow laminar and makes sure your mind doesn't get load Xd",
+    startup_message_image = ".config/awesome/icons/hope.jpeg",
+    activity = {
+        width = 310,
+        align = "center",
+        font = "KodeMono 10",
+        fg = "#ff035b",
+        bg = "#00000099",
+        txtbox_mg = 5,
+        mg = {
+            left = 7,
+            right = 7,
+            top = 5,
+            bottom = 5,
+        },
+        radius = 5,
     },
-    gizmo_radius = 15,
+
+    gizmo = {
+        fnt = "JetBrainsMono 13",
+        txt_fnt_clr = "#04d9ff",
+        ic_fnt_clr = "#ff035b",
+        bg = "#00000099",
+        margins = {
+            top = 0,
+            bottom = 0,
+            left = 5,
+            right = 5
+        },
+        icons = {
+            cpu = " ",
+            ram = " ",
+            download_speed = "󰛀 ",
+            upload_speed = "󰛃 ",
+        },
+        radius = 15,
+        visible = true,
+    },
+    takslist = {
+        bg = "#00000099",
+        back_bg = "#00000055",
+        width = 230,
+        max_width = 210,
+        spacing = 5,
+        halign = "left",
+        radius = 5,
+        ic_box = {
+            width = 30,
+            height = 30,
+            radius = 5,
+            mg = 5,
+        },
+        mg = {
+            top = 0,
+            bottom = 0,
+            left = 5,
+            right = 5
+        },
+    },
+
+    systray = {
+        wifi = {
+            high = {
+                { 1, 1, 1 },
+                { 1, 1, 1 },
+                { 1, 1, 1 },
+                { 1, 1, 1 }
+            },
+            medium = {
+                { 0.5, 0.5, 0.5 },
+                { 1,   1,   1 },
+                { 1,   1,   1 },
+                { 1,   1,   1 }
+            },
+            weak = {
+                { 0.5, 0.5, 0.5 },
+                { 0.5, 0.5, 0.5 },
+                { 1,   1,   1 },
+                { 1,   1,   1 }
+            },
+            veryweak = {
+                { 0.5, 0.5, 0.5 },
+                { 0.5, 0.5, 0.5 },
+                { 0.5, 0.5, 0.5 },
+                { 1,   1,   1 }
+            },
+            no_signal = {
+                { 1, 0.6, 0.6 },
+                { 1, 0.5, 0.5 },
+                { 1, 0.4, 0.4 },
+                { 1, 0.3, 0.3 }
+            },
+
+        },
+        ble = {
+            clr_on_disconnected = "#ffffff",
+            clr_on_connected = "#00ffff",
+            margins = {
+                top = 5,
+                bottom = 5,
+                left = 15,
+                right = 15
+            }
+        },
+        bat = {
+
+        }
+    },
 
     systray_bat_fnt = "JetBrainsMono 14",
     systray_bat_bg = "#000000",
@@ -61,8 +179,6 @@ local vars = {
     systray_bat_clr_behind_bar = "#000000",
     systray_bat_border_clr = "#ffffff",
 
-    systray_ble_clr_on_disconnected = "#ffffff",
-    systray_ble_clr_on_connected = "#00ffff",
 
     systray_wifi_iface_name = "wlp61s0", -- or it could be wlan0 but it may vary so just check which one you have
     systray_wifi_df_clr = "#ffffff",
@@ -72,26 +188,7 @@ local vars = {
         left = 9,
         right = 9
     },
-    -- wifi colors when signal >= -30
-    systray_arc2_clr_c1 = "#ffffff",
-    systray_arc1_clr_c1 = "#ffffff",
-    systray_dot_clr_c1 = "#ffffff",
-    -- signal >= -60 and signal < -30
-    systray_arc2_clr_c2 = "#ffffff88",
-    systray_arc1_clr_c2 = "#ffffff",
-    systray_dot_clr_c2 = "#ffffff",
-    -- signal >= -70 and signal < -60
-    systray_arc2_clr_c3 = "#ffffff88",
-    systray_arc1_clr_c3 = "#ffffff88",
-    systray_dot_clr_c3 = "#ffffff",
-    -- signal > -100 and signal < -70
-    systray_arc2_clr_c4 = "#ffffff88",
-    systray_arc1_clr_c4 = "#ffffff88",
-    systray_dot_clr_c4 = "#ffffff88",
-    -- else
-    systray_arc2_clr_c5 = "#FD9346",
-    systray_arc1_clr_c5 = "#FD7F2C",
-    systray_dot_clr_c5 = "#FF6200",
+
 
     icons_df_clr_on_hover = "#ff035bff",
 
@@ -145,16 +242,7 @@ local vars = {
     TB_radius = 8,
     TB_visible = true,
 
-    TB_task_bg = "#000000",
-    TB_task_back_bg = "#00000055",
-    TB_task_width = 230,
-    TB_task_mx_width = 210,
-    TB_task_df_mgs = {
-        top = 0,
-        bottom = 0,
-        left = 5,
-        right = 5
-    },
+
 
     -- bottom_bar
     BB_width = 70,
@@ -181,13 +269,7 @@ local vars = {
 
     -- defaults
     -- def -> default
-    def = {
-        term = "alacritty",
-        wall = "~/Downloads/anime.png",
-        client_border_width = 2,
-        client_border_color = "#ff0000",
-        shutdrawer_visibility = false,
-    },
+
 
     -- popup_configs
     pop_infobox = {
@@ -217,8 +299,12 @@ local vars = {
         posx = 1.1,
         posy = 1.4,
         quote = [[
-            ...But, then again, isn't it all the same? Our senses just mediocre inputs to our brain? Sure, we rely on them, trust they accurately portray the real world around us, but what if the haunting truth is they can't? That what we perceive isn't the real world at all, but just our mind's best guess? That all we really have is a garbled reality, a truly fuzzy picture we will never make out?
-                ]]
+            sys/socket, xcb, xproto, xinput, xcp_event, xcb_image, xcb_render, xcb_shape, xcb_keysyms, xcb_cursor, xcb_util, xcb_icccm
+        ]],
+        author = "no cap"
+        -- quote = [[
+        --     ...But, then again, isn't it all the same? Our senses just mediocre inputs to our brain? Sure, we rely on them, trust they accurately portray the real world around us, but what if the haunting truth is they can't? That what we perceive isn't the real world at all, but just our mind's best guess? That all we really have is a garbled reality, a truly fuzzy picture we will never make out?
+        --         ]]
     },
 
     -- notifications stuff here

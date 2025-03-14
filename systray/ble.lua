@@ -1,7 +1,6 @@
 local gears = require("gears")
 local wibox = require("wibox")
 local awful = require("awful")
-local naughty = require('naughty')
 local config = require("confs.config").vars
 
 local function ble(s)
@@ -11,34 +10,27 @@ local function ble(s)
         image = icon,
         widget = wibox.widget.imagebox
     }
+    local function check_bluetooth()
+        awful.spawn.easy_async("bluetoothctl info | grep Connected | awk '{print $2}'", function(output)
+            output = output:gsub("^%s*(.-)%s*$", "%1")
+            if output == "yes" then
+                box.image = gears.color.recolor_image(icon, config.systray.ble.clr_on_connected)
+            else
+                box.image = gears.color.recolor_image(icon, config.systray.ble.clr_on_disconnected)
+            end
+        end)
+    end
     gears.timer {
         timeout = 5, -- Check every second (adjust as needed)
         autostart = true,
         call_now = true,
-        callback = function()
-            local command = "bluetoothctl info | grep Connected | awk '{print $2}'"
-            local file = io.popen(command)
-            local output = file:read("*all")
-            file:close()
-            output = output:gsub("^%s*(.-)%s*$", "%1")
-
-            if output == "yes" then
-                box.image = gears.color.recolor_image(icon, config.systray_ble_clr_on_connected)
-            else
-                box.image = gears.color.recolor_image(icon, config.systray_ble_clr_on_disconnected)
-            end
-        end
+        callback = check_bluetooth
     }
     local bluetooth = wibox.widget {
         {
             box,
             widget = wibox.container.margin,
-            margins = {
-                top = 5,
-                bottom = 5,
-                left = 15,
-                right = 15
-            }
+            margins = config.systray.ble.margins
         },
         widget = wibox.container.background,
         bg = "#00000000",

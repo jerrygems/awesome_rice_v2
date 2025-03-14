@@ -7,14 +7,16 @@ local config = require("confs.config").vars
 local function activityBar(s)
     local status = "Unknown"
     local box = wibox.widget {
-        markup = "<<span color='"..config.actvt_fnt_clr.."' font='"..config.actvt_fnt.."'><b>Hey, I Just got Started</b></span>",
+        markup = "<span color='" .. config.activity.fg .. "' font='" .. config.activity.font .. "'><b>Hey, I Just got Started</b></span>",
         widget = wibox.widget.textbox
     }
     client.connect_signal("focus", function(c)
-        box.markup = "<span color='"..config.actvt_fnt_clr.."' font='"..config.actvt_fnt.."'><b>" .. c.name .. "</b></span>"
+        box.markup = "<span color='" ..
+        config.activity.fg .. "' font='" .. config.activity.font .. "'><b>" .. c.name .. "</b></span>"
     end)
     client.connect_signal("property::name", function(c)
-        box.markup = "<span color='"..config.actvt_fnt_clr.."' font='"..config.actvt_fnt.."'><b>" .. c.name .. "</b></span>"
+        box.markup = "<span color='" ..
+        config.activity.fg .. "' font='" .. config.activity.font .. "'><b>" .. c.name .. "</b></span>"
     end)
 
     local activity = {
@@ -22,19 +24,20 @@ local function activityBar(s)
             {
                 box,
                 widget = wibox.container.place,
-                align = "center"
+                align = config.activity.align
             },
-            margins = 5,
+            margins = config.activity.txtbox_mg,
             widget = wibox.container.margin
         },
-        bg = config.actvt_bg,
+        bg = config.activity.bg,
         shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 5)
+            gears.shape.rounded_rect(cr, width, height, config.activity.radius)
         end,
         widget = wibox.container.background,
-        forced_width = 310
+        forced_width = config.activity.width
     }
-    return wibox.container.margin(activity, config.actvt_mg_left, config.actvt_mg_right, config.actvt_mg_top, config.actvt_mg_bottom)
+    return wibox.container.margin(activity, config.activity.mg.left, config.activity.mg.right, config.activity.mg.top,
+        config.activity.mg.bottom)
 end
 
 return {

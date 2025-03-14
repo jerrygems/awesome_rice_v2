@@ -3,7 +3,6 @@ local gears = require("gears")
 local awful = require("awful")
 local lfs = require("lfs")
 local bars = require("bars.bars")
-local notif = require("notifications.notifCenter")
 local naughty = require("naughty")
 local home_dir = os.getenv("HOME")
 
@@ -151,7 +150,7 @@ local function buttonBox(s)
                         btngen("Notification Toggle", "󰎟", "", "", "", function()
                             naughty.destroy_all_notifications()
                             naughty.toggle()
-                        end,"#ffffff77"),
+                        end, "#ffffff77"),
                         btngen("Screen Recording", "󰑋", "yes", "no", "", "vokoscreenNG"),
                         btngen("ScreenShot", "", "yes", "no", "", "flameshot gui"),
                         btngen("File Manager", "󱧷", "yes", "no", "", "thunar"),

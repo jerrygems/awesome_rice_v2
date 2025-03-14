@@ -1,5 +1,13 @@
 {
     "Lua.diagnostics.globals": [
-        "return"
-    ]
+        "return",
+        "config"
+    ],
+    "files.associations": {
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
+    }
 }

@@ -6,19 +6,119 @@ local bars = require("bars.bars")
 local shutter = require("drawers.centerDrawer")
 local switchboard = require("drawers.switchDrawer")
 local musicBox = require("popups.musicBoxPopup")
+local config = require("confs.config").vars
 
+local home_dir = os.getenv("HOME")
 local shut = shutter()
 local switch = switchboard()
 local music = musicBox()
 
+
 modkey = "Mod4"
 
+local visiblity_toggle = function(target, others)
+    target.visible = not target.visible
+    for _, widget in ipairs(others) do
+        widget.visible = false
+    end
+end
+
+
+
 -- {{{ Key bindings
-local globalkeys = gears.table.join(
+
+local music_keys = gears.table.join(
+    awful.key({ modkey }, "h",
+        function(c)
+            awful.spawn.easy_async("playerctl position 10-", function()
+                return nil
+            end)
+        end,
+        { description = "music seek", group = "client" }),
+    awful.key({ modkey }, "j",
+        function(c)
+            awful.spawn.easy_async("playerctl previous", function()
+                return nil
+            end)
+        end,
+        { description = "music button", group = "client" }),
+    awful.key({ modkey }, "k",
+        function(c)
+            awful.spawn.easy_async("playerctl play-pause", function()
+                return nil
+            end)
+        end,
+        { description = "music button", group = "client" }),
+    awful.key({ modkey, "Shift" }, "k",
+        function(c)
+            awful.spawn.easy_async("playerctl pause -a", function()
+                return nil
+            end)
+        end,
+        { description = "music button", group = "client" }),
+    awful.key({ modkey }, "l",
+        function(c)
+            awful.spawn.easy_async("playerctl next", function()
+                return nil
+            end)
+        end,
+        { description = "music button", group = "client" }),
+    awful.key({ modkey }, ";",
+        function(c)
+            awful.spawn.easy_async("playerctl position 10+", function()
+                return nil
+            end)
+        end,
+        { description = "music seek", group = "client" }),
+    awful.key({ modkey, "Shift" }, "Up",
+        function(c)
+            awful.spawn.easy_async("pulsemixer --change-volume +5", function()
+                return nil
+            end)
+        end,
+        { description = "music volume", group = "client" }),
+    awful.key({ modkey, "Shift" }, "Down",
+        function(c)
+            awful.spawn.easy_async("pulsemixer --change-volume -5", function()
+                return nil
+            end)
+        end,
+        { description = "music volume", group = "client" })
+)
+local utility_keys = gears.table.join(
+-- previous and next view keybindings
     awful.key({ modkey, }, "Left", awful.tag.viewprev,
         { description = "view previous", group = "tag" }),
     awful.key({ modkey, }, "Right", awful.tag.viewnext,
         { description = "view next", group = "tag" }),
+
+    awful.key({ modkey, "Control" }, "Right", function()
+        awful.screen.focus_relative(1)
+    end, { description = "focus next monitor", group = "screen" }),
+    awful.key({ modkey, "Control" }, "Left", function()
+        awful.screen.focus_relative(-1)
+    end, { description = "focus previous monitor", group = "screen" }),
+    awful.key({ modkey, "Control" }, "a", awful.tag.viewprev,
+        { description = "view previous", group = "tag" }),
+    awful.key({ modkey, "Control" }, "d", awful.tag.viewnext,
+        { description = "view next", group = "tag" }),
+    -- awful.key({ modkey, "Shift" }, "Right", move_to(1),
+    --     { description = "move client to the next tag" }),
+    -- awful.key({ modkey, "Shift" }, "Left", move_to(-1),
+    --     { description = "move client to the previous tag" }),
+
+    awful.key({ modkey, "Shift" }, "l", function()
+            awful.spawn.easy_async("i3lock-fancy -g -p", function(stdout, stderr, reason, exit_code)
+                if exit_code ~= 1 then
+                    naughty.notification({
+                        image = home_dir .. "/.config/awesome/icons/lockscreen.svg",
+                        title = "Screen Unlocked",
+                        text = "Hey, Let's get back to the work huh?"
+                    })
+                end
+            end)
+        end,
+        { description = "lock the screen", group = "tag" }),
     awful.key({ modkey, }, "Escape", awful.tag.history.restore,
         { description = "go back", group = "tag" }),
 
@@ -34,14 +134,14 @@ local globalkeys = gears.table.join(
 
     -- Standard program
     awful.key({ modkey, }, "Return", function()
-            awful.spawn.easy_async(terminal, function()
+            awful.spawn.easy_async(config.user.term, function()
                 return nil
             end)
         end,
         { description = "open a terminal", group = "launcher" }),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
         { description = "reload awesome", group = "awesome" }),
-    awful.key({ modkey, "Shift" }, "q", awesome.quit,
+    awful.key({ modkey, "Control" }, "q", awesome.quit,
         { description = "quit awesome", group = "awesome" }),
     awful.key({ modkey, }, "t", function() awful.layout.inc(1) end,
         { description = "select next", group = "layout" }),
@@ -67,32 +167,42 @@ local globalkeys = gears.table.join(
 
     awful.key({ modkey }, "d",
         function(c)
-            awful.spawn.easy_async("rofi -show drun ", function()
-                return nil
+            awful.spawn.easy_async("rofi -show drun ", function(stdout, stderr, reason, exit_code)
+                if exit_code ~= 0 then
+                    naughty.notification({
+                        image = config.user.home .. "/.config/awesome/icons/err.svg",
+                        title = "Unexpected error occurred",
+                        text = "Reason ;-) " .. tostring(reason) .. "\nThe status code is ;-) " .. tostring(exit_code),
+                    })
+                end
             end)
         end,
         { description = "rofi", group = "client" }),
     awful.key({ modkey, "Shift" }, "d",
         function(c)
-            awful.spawn.easy_async("rofi -show window ", function()
-                return nil
+            awful.spawn.easy_async("rofi -show window ", function(stdout, stderr, reason, exit_code)
+                if exit_code ~= 0 then
+                    naughty.notification({
+                        image = config.user.home .. "/.config/awesome/icons/err.svg",
+                        title = "Unexpected error occurred",
+                        text = "Reason ;-) " .. tostring(reason) .. "\nThe status code is ;-) " .. tostring(exit_code),
+                    })
+                end
             end)
         end,
-        { description = "rofi", group = "client" }),
+        { description = "rofi", group = "client" })
+)
+
+local widget_toggling_keys = gears.table.join(
+-- toggling widgets here
     awful.key({ modkey }, "x", function(c)
-        shut.visible = not shut.visible
-        music.visible = false
-        switch.visible = false
+        visiblity_toggle(shut, { music, switch })
     end),
     awful.key({ modkey }, "s", function()
-        switch.visible = not switch.visible
-        music.visible = false
-        shut.visible = false
+        visiblity_toggle(switch, { music, shut })
     end),
     awful.key({ modkey, "Shift" }, "m", function()
-        music.visible = not music.visible
-        switch.visible = false
-        shut.visible = false
+        visiblity_toggle(music, { shut, switch })
     end),
     awful.key({ modkey, "Shift" }, "b", function()
         bars.all_toggle_bar_visibility()
@@ -112,59 +222,30 @@ local globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "k", function()
         bars.toggle_one_bar(3)
     end),
-    awful.key({ modkey,"Shift" }, "space", function()
-        local c=client.focus
-        awful.titlebar.toggle(c)
-    end),
-    awful.key({ modkey }, "h",
-        function(c)
-            awful.spawn.easy_async("playerctl position 10-", function()
-                return nil
-            end)
-        end,
-        { description = "music seek", group = "client" }),
-    awful.key({ modkey }, "j",
-        function(c)
-            awful.spawn.easy_async("playerctl previous", function()
-                return nil
-            end)
-        end,
-        { description = "music button", group = "client" }),
-    awful.key({ modkey }, "k",
-        function(c)
-            awful.spawn.easy_async("playerctl play-pause", function()
-                return nil
-            end)
-        end,
-        { description = "music button", group = "client" }),
-    awful.key({ modkey }, "l",
-        function(c)
-            awful.spawn.easy_async("playerctl next", function()
-                return nil
-            end)
-        end,
-        { description = "music button", group = "client" }),
-    awful.key({ modkey }, ";",
-        function(c)
-            awful.spawn.easy_async("playerctl position 10+", function()
-                return nil
-            end)
-        end,
-        { description = "music seek", group = "client" }),
-    awful.key({ modkey, "Shift" }, "Up",
-        function(c)
-            awful.spawn.easy_async("pulsemixer --change-volume +10", function()
-                return nil
-            end)
-        end,
-        { description = "music volume", group = "client" }),
-    awful.key({ modkey, "Shift" }, "Down",
-        function(c)
-            awful.spawn.easy_async("pulsemixer --change-volume -10", function()
-                return nil
-            end)
-        end,
-        { description = "music volume", group = "client" })
+    awful.key({ modkey, "Shift" }, "space", function()
+        local c = client.focus
+        if c then
+            awful.titlebar.toggle(c)
+        else
+            naughty.notification({
+                title = "No client window found",
+                text = "you need to open a client window for it."
+            })
+        end
+    end)
+)
+
+local switching_clients = gears.table.join(
+    awful.key({ modkey, "Shift" }, "up", function()
+        awful.client.focus.bydirection("up")
+    end)
+)
+
+local globalkeys = gears.table.join(
+    switching_clients,
+    widget_toggling_keys,
+    music_keys,
+    utility_keys
 )
 
 local clientkeys = gears.table.join(
@@ -223,7 +304,7 @@ for i = 1, 9 do
                 end
             end,
             { description = "view tag #" .. i, group = "tag" }),
-        -- Toggle tag display.
+        -- Toggle tag display or Mix multiple tags temporarily
         awful.key({ modkey, "Control" }, "#" .. i + 9,
             function()
                 local screen = awful.screen.focused()
@@ -267,7 +348,7 @@ local clientbuttons = gears.table.join(
         c:emit_signal("request::activate", "mouse_click", { raise = true })
         awful.mouse.client.move(c)
     end),
-    awful.button({ modkey }, 2, function(c)
+    awful.button({ modkey }, 3, function(c)
         c:emit_signal("request::activate", "mouse_click", { raise = true })
         awful.mouse.client.resize(c)
     end)

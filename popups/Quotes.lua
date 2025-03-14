@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local naughty = require("naughty")
 local wibox = require("wibox")
+local config = require("confs.config")
 
 local function Quotes(w, h, posx, posy, qt, s)
     local screen_geometry = s.geometry
@@ -36,7 +37,7 @@ local function Quotes(w, h, posx, posy, qt, s)
                     {
                         {
                             widget = wibox.widget.textbox,
-                            markup = "<span font='KodeMono 12' color='#ff3333'>~ Mr. Robot</span>",
+                            markup = "<span font='KodeMono 12' color='#ff3333'>~ " .. config.vars.pop_quotes.author .. "</span>",
                             wrap = "word",
                             align = 'center',
                         },

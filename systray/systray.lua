@@ -10,7 +10,7 @@ local function systray(s)
             {
                 {
                     wibox.container.margin(sysble.ble(s), 2, 2, 0, 0),
-                    wibox.container.margin(syswifi.wifi(s), 2, 2, 0, 0),
+                    wibox.container.margin(syswifi.wifi(), 2, 2, 0, 0),
                     wibox.container.margin(sysbat.bat0(s), 2, 2, 0, 0),
 
                     layout = wibox.layout.fixed.horizontal,

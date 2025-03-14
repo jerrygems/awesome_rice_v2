@@ -1,9 +1,11 @@
-local gears = require("gears")
-local awful = require("awful")
-require("awful.autofocus")
-local beautiful = require("beautiful")
+local fetchman = require("fetchman")
 -- Notification library
 local naughty = require("naughty")
+local gears = require("gears")
+local awful = require("awful")
+local wibox = require("wibox")
+require("awful.autofocus")
+local beautiful = require("beautiful")
 -- local menubar = require("menubar")
 -- local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
@@ -16,6 +18,10 @@ local infoBox = require("popups.infoBox")
 --config
 local config = require("confs.config").vars
 local bars = require("bars.bars")
+-- i know according to you it's unused
+local notif = require("notifications.notifCenter")
+local home_dir = os.getenv("HOME")
+
 
 
 if awesome.startup_errors then
@@ -25,7 +31,6 @@ if awesome.startup_errors then
         text = awesome.startup_errors
     })
 end
-
 -- Handle runtime errors after startup
 do
     local in_error = false
@@ -38,21 +43,19 @@ do
 
         naughty.notify({
             preset = naughty.config.presets.critical,
-            title = "Oops, an error happened!",
+            title = "Oops! an error occurred!",
             text = tostring(err)
         })
         in_error = false
     end)
 end
 
-beautiful.useless_gap = 5
+beautiful.useless_gap = config.useless_gap
 
 -- default terminal editor
-terminal = config.def.term
+terminal = config.user.term
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
-
-
 
 awful.layout.layouts = {
     awful.layout.suit.floating,
@@ -68,19 +71,6 @@ awful.layout.layouts = {
     awful.layout.suit.corner.nw
 }
 
-local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = config.def.wall
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
 
 
 -- {{{ Mouse bindings
@@ -98,7 +88,6 @@ client.connect_signal("request::titlebars", function(c)
 end)
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-
 awful.rules.rules = {
     {
         rule = {},
@@ -135,29 +124,38 @@ awful.rules.rules = {
 }
 -- }}}
 
--- {{{ Signals
--- Signal function to execute when a new client appears.
--- client.connect_signal("manage", function(c)
--- Set the windows at the slave,
--- i.e. put it at the end of others instead of setting it master.
--- if not awesome.startup then awful.client.setslave(c) end
-
--- if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
---     -- Prevent clients from being unreachable after screen count changes.
---     awful.placement.no_offscreen(c)
--- end
-
-
--- end)
-
-require("snap.snap")
+-- require("snap.snap")
 -- bars stuff will be from here
-awful.mouse.snap.edge_enabled = false
-awful.screen.connect_for_each_screen(function(s)
-    set_wallpaper(s)
+-- awful.mouse.snap.edge_enabled = false
 
-    awful.tag.add("1", { layout = awful.layout.suit.spiral.dwindle, screen = s, selected = true, })
-    awful.tag.add("2", { layout = awful.layout.suit.corner.nw, screen = s, })
+local function set_wallpaper(s)
+    local wallpaper = config.user.wall[config.user.wall_index]
+    if type(wallpaper) == "function" then
+        wallpaper = wallpaper(s)
+    end
+    gears.wallpaper.maximized(wallpaper, s, true)
+end
+do
+    set_wallpaper(s)
+end
+-- screen.connect_signal("property::geometry", set_wallpaper) -- it's time consuming
+awful.screen.connect_for_each_screen(function(s)
+    root.keys(gears.table.join(
+        root.keys(),
+        awful.key({ modkey }, "w", function()
+            config.user.wall_index = (config.user.wall_index % #config.user.wall) + 1
+            naughty.notification({ title = "Wallpaper Changed", text = "Was it really bad huh?      " })
+            set_wallpaper(s)
+        end),
+        awful.key({ modkey, "Shift" }, "w", function()
+            config.user.wall_index = (config.user.wall_index % #config.user.wall) - 1
+            naughty.notification({ title = "Wallpaper Changed", text = "Oh, So you liked this one, hmmm..." })
+            set_wallpaper(s)
+        end)
+    ))
+
+    awful.tag.add("1", { layout = awful.layout.suit.floating, screen = s, selected = true, })
+    awful.tag.add("2", { layout = awful.layout.suit.floating, screen = s, })
     awful.tag.add("3", { layout = awful.layout.suit.tile.bottom, screen = s, })
     awful.tag.add("4", { layout = awful.layout.suit.tile, screen = s, })
     awful.tag.add("5", { layout = awful.layout.suit.floating, screen = s, })
@@ -167,20 +165,9 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add("9", { layout = awful.layout.suit.max, screen = s, })
 
     s.mypromptbox = awful.widget.prompt()
-    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(awful.button({}, 1, function()
-        awful.layout.inc(1)
-    end), awful.button({}, 3, function()
-        awful.layout.inc(-1)
-    end), awful.button({}, 4, function()
-        awful.layout.inc(1)
-    end), awful.button({}, 5, function()
-        awful.layout.inc(-1)
-    end)))
 end)
 
+-- wibars applied
 bars.create()
 
 naughty.config.defaults.ontop = config.notifs.ontop
@@ -188,11 +175,22 @@ naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = config.notifs.timeout
 naughty.config.defaults.position = config.notifs.position
 naughty.notification({
+    image = gears.color.recolor_image(home_dir .. "/" .. config.startup_message_image,"#ffffff00"),
     title = config.startup_message_title,
     text = config.startup_message
 })
-
 awful.screen.connect_for_each_screen(function(s)
+    gears.timer {
+        timeout   = 0.5,
+        autostart = true,
+        callback  = function()
+            -- if collectgarbage("count") > 100 then
+            -- naughty.notification({text=""..tostring(collectgarbage('count'))})
+            collectgarbage("collect")
+            -- end
+        end
+    }
+
     if s.index == 1 then
         local IB = nil
         root.keys(gears.table.join(root.keys(), awful.key({ modkey, "Shift" }, "i", function()
@@ -213,11 +211,13 @@ awful.screen.connect_for_each_screen(function(s)
                 end)
             end
         end)))
+
+
+        -- require("personal_widgets.stat_board").git_stats(900,1800,60,120,s)
         -- require("stuff.AiChat").AiChat(config.pop_aichat.width, config.pop_aichat.height, config.pop_aichat.posx,
         -- config.pop_aichat.posy, config.pop_aichat.bg, s)    -- AiChat(w,h,posx,posy,screen)
-        require("popups.Quotes").Quotes(config.pop_quotes.width, config.pop_quotes.height, config.pop_quotes.posx,
-            config.pop_quotes.posy, config.pop_quotes.quote, s) -- Quotes(w,h,posx,posy,quote_text,screen)
+        -- require("popups.Quotes").Quotes(config.pop_quotes.width, config.pop_quotes.height, config.pop_quotes.posx,
+        -- config.pop_quotes.posy, config.pop_quotes.quote, s) -- Quotes(w,h,posx,posy,quote_text,screen)
+        -- require("extra_widgets.mrs_minute").mrs_minute(s, 300, 300, 1600, 60)
     end
 end)
-
-
